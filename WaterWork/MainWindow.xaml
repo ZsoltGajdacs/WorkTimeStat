@@ -3,10 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:WaterWork"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowState="Minimized" Visibility="Hidden">
     <Grid>
-        
+        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="water_white.ico" MenuActivation="DoubleClick" MouseLeftButtonUp="TaskbarIcon_MouseLeftButtonUp" MouseRightButtonUp="TaskbarIcon_MouseRightButtonUp">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="settingsItem" Header="Settings" Click="SettingsItem_Click"/>
+                    <MenuItem Name="statisticsItem" Header="Statistics" Click="StatisticsItem_Click"/>
+                    <Separator />
+                    <MenuItem Name="exitItem" Header="Exit" Click="ExitItem_Click"/>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+
+        </tb:TaskbarIcon>
     </Grid>
 </Window>
