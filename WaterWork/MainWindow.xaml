@@ -6,9 +6,13 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:WaterWork"
         mc:Ignorable="d"
-        Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowState="Minimized" Visibility="Hidden">
+        Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowState="Minimized" Visibility="Hidden" Closing="Window_Closing">
     <Grid>
-        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="water_white.ico" MenuActivation="DoubleClick" MouseLeftButtonUp="TaskbarIcon_MouseLeftButtonUp" MouseRightButtonUp="TaskbarIcon_MouseRightButtonUp">
+        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="water_white.ico" 
+                        ToolTip="Bal gomb munkaidő, Jobb gomb víz fogyasztás növelése" 
+                        MenuActivation="MiddleClick" TrayRightMouseUp="TaskbarIcon_TrayRightMouseUp" 
+                        TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
+
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Name="settingsItem" Header="Settings" Click="SettingsItem_Click"/>

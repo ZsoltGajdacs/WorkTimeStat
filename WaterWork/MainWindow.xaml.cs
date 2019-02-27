@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,17 +26,54 @@ namespace WaterWork
     public partial class MainWindow : Window
     {
         private Keeper keeper;
+        private readonly string savePath;
 
         public MainWindow()
         {
             InitializeComponent();
-            keeper = Keeper.Instance;
+            FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
+            savePath = file.DirectoryName + "\\" + DateTime.Now.Year.ToString() + ".json";
+
+            keeper = Deserialize();
+
+            if (keeper == null)
+            {
+                keeper = new Keeper();
+            }
         }
 
-        private void SettingsItem_Click(object sender, RoutedEventArgs e)
+        #region Window Events
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Serialize();
+        }
+        #endregion
+
+        #region Tray Click Events
+        private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
             WorkdayEdit dayEdit = new WorkdayEdit(keeper.GetToday());
             keeper.SetToday(dayEdit.ShowDialog());
+        }
+
+        private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
+        {
+            WorkDay today = keeper.GetToday();
+            today.IncreaseWaterConsumption();
+
+            float waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
+
+            taskbarIcon.ShowBalloonTip("Vízfogyasztás", "Már " + waterAmount + "l vizet ittál ma!", 
+                                            Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);
+            Thread.Sleep(3000);
+            taskbarIcon.HideBalloonTip();
+        }
+        #endregion
+
+        #region Menu Click Events
+        private void SettingsItem_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
@@ -45,26 +83,13 @@ namespace WaterWork
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
-            Serialize();
             Application.Current.Shutdown();
         }
+        #endregion
 
-        private void TaskbarIcon_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            /*WorkdayEdit dayEdit = new WorkdayEdit();
-            dayEdit.ShowDialog();*/
-        }
-
-        private void TaskbarIcon_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
+        #region JSON serialization
         private void Serialize()
         {
-            FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
-            string savePath = file.DirectoryName + "\\" + DateTime.Now.Year.ToString() + ".json";
-
             TextWriter writer = null;
             try
             {
@@ -77,5 +102,30 @@ namespace WaterWork
                 if (writer != null) writer.Close();
             }
         }
+
+        private Keeper Deserialize()
+        {
+            if (new FileInfo(savePath).Exists)
+            {
+                TextReader reader = null;
+                try
+                {
+                    reader = new StreamReader(savePath);
+                    var fileContents = reader.ReadToEnd();
+
+                    return JsonConvert.DeserializeObject<Keeper>(fileContents);
+                }
+                finally
+                {
+                    if (reader != null)
+                        reader.Close();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }

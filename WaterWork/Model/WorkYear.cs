@@ -24,19 +24,6 @@ namespace WaterWork.Model
             WorkDays = new Dictionary<String, WorkDay>();
         }
 
-        internal void AddDay(String date)
-        {
-            if (!WorkDays.ContainsKey(date))
-            {
-                WorkDays.Add(GetTodayDate(), new WorkDay());
-            }
-        }
-
-        internal void AddDay(String date, WorkDay day)
-        {
-            WorkDays[date] = day;
-        }
-
         internal WorkDay GetCurrentDay()
         {
             WorkDays.TryGetValue(GetTodayDate(), out WorkDay day);
@@ -49,14 +36,14 @@ namespace WaterWork.Model
             WorkDays[GetTodayDate()] = today;
         }
 
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private String GetTodayDate()
         {
             return DateTime.Today.Date.ToString("yyyy-MM-dd");
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

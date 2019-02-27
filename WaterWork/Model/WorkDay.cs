@@ -16,11 +16,21 @@ namespace WaterWork.Model
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int LunchBreakDuration { get; set; }
-        public int WaterConsumptionCount { get; set; }
-        public int AmountOfLitreInOneUnit { get; set; }
+        public float WaterConsumptionCount { get; set; }
+        public float AmountOfLitreInOneUnit { get; set; }
         public Boolean IsLunchTimeWorkTime { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public WorkDay()
+        {
+            AmountOfLitreInOneUnit = 1;
+        }
+
+        internal void IncreaseWaterConsumption()
+        {
+            ++WaterConsumptionCount;
+        }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

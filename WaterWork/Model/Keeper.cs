@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,27 +14,9 @@ namespace WaterWork.Model
     {
         public Dictionary<int, WorkYear> WorkYears { get; set; }
 
-        #region Singleton stuff + CTOR
-        private static readonly Lazy<Keeper> lazy = new Lazy<Keeper>(() =>
-        {
-            return new Keeper();
-        });
-
-        private Keeper()
+        internal Keeper()
         {
             WorkYears = new Dictionary<int, WorkYear>();
-        }
-
-        public static Keeper Instance { get { return lazy.Value; } }
-        #endregion
-
-        internal void AddNewYear(int year)
-        {
-            if (!WorkYears.ContainsKey(year))
-            {
-
-                WorkYears.Add(year, new WorkYear());
-            }
         }
 
         internal WorkDay GetToday()
