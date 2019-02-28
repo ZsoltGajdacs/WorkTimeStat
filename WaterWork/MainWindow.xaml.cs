@@ -61,7 +61,7 @@ namespace WaterWork
             WorkDay today = keeper.GetToday();
             today.IncreaseWaterConsumption();
 
-            float waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
+            decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
 
             taskbarIcon.ShowBalloonTip("Vízfogyasztás", "Már " + waterAmount + "l vizet ittál ma!", 
                                             Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);

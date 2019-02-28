@@ -41,6 +41,11 @@ namespace WaterWork.Model
             WorkYears[GetCurrentYear()].SetCurrentDay(today);
         }
 
+        internal WorkYear GetThisYear()
+        {
+            return WorkYears[GetCurrentYear()];
+        }
+
         private int GetCurrentYear()
         {
             return int.Parse(DateTime.Now.Year.ToString());

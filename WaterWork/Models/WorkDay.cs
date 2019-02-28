@@ -16,8 +16,8 @@ namespace WaterWork.Model
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int LunchBreakDuration { get; set; }
-        public float WaterConsumptionCount { get; set; }
-        public float AmountOfLitreInOneUnit { get; set; }
+        public decimal WaterConsumptionCount { get; set; }
+        public decimal AmountOfLitreInOneUnit { get; set; }
         public Boolean IsLunchTimeWorkTime { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

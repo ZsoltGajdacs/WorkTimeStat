@@ -14,14 +14,21 @@ namespace WaterWork.Model
     internal class WorkYear : INotifyPropertyChanged
     {
         public Dictionary<String, WorkDay> WorkDays { get; set; }
-        public uint OfficalWorkDayCount { get; set; }
-        public uint NoOfDaysWorked { get; set; }
+        public int OfficalWorkDayCount { get; set; }
+        public int NoOfDaysWorked { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         internal WorkYear()
         {
             WorkDays = new Dictionary<String, WorkDay>();
+
+            PropertyChanged += WorkYear_PropertyChanged;
+        }
+
+        private void WorkYear_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CountWorkedDays();
         }
 
         internal WorkDay GetCurrentDay()
@@ -39,6 +46,11 @@ namespace WaterWork.Model
         private String GetTodayDate()
         {
             return DateTime.Today.Date.ToString("yyyy-MM-dd");
+        }
+
+        private void CountWorkedDays()
+        {
+            NoOfDaysWorked = WorkDays.Count;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
