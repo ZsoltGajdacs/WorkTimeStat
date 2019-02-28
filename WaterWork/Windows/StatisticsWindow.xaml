@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterWork.Windows"
         mc:Ignorable="d"
-        Title="StatisticsWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Background="#FF434343" Foreground="White" FontSize="14">
+        Title="Statisztikák" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Background="#FF434343" Foreground="White" FontSize="14">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="14" />
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
@@ -41,7 +41,13 @@
         <Label Content="Ledolgozott órák: " Grid.Column="1" Grid.Row="3"/>
         <Label Content="Szükséges órák: " Grid.Column="1" Grid.Row="5"/>
         <Label Content="Különbség: " Grid.Column="1" Grid.Row="7"/>
-        
-        <Label Content="{Binding }"/>
+
+        <Label Name="monthlyWorkedHours" Grid.Column="3" Grid.Row="3"/>
+        <Label Name="monthlyFullHours" Grid.Column="3" Grid.Row="5"/>
+        <Label Name="monthlyLeftHours" Grid.Column="3" Grid.Row="7"/>
+
+        <Label Name="yearlyWorkedHours" Grid.Column="5" Grid.Row="3"/>
+        <Label Name="yearlyFullHours" Grid.Column="5" Grid.Row="5"/>
+        <Label Name="yearlyLeftHours" Grid.Column="5" Grid.Row="7"/>
     </Grid>
 </Window>

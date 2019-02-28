@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WaterWork.Helpers;
-using WaterWork.Model;
+using WaterWork.Models;
 
 namespace WaterWork.Dialogs
 {
@@ -35,7 +35,7 @@ namespace WaterWork.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal WorkdayEdit(WorkDay today)
+        internal WorkdayEdit(ref WorkDay today)
         {
             InitializeComponent();
 

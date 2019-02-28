@@ -16,7 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WaterWork.Dialogs;
-using WaterWork.Model;
+using WaterWork.Models;
+using WaterWork.Windows;
 
 namespace WaterWork
 {
@@ -28,11 +29,15 @@ namespace WaterWork
         private Keeper keeper;
         private readonly string savePath;
 
+        private WorkYear year;
+        private WorkMonth month;
+        private WorkDay today;
+
         public MainWindow()
         {
             InitializeComponent();
             FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
-            savePath = file.DirectoryName + "\\" + DateTime.Now.Year.ToString() + ".json";
+            savePath = file.DirectoryName + "\\waterwork - " + DateTime.Now.Year.ToString() + ".json";
 
             keeper = Deserialize();
 
@@ -52,13 +57,18 @@ namespace WaterWork
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkdayEdit dayEdit = new WorkdayEdit(keeper.GetToday());
-            keeper.SetToday(dayEdit.ShowDialog());
+            GetWorkVars();
+
+            WorkdayEdit dayEdit = new WorkdayEdit(ref today);
+            today = dayEdit.ShowDialog();
+
+            SetWorkVars();
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkDay today = keeper.GetToday();
+            GetWorkVars();
+
             today.IncreaseWaterConsumption();
 
             decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
@@ -67,6 +77,8 @@ namespace WaterWork
                                             Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);
             Thread.Sleep(3000);
             taskbarIcon.HideBalloonTip();
+
+            SetWorkVars();
         }
         #endregion
 
@@ -78,12 +90,29 @@ namespace WaterWork
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-
+            StatisticsWindow statisticsWindow = new StatisticsWindow(keeper.GetCurrentYear());
+            statisticsWindow.Show();
         }
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+        #endregion
+
+        #region Helpers
+        private void GetWorkVars()
+        {
+            year = keeper.GetCurrentYear();
+            month = year.GetCurrentMonth();
+            today = month.GetCurrentDay();
+        }
+
+        private void SetWorkVars()
+        {
+            month.SetCurrentDay(ref today);
+            year.SetCurrentMonth(ref month);
+            keeper.SetCurrentYear(ref year);
         }
         #endregion
 

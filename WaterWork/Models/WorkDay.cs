@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterWork.Model
+namespace WaterWork.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]

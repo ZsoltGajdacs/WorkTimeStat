@@ -7,13 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterWork.Model
+namespace WaterWork.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
     internal class WorkYear : INotifyPropertyChanged
     {
-        public Dictionary<String, WorkDay> WorkDays { get; set; }
+        public Dictionary<int, WorkMonth> WorkMonths { get; set; }
         public int OfficalWorkDayCount { get; set; }
         public int NoOfDaysWorked { get; set; }
 
@@ -21,7 +21,7 @@ namespace WaterWork.Model
 
         internal WorkYear()
         {
-            WorkDays = new Dictionary<String, WorkDay>();
+            WorkMonths = new Dictionary<int, WorkMonth>();
 
             PropertyChanged += WorkYear_PropertyChanged;
         }
@@ -31,26 +31,33 @@ namespace WaterWork.Model
             CountWorkedDays();
         }
 
-        internal WorkDay GetCurrentDay()
+        internal WorkMonth GetCurrentMonth()
         {
-            WorkDays.TryGetValue(GetTodayDate(), out WorkDay day);
+            WorkMonths.TryGetValue(GetThisMonthNum(), out WorkMonth thisMonth);
 
-            return day ?? new WorkDay();
+            return thisMonth ?? new WorkMonth();
         }
 
-        internal void SetCurrentDay(WorkDay today)
+        internal void SetCurrentMonth(ref WorkMonth thisMonth)
         {
-            WorkDays[GetTodayDate()] = today;
-        }
-
-        private String GetTodayDate()
-        {
-            return DateTime.Today.Date.ToString("yyyy-MM-dd");
+            WorkMonths[GetThisMonthNum()] = thisMonth;
+            NotifyPropertyChanged();
         }
 
         private void CountWorkedDays()
         {
-            NoOfDaysWorked = WorkDays.Count;
+            int count = 0;
+            foreach (WorkMonth workMonth in WorkMonths.Values)
+            {
+                count += workMonth.NoOfDaysWorked;
+            }
+
+            NoOfDaysWorked = count;
+        }
+
+        private int GetThisMonthNum()
+        {
+            return int.Parse(DateTime.Today.Date.ToString("MM"));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

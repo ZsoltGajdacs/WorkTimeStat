@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterWork.Model
+namespace WaterWork.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
@@ -19,34 +19,19 @@ namespace WaterWork.Model
             WorkYears = new Dictionary<int, WorkYear>();
         }
 
-        internal WorkDay GetToday()
+        internal WorkYear GetCurrentYear()
         {
-            WorkYears.TryGetValue(GetCurrentYear(), out WorkYear year);
+            WorkYears.TryGetValue(GetCurrentYearNum(), out WorkYear thisYear);
 
-            if (year != null)
-            {
-                return year.GetCurrentDay();
-            }
-            else
-            {
-                year = new WorkYear();
-                WorkYears[GetCurrentYear()] = year;
-
-                return year.GetCurrentDay();
-            }
+            return thisYear ?? new WorkYear();
         }
 
-        internal void SetToday(WorkDay today)
+        internal void SetCurrentYear(ref WorkYear thisYear)
         {
-            WorkYears[GetCurrentYear()].SetCurrentDay(today);
+            WorkYears[GetCurrentYearNum()] = thisYear;
         }
 
-        internal WorkYear GetThisYear()
-        {
-            return WorkYears[GetCurrentYear()];
-        }
-
-        private int GetCurrentYear()
+        private int GetCurrentYearNum()
         {
             return int.Parse(DateTime.Now.Year.ToString());
         }
