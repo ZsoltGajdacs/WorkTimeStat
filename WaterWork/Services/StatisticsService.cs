@@ -34,6 +34,12 @@ namespace WaterWork.Services
             foreach (WorkDay workDay in month.WorkDays.Values)
             {
                 double minutesWorked = (workDay.EndTime - workDay.StartTime).TotalMinutes;
+
+                if (!workDay.IsLunchTimeWorkTime)
+                {
+                    minutesWorked -= workDay.LunchBreakDuration; 
+                }
+
                 result += minutesWorked / 60;
             }
 
@@ -45,5 +51,6 @@ namespace WaterWork.Services
             return month.OfficalWorkDayCount * 8;
         }
         #endregion
+
     }
 }

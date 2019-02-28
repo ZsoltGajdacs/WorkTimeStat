@@ -37,12 +37,16 @@ namespace WaterWork.Windows
 
             yearlyWorkedHours.Content = yWorkedHours;
             yearlyFullHours.Content = yFullHours;
-            yearlyLeftHours.Content = yWorkedHours - yFullHours;
+            yearlyLeftHours.Content = AddPlusIfNeeded(yWorkedHours - yFullHours);
 
             monthlyWorkedHours.Content = mWorkedHours;
             monthlyFullHours.Content = mFullHours;
-            monthlyLeftHours.Content = mWorkedHours - mFullHours;
+            monthlyLeftHours.Content = AddPlusIfNeeded(mWorkedHours - mFullHours);
         }
 
+        private string AddPlusIfNeeded(double num)
+        {
+            return num > 0 ? "+" + num : num.ToString();
+        }
     }
 }
