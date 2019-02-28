@@ -32,9 +32,16 @@ namespace WaterWork.Windows
             double yWorkedHours = StatisticsService.GetYearlyWorkedHours(ref thisYear);
             double yFullHours = StatisticsService.GetYearlyTotalHours(ref thisYear);
 
+            double mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisYear.GetCurrentMonth());
+            double mFullHours = StatisticsService.GetMonthlyTotalHours(thisYear.GetCurrentMonth());
+
             yearlyWorkedHours.Content = yWorkedHours;
             yearlyFullHours.Content = yFullHours;
-            yearlyLeftHours.Content = yFullHours - yWorkedHours;
+            yearlyLeftHours.Content = yWorkedHours - yFullHours;
+
+            monthlyWorkedHours.Content = mWorkedHours;
+            monthlyFullHours.Content = mFullHours;
+            monthlyLeftHours.Content = mWorkedHours - mFullHours;
         }
 
     }
