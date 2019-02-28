@@ -26,9 +26,29 @@ namespace WaterWork.Models
             return thisYear ?? new WorkYear();
         }
 
+        internal WorkMonth GetCurrentMonth()
+        {
+            return GetCurrentYear().GetCurrentMonth();
+        }
+
+        internal WorkDay GetCurrentDay()
+        {
+            return GetCurrentMonth().GetCurrentDay();
+        }
+
         internal void SetCurrentYear(ref WorkYear thisYear)
         {
             WorkYears[GetCurrentYearNum()] = thisYear;
+        }
+
+        internal void SetCurrentMonth(ref WorkMonth thisMonth)
+        {
+            GetCurrentYear().SetCurrentMonth(ref thisMonth);
+        }
+
+        internal void SetCurrentDay(ref WorkDay today)
+        {
+            GetCurrentMonth().SetCurrentDay(ref today);
         }
 
         private int GetCurrentYearNum()

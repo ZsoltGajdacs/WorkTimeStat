@@ -29,10 +29,6 @@ namespace WaterWork
         private Keeper keeper;
         private readonly string savePath;
 
-        private WorkYear year;
-        private WorkMonth month;
-        private WorkDay today;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -57,18 +53,15 @@ namespace WaterWork
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            GetWorkVars();
+            WorkdayEdit dayEdit = new WorkdayEdit(keeper.GetCurrentDay());
+            WorkDay today = dayEdit.ShowDialog();
 
-            WorkdayEdit dayEdit = new WorkdayEdit(ref today);
-            today = dayEdit.ShowDialog();
-
-            SetWorkVars();
+            keeper.SetCurrentDay(ref today);
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
         {
-            GetWorkVars();
-
+            WorkDay today = keeper.GetCurrentDay();
             today.IncreaseWaterConsumption();
 
             decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
@@ -77,8 +70,6 @@ namespace WaterWork
                                             Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);
             Thread.Sleep(3000);
             taskbarIcon.HideBalloonTip();
-
-            SetWorkVars();
         }
         #endregion
 
@@ -97,22 +88,6 @@ namespace WaterWork
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-        #endregion
-
-        #region Helpers
-        private void GetWorkVars()
-        {
-            year = keeper.GetCurrentYear();
-            month = year.GetCurrentMonth();
-            today = month.GetCurrentDay();
-        }
-
-        private void SetWorkVars()
-        {
-            month.SetCurrentDay(ref today);
-            year.SetCurrentMonth(ref month);
-            keeper.SetCurrentYear(ref year);
         }
         #endregion
 

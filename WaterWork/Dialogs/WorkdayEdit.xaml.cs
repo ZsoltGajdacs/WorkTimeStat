@@ -35,7 +35,7 @@ namespace WaterWork.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal WorkdayEdit(ref WorkDay today)
+        internal WorkdayEdit(WorkDay today)
         {
             InitializeComponent();
 
