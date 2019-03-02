@@ -19,11 +19,20 @@ namespace WaterWork.Models
             WorkYears = new Dictionary<int, WorkYear>();
         }
 
+        #region GETs
         internal WorkYear GetCurrentYear()
         {
             WorkYears.TryGetValue(GetCurrentYearNum(), out WorkYear thisYear);
 
-            return thisYear ?? new WorkYear();
+            if (thisYear != null)
+                return thisYear;
+            else
+            {
+                WorkYear year = new WorkYear();
+                SetCurrentYear(ref year);
+
+                return year;
+            }
         }
 
         internal WorkMonth GetCurrentMonth()
@@ -35,7 +44,9 @@ namespace WaterWork.Models
         {
             return GetCurrentMonth().GetCurrentDay();
         }
+        #endregion
 
+        #region SETs
         internal void SetCurrentYear(ref WorkYear thisYear)
         {
             WorkYears[GetCurrentYearNum()] = thisYear;
@@ -50,6 +61,7 @@ namespace WaterWork.Models
         {
             GetCurrentMonth().SetCurrentDay(ref today);
         }
+        #endregion
 
         private int GetCurrentYearNum()
         {

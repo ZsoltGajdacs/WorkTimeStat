@@ -26,16 +26,19 @@ namespace WaterWork.Models
             PropertyChanged += WorkYear_PropertyChanged;
         }
 
-        private void WorkYear_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            CountWorkedDays();
-        }
-
         internal WorkMonth GetCurrentMonth()
         {
             WorkMonths.TryGetValue(GetThisMonthNum(), out WorkMonth thisMonth);
 
-            return thisMonth ?? new WorkMonth();
+            if (thisMonth != null)
+                return thisMonth;
+            else
+            {
+                WorkMonth month = new WorkMonth();
+                SetCurrentMonth(ref month);
+
+                return month;
+            }
         }
 
         internal void SetCurrentMonth(ref WorkMonth thisMonth)
@@ -60,9 +63,16 @@ namespace WaterWork.Models
             return int.Parse(DateTime.Today.Date.ToString("MM"));
         }
 
+        #region Event Handling
+        private void WorkYear_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CountWorkedDays();
+        }
+
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
     }
 }
