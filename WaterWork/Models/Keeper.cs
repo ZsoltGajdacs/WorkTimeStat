@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WaterWork.Services;
@@ -11,9 +13,12 @@ namespace WaterWork.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    internal class Keeper
+    internal class Keeper : INotifyPropertyChanged
     {
         public Dictionary<int, WorkYear> WorkYears { get; set; }
+        public Boolean IsLunchTimeWorkTimeDefault { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         internal Keeper()
         {
@@ -43,7 +48,7 @@ namespace WaterWork.Models
 
         internal WorkDay GetCurrentDay()
         {
-            return GetCurrentMonth().GetCurrentDay();
+            return GetCurrentMonth().GetCurrentDay(IsLunchTimeWorkTimeDefault);
         }
         #endregion
 
@@ -67,6 +72,11 @@ namespace WaterWork.Models
         private int GetCurrentYearNum()
         {
             return StatisticsService.GetThisYearNum();
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

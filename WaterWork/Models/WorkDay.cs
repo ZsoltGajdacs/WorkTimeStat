@@ -22,9 +22,10 @@ namespace WaterWork.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WorkDay()
+        public WorkDay(bool isLunchTimeWorkTime)
         {
             AmountOfLitreInOneUnit = 1;
+            IsLunchTimeWorkTime = isLunchTimeWorkTime;
         }
 
         internal void IncreaseWaterConsumption()

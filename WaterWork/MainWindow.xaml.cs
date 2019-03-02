@@ -33,7 +33,7 @@ namespace WaterWork
         {
             InitializeComponent();
             FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
-            savePath = file.DirectoryName + "\\waterwork - " + DateTime.Now.Year.ToString() + ".json";
+            savePath = file.DirectoryName + "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
 
             keeper = Deserialize();
 
@@ -76,7 +76,8 @@ namespace WaterWork
         #region Menu Click Events
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
         {
-            
+            SettingsWindow settingsWindow = new SettingsWindow(ref keeper);
+            settingsWindow.Show();
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)

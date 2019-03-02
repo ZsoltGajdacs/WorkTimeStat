@@ -26,7 +26,7 @@ namespace WaterWork.Models
             PropertyChanged += WorkMonth_PropertyChanged;
         }
 
-        internal WorkDay GetCurrentDay()
+        internal WorkDay GetCurrentDay(bool isLunchTimeWorkTime)
         {
             WorkDays.TryGetValue(GetTodayNum(), out WorkDay today);
 
@@ -34,7 +34,7 @@ namespace WaterWork.Models
                 return today;
             else
             {
-                WorkDay day = new WorkDay();
+                WorkDay day = new WorkDay(isLunchTimeWorkTime);
                 SetCurrentDay(ref day);
 
                 return day;
