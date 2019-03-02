@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WaterWork.Services;
 
 namespace WaterWork.Models
 {
@@ -14,7 +15,6 @@ namespace WaterWork.Models
     internal class WorkYear : INotifyPropertyChanged
     {
         public Dictionary<int, WorkMonth> WorkMonths { get; set; }
-        public int OfficalWorkDayCount { get; set; }
         public int NoOfDaysWorked { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,6 +35,7 @@ namespace WaterWork.Models
             else
             {
                 WorkMonth month = new WorkMonth();
+                month.PropertyChanged += Month_PropertyChanged;
                 SetCurrentMonth(ref month);
 
                 return month;
@@ -47,7 +48,7 @@ namespace WaterWork.Models
             NotifyPropertyChanged();
         }
 
-        private void CountWorkedDays()
+        internal void CountWorkedDays()
         {
             int count = 0;
             foreach (WorkMonth workMonth in WorkMonths.Values)
@@ -60,11 +61,16 @@ namespace WaterWork.Models
 
         private int GetThisMonthNum()
         {
-            return int.Parse(DateTime.Today.Date.ToString("MM"));
+            return StatisticsService.GetThisMonthNum();
         }
 
         #region Event Handling
         private void WorkYear_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CountWorkedDays();
+        }
+
+        private void Month_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             CountWorkedDays();
         }

@@ -23,7 +23,7 @@ namespace WaterWork.Services
 
         internal static double GetYearlyTotalHours(ref WorkYear year)
         {
-            return year.OfficalWorkDayCount * 8;
+            return year.NoOfDaysWorked * 8;
         }
         #endregion
 
@@ -48,7 +48,24 @@ namespace WaterWork.Services
 
         internal static double GetMonthlyTotalHours(WorkMonth month)
         {
-            return month.OfficalWorkDayCount * 8;
+            return month.NoOfDaysWorked * 8;
+        }
+        #endregion
+
+        #region Helpers
+        internal static int GetTodayNum()
+        {
+            return int.Parse(DateTime.Today.Date.ToString("dd"));
+        }
+
+        internal static int GetThisMonthNum()
+        {
+            return int.Parse(DateTime.Today.Date.ToString("MM"));
+        }
+
+        internal static int GetThisYearNum()
+        {
+            return int.Parse(DateTime.Now.Year.ToString());
         }
         #endregion
 

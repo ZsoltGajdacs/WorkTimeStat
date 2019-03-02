@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WaterWork.Services;
 
 namespace WaterWork.Models
 {
@@ -65,7 +66,7 @@ namespace WaterWork.Models
 
         private int GetCurrentYearNum()
         {
-            return int.Parse(DateTime.Now.Year.ToString());
+            return StatisticsService.GetThisYearNum();
         }
     }
 }

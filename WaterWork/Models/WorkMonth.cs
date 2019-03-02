@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WaterWork.Services;
 
 namespace WaterWork.Models
 {
@@ -14,7 +15,6 @@ namespace WaterWork.Models
     internal class WorkMonth : INotifyPropertyChanged
     {
         public Dictionary<int, WorkDay> WorkDays { get; set; }
-        public int OfficalWorkDayCount { get; set; }
         public int NoOfDaysWorked { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,7 +54,7 @@ namespace WaterWork.Models
 
         private int GetTodayNum()
         {
-            return int.Parse(DateTime.Today.Date.ToString("dd"));
+            return StatisticsService.GetTodayNum();
         }
 
         #region Event Handling

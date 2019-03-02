@@ -38,9 +38,9 @@ namespace WaterWork
             keeper = Deserialize();
 
             if (keeper == null)
-            {
                 keeper = new Keeper();
-            }
+            else
+                keeper.GetCurrentYear().CountWorkedDays();
         }
 
         #region Window Events
