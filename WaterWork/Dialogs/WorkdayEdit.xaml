@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WaterWork.Dialogs"
         xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Munkaidő szerkesztés" Height="115" Width="565" ResizeMode="NoResize" FontSize="14" Background="#FF434343" Foreground="White" Icon="/WaterWork;component/water_white.ico" Topmost="True">
+        Title="Munkaidő szerkesztés" Height="115" Width="675" ResizeMode="NoResize" FontSize="14" Background="#FF434343" Foreground="White" Icon="/WaterWork;component/water_white.ico" Topmost="True">
     <Grid x:Name="editGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
@@ -27,17 +27,19 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
         <Label x:Name="workStartLabel" Content="Kezdés:" Grid.Row="1" Grid.Column="1" Foreground="White"/>
         <xce:TimePicker x:Name="workStart" Value="{Binding StartTime, Mode=TwoWay}" ShowButtonSpinner="False"
-                        StartTime="6:00" EndTime="14:00" TimeInterval="00:30" ClipValueToMinMax="True" 
+                        StartTime="7:00" EndTime="14:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                         Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workEndLabel" Content="Befejezés:" Grid.Row="1" Grid.Column="3" Foreground="White"/>
         <xce:TimePicker x:Name="workEnd" Value="{Binding EndTime, Mode=TwoWay}" ShowButtonSpinner="False"
-                        StartTime="12:00" EndTime="20:00" TimeInterval="00:30" ClipValueToMinMax="True" 
+                        StartTime="12:00" EndTime="20:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                         Grid.Row="3" Grid.Column="3" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workLunchLabel" Content="Ebédszünet:" Grid.Row="1" Grid.Column="5" Foreground="White"/>
@@ -45,14 +47,19 @@
                            Minimum="0" Maximum="120" ClipValueToMinMax="True" 
                            Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
 
-        <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="7" Foreground="White"/>
-        <xce:IntegerUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
-                           Minimum="0" Maximum="10" ClipValueToMinMax="True" 
+        <Label x:Name="workbreakLabel" Content="Egyéb szünet:" Grid.Row="1" Grid.Column="7" Foreground="White"/>
+        <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
+                           Minimum="0" Maximum="120" ClipValueToMinMax="True" 
                            Grid.Row="3" Grid.Column="7" Background="#FF434343" Foreground="White"/>
 
-        <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="9" Foreground="White"/>
+        <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
+        <xce:IntegerUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
+                           Minimum="0" Maximum="10" ClipValueToMinMax="True" 
+                           Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
+
+        <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="11" Foreground="White"/>
         <xce:DecimalUpDown x:Name="workBottleCount" Value="{Binding BottleSize, Mode=TwoWay}" 
                            Minimum="0" Maximum="5" ClipValueToMinMax="True" 
-                           Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
+                           Grid.Row="3" Grid.Column="11" Background="#FF434343" Foreground="White"/>
     </Grid>
 </Window>

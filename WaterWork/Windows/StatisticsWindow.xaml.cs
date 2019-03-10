@@ -29,10 +29,10 @@ namespace WaterWork.Windows
             InitializeComponent();
             mainGrid.DataContext = this;
 
-            double yWorkedHours = StatisticsService.GetYearlyWorkedHours(ref thisYear);
+            double yWorkedHours = Math.Round(StatisticsService.GetYearlyWorkedHours(ref thisYear), 2);
             double yFullHours = StatisticsService.GetYearlyTotalHours(ref thisYear);
 
-            double mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisYear.GetCurrentMonth());
+            double mWorkedHours = Math.Round(StatisticsService.GetMonthlyWorkedHours(thisYear.GetCurrentMonth()), 2);
             double mFullHours = StatisticsService.GetMonthlyTotalHours(thisYear.GetCurrentMonth());
 
             yearlyWorkedHours.Content = yWorkedHours;
@@ -46,6 +46,7 @@ namespace WaterWork.Windows
 
         private string AddPlusIfNeeded(double num)
         {
+            num = Math.Round(num, 2);
             return num > 0 ? "+" + num : num.ToString();
         }
     }

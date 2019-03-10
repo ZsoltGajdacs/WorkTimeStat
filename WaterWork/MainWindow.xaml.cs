@@ -74,6 +74,11 @@ namespace WaterWork
         #endregion
 
         #region Menu Click Events
+        private void FlowerItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settingsWindow = new SettingsWindow(ref keeper);
@@ -132,5 +137,6 @@ namespace WaterWork
             }
         }
         #endregion
+
     }
 }

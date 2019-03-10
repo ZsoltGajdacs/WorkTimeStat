@@ -15,10 +15,12 @@
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="settingsItem" Header="Settings" Click="SettingsItem_Click"/>
-                    <MenuItem Name="statisticsItem" Header="Statistics" Click="StatisticsItem_Click"/>
+                    <MenuItem Name="flowerItem" Header="Virágok" Click="FlowerItem_Click"/>
                     <Separator />
-                    <MenuItem Name="exitItem" Header="Exit" Click="ExitItem_Click"/>
+                    <MenuItem Name="settingsItem" Header="Beállítások" Click="SettingsItem_Click"/>
+                    <MenuItem Name="statisticsItem" Header="Statisztikák" Click="StatisticsItem_Click"/>
+                    <Separator />
+                    <MenuItem Name="exitItem" Header="Kilépés" Click="ExitItem_Click"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
 
