@@ -53,8 +53,8 @@
                            Grid.Row="3" Grid.Column="7" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
-        <xce:IntegerUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
-                           Minimum="0" Maximum="10" ClipValueToMinMax="True" 
+        <xce:DecimalUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
+                           Minimum="0" Maximum="6" ClipValueToMinMax="True" 
                            Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="11" Foreground="White"/>

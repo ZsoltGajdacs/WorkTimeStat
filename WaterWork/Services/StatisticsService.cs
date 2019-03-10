@@ -9,6 +9,8 @@ namespace WaterWork.Services
 {
     internal static class StatisticsService
     {
+        private static readonly int WORKDAY_HOUR_LENGTH = 8;
+
         #region Year counters
         internal static double GetYearlyWorkedHours(ref WorkYear year)
         {
@@ -23,7 +25,7 @@ namespace WaterWork.Services
 
         internal static double GetYearlyTotalHours(ref WorkYear year)
         {
-            return year.NoOfDaysWorked * 8;
+            return year.NoOfDaysWorked * WORKDAY_HOUR_LENGTH;
         }
         #endregion
 
@@ -33,14 +35,8 @@ namespace WaterWork.Services
             double result = 0;
             foreach (WorkDay workDay in month.WorkDays.Values)
             {
-                double minutesWorked = (workDay.EndTime - workDay.StartTime).TotalMinutes;
 
-                if (!workDay.IsLunchTimeWorkTime)
-                {
-                    minutesWorked -= workDay.LunchBreakDuration; 
-                }
-
-                result += minutesWorked / 60;
+                result += GetDailyWorkedHours(workDay);
             }
 
             return result;
@@ -48,7 +44,28 @@ namespace WaterWork.Services
 
         internal static double GetMonthlyTotalHours(WorkMonth month)
         {
-            return month.NoOfDaysWorked * 8;
+            return month.NoOfDaysWorked * WORKDAY_HOUR_LENGTH;
+        }
+        #endregion
+
+        #region Day Counters
+        internal static double GetDailyWorkedHours(WorkDay day)
+        {
+            double minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
+
+            minutesWorked -= day.OtherBreakDuration;
+
+            if (!day.IsLunchTimeWorkTime)
+            {
+                minutesWorked -= day.LunchBreakDuration;
+            }
+
+            return minutesWorked / 60;
+        }
+
+        internal static double GetDailyTotalHours()
+        {
+            return WORKDAY_HOUR_LENGTH;
         }
         #endregion
 

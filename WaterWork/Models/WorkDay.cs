@@ -31,7 +31,7 @@ namespace WaterWork.Models
 
         internal void IncreaseWaterConsumption()
         {
-            ++WaterConsumptionCount;
+            WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, 0.5m);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

@@ -87,7 +87,7 @@ namespace WaterWork
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWindow statisticsWindow = new StatisticsWindow(keeper.GetCurrentYear());
+            StatisticsWindow statisticsWindow = new StatisticsWindow(keeper.GetCurrentYear(), keeper.IsLunchTimeWorkTimeDefault);
             statisticsWindow.Show();
         }
 

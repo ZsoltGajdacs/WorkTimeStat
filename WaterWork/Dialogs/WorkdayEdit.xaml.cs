@@ -40,12 +40,7 @@ namespace WaterWork.Dialogs
         {
             InitializeComponent();
 
-            Point pos = NativeMethods.GetMousePosition();
-            //System.Drawing.Rectangle resolution = Screen.PrimaryScreen.Bounds;
-
-            Top = pos.Y - (Height + 100);
-            Left = pos.X - (Width / 2) - 100;
-            
+            SetWindowPos();
 
             this.today = today;
             dateToday = DateTime.Now.Date;
@@ -72,6 +67,15 @@ namespace WaterWork.Dialogs
             today.AmountOfLitreInOneUnit = BottleSize;
 
             return today;
+        }
+
+        private void SetWindowPos()
+        {
+            Point pos = NativeMethods.GetMousePosition();
+            //System.Drawing.Rectangle resolution = Screen.PrimaryScreen.Bounds;
+
+            Top = pos.Y - (Height + 100);
+            Left = pos.X - (Width / 2) - 100;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

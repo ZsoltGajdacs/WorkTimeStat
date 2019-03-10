@@ -24,7 +24,7 @@ namespace WaterWork.Windows
     public partial class StatisticsWindow : Window
     {
 
-        internal StatisticsWindow(WorkYear thisYear)
+        internal StatisticsWindow(WorkYear thisYear, bool isLunchTimeWorkTime)
         {
             InitializeComponent();
             mainGrid.DataContext = this;
@@ -34,6 +34,19 @@ namespace WaterWork.Windows
 
             double mWorkedHours = Math.Round(StatisticsService.GetMonthlyWorkedHours(thisYear.GetCurrentMonth()), 2);
             double mFullHours = StatisticsService.GetMonthlyTotalHours(thisYear.GetCurrentMonth());
+
+            double dWorkedHours = StatisticsService.GetDailyWorkedHours(thisYear.GetCurrentMonth().GetCurrentDay(isLunchTimeWorkTime));
+            double dFullHours = StatisticsService.GetDailyTotalHours();
+
+            double ywdWorkedHours = StatisticsService.GetDailyWorkedHours(thisYear.GetCurrentMonth().GetYesterWorkDay());
+
+            yesterworkdayWorkedHours.Content = ywdWorkedHours;
+            yesterworkdayFullHours.Content = dFullHours;
+            yesterworkdayLeftHours.Content = AddPlusIfNeeded(ywdWorkedHours - dFullHours);
+
+            todayWorkedHours.Content = dWorkedHours;
+            todayFullHours.Content = dFullHours;
+            todayLeftHours.Content = AddPlusIfNeeded(dWorkedHours - dFullHours);
 
             yearlyWorkedHours.Content = yWorkedHours;
             yearlyFullHours.Content = yFullHours;
