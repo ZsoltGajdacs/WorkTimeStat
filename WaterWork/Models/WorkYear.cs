@@ -59,6 +59,12 @@ namespace WaterWork.Models
             NoOfDaysWorked = count;
         }
 
+        internal WorkMonth GetMonth(int month)
+        {
+            WorkMonths.TryGetValue(month, out WorkMonth monthResult);
+            return monthResult;
+        }
+
         private int GetThisMonthNum()
         {
             return StatisticsService.GetThisMonthNum();

@@ -18,6 +18,7 @@
                     <MenuItem Name="flowerItem" Header="Virágok" Click="FlowerItem_Click"/>
                     <Separator />
                     <MenuItem Name="settingsItem" Header="Beállítások" Click="SettingsItem_Click"/>
+                    <MenuItem Name="calendarItem" Header="Naptár" Click="CalendarItem_Click"/>
                     <MenuItem Name="statisticsItem" Header="Statisztikák" Click="StatisticsItem_Click"/>
                     <Separator />
                     <MenuItem Name="exitItem" Header="Kilépés" Click="ExitItem_Click"/>

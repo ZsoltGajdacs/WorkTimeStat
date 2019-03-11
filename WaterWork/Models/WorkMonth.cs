@@ -74,6 +74,12 @@ namespace WaterWork.Models
             return yesterWorkDay;
         }
 
+        internal WorkDay GetDay(int day)
+        {
+            WorkDays.TryGetValue(day, out WorkDay dayResult);
+            return dayResult;
+        }
+
         private void CountWorkedDays()
         {
             NoOfDaysWorked = WorkDays.Count;

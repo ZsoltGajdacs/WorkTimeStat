@@ -54,6 +54,12 @@ namespace WaterWork.Models
         {
             return GetCurrentMonth().GetCurrentDay(IsLunchTimeWorkTimeDefault);
         }
+        
+        internal WorkYear GetYear(int year)
+        {
+            WorkYears.TryGetValue(year, out WorkYear yearResult);
+            return yearResult;
+        }
         #endregion
 
         #region SETs

@@ -74,6 +74,12 @@ namespace WaterWork
         #endregion
 
         #region Menu Click Events
+        private void CalendarItem_Click(object sender, RoutedEventArgs e)
+        {
+            CalendarWindow calendarWindow = new CalendarWindow(ref keeper);
+            calendarWindow.Show();
+        }
+
         private void FlowerItem_Click(object sender, RoutedEventArgs e)
         {
 

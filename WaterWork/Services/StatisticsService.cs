@@ -72,17 +72,32 @@ namespace WaterWork.Services
         #region Helpers
         internal static int GetTodayNum()
         {
-            return int.Parse(DateTime.Today.Date.ToString("dd"));
+            return GetDayForDate(DateTime.Today);
         }
 
         internal static int GetThisMonthNum()
         {
-            return int.Parse(DateTime.Today.Date.ToString("MM"));
+            return GetMonthForDate(DateTime.Today);
         }
 
         internal static int GetThisYearNum()
         {
-            return int.Parse(DateTime.Now.Year.ToString());
+            return GetYearForDate(DateTime.Today);
+        }
+
+        internal static int GetYearForDate(DateTime date)
+        {
+            return int.Parse(date.ToString("yyyy"));
+        }
+
+        internal static int GetMonthForDate(DateTime date)
+        {
+            return int.Parse(date.ToString("MM"));
+        }
+
+        internal static int GetDayForDate(DateTime date)
+        {
+            return int.Parse(date.ToString("dd"));
         }
         #endregion
 
