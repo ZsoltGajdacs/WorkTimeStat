@@ -3,19 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WaterWork.Dialogs;
+using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Windows;
 
@@ -26,42 +17,72 @@ namespace WaterWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Keeper keeper;
-        private readonly string savePath;
+        private WorkKeeper workKeeper;
+        private LogKeeper logKeeper;
+
+        private Serializer serializer;
+
+        private readonly string saveDirPath;
+        private readonly string waterWorkFileName;
+        private readonly string workLogFileName;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            serializer = new Serializer();
+
             FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
-            savePath = file.DirectoryName + "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
+            saveDirPath = file.DirectoryName;
 
-            keeper = Deserialize();
+            waterWorkFileName = "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
+            workLogFileName = "\\worklog" + DateTime.Now.ToString("yyyy-MM-dd") + ".json";
 
-            if (keeper == null)
-                keeper = new Keeper();
-            else
-                keeper.GetCurrentYear().CountWorkedDays();
+            InitializeWorkKeeper();
+            InitializeLogKeeper();
         }
+
+        #region Startup
+        private void InitializeWorkKeeper()
+        {
+            workKeeper = serializer.JsonObjectDeserialize<WorkKeeper>(saveDirPath + waterWorkFileName);
+
+            if (workKeeper == null)
+                workKeeper = new WorkKeeper();
+            else
+                workKeeper.GetCurrentYear().CountWorkedDays();
+        }
+
+        private void InitializeLogKeeper()
+        {
+            logKeeper = serializer.JsonObjectDeserialize<LogKeeper>(saveDirPath + workLogFileName);
+
+            if (logKeeper == null)
+                logKeeper = new LogKeeper();
+        }
+
+        #endregion
 
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Serialize();
+            serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper);
+            serializer.JsonObjectSerialize<LogKeeper>(saveDirPath + workLogFileName, ref logKeeper);
         }
         #endregion
 
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkdayEdit dayEdit = new WorkdayEdit(keeper.GetCurrentDay());
+            WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.GetCurrentDay());
             WorkDay today = dayEdit.ShowDialog();
 
-            keeper.SetCurrentDay(ref today);
+            workKeeper.SetCurrentDay(ref today);
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkDay today = keeper.GetCurrentDay();
+            WorkDay today = workKeeper.GetCurrentDay();
             today.IncreaseWaterConsumption();
 
             decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
@@ -74,73 +95,33 @@ namespace WaterWork
         #endregion
 
         #region Menu Click Events
-        private void CalendarItem_Click(object sender, RoutedEventArgs e)
+        private void WorkLogItem_Click(object sender, RoutedEventArgs e)
         {
-            CalendarWindow calendarWindow = new CalendarWindow(ref keeper);
-            calendarWindow.Show();
+            WorkLogWindow workLogWindow = new WorkLogWindow(ref logKeeper);
+            workLogWindow.Show();
         }
 
-        private void FlowerItem_Click(object sender, RoutedEventArgs e)
+        private void CalendarItem_Click(object sender, RoutedEventArgs e)
         {
-
+            CalendarWindow calendarWindow = new CalendarWindow(ref workKeeper);
+            calendarWindow.Show();
         }
 
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow(ref keeper);
+            SettingsWindow settingsWindow = new SettingsWindow(ref workKeeper);
             settingsWindow.Show();
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWindow statisticsWindow = new StatisticsWindow(keeper.GetCurrentYear(), keeper.IsLunchTimeWorkTimeDefault);
+            StatisticsWindow statisticsWindow = new StatisticsWindow(workKeeper.GetCurrentYear(), workKeeper.IsLunchTimeWorkTimeDefault);
             statisticsWindow.Show();
         }
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-        #endregion
-
-        #region JSON serialization
-        private void Serialize()
-        {
-            TextWriter writer = null;
-            try
-            {
-                string output = JsonConvert.SerializeObject(keeper);
-                writer = new StreamWriter(savePath, false);
-                writer.Write(output);
-            }
-            finally
-            {
-                if (writer != null) writer.Close();
-            }
-        }
-
-        private Keeper Deserialize()
-        {
-            if (new FileInfo(savePath).Exists)
-            {
-                TextReader reader = null;
-                try
-                {
-                    reader = new StreamReader(savePath);
-                    var fileContents = reader.ReadToEnd();
-
-                    return JsonConvert.DeserializeObject<Keeper>(fileContents);
-                }
-                finally
-                {
-                    if (reader != null)
-                        reader.Close();
-                }
-            }
-            else
-            {
-                return null;
-            }
         }
         #endregion
 

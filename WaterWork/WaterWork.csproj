@@ -55,7 +55,7 @@
     <StartupObject>WaterWork.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>water_white.ico</ApplicationIcon>
+    <ApplicationIcon>Icons\water_white.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -101,20 +101,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Flower.cs" />
+    <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Models\LogEntry.cs" />
+    <Compile Include="Models\LogKeeper.cs" />
     <Compile Include="Models\WorkMonth.cs" />
     <Compile Include="Services\StatisticsService.cs" />
     <Compile Include="Windows\CalendarWindow.xaml.cs">
       <DependentUpon>CalendarWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FlowerWindow.xaml.cs">
-      <DependentUpon>FlowerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\StatisticsWindow.xaml.cs">
       <DependentUpon>StatisticsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WorkLogWindow.xaml.cs">
+      <DependentUpon>WorkLogWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\WorkdayEdit.xaml">
       <SubType>Designer</SubType>
@@ -140,10 +142,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\FlowerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,9 +150,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\WorkLogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Keeper.cs" />
+    <Compile Include="Models\WorkKeeper.cs" />
     <Compile Include="Models\WorkDay.cs" />
     <Compile Include="Models\WorkYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -184,8 +186,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="water_black.ico" />
-    <Resource Include="water_white.ico" />
+    <Resource Include="Icons\water_black.ico" />
+    <Resource Include="Icons\water_white.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -198,6 +200,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RedX.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

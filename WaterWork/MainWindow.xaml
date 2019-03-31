@@ -8,14 +8,14 @@
         mc:Ignorable="d"
         Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowState="Minimized" Visibility="Hidden" Closing="Window_Closing">
     <Grid>
-        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="water_white.ico" 
+        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons\water_white.ico" 
                         ToolTip="Bal gomb munkaidő, Jobb gomb víz fogyasztás növelése" 
                         MenuActivation="MiddleClick" TrayRightMouseUp="TaskbarIcon_TrayRightMouseUp" 
                         TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="flowerItem" Header="Virágok" Click="FlowerItem_Click"/>
+                    <MenuItem Name="workLogItem" Header="Munkanapló" Click="WorkLogItem_Click" />
                     <Separator />
                     <MenuItem Name="settingsItem" Header="Beállítások" Click="SettingsItem_Click"/>
                     <MenuItem Name="calendarItem" Header="Naptár" Click="CalendarItem_Click"/>

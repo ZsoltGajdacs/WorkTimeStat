@@ -13,16 +13,14 @@ namespace WaterWork.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    internal class Keeper : INotifyPropertyChanged
+    internal class WorkKeeper : INotifyPropertyChanged
     {
         public Dictionary<int, WorkYear> WorkYears { get; set; }
         public Boolean IsLunchTimeWorkTimeDefault { get; set; }
 
-        public List<Flower> Flowers { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal Keeper()
+        internal WorkKeeper()
         {
             WorkYears = new Dictionary<int, WorkYear>();
         }

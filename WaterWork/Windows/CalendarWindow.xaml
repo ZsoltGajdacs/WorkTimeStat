@@ -26,6 +26,8 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -38,21 +40,23 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="9" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Center" Foreground="White" Background="#FFC9C9C9" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+        <Label x:Name="chosenDateLabel" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center"/>
 
-        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="1"/>
-        <Label Content="Zárás: " Grid.Column="3" Grid.Row="3"/>
-        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="5"/>
-        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="7"/>
-        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="9"/>
+        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="11" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Foreground="White" Background="#FFC9C9C9" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+
+        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="3"/>
+        <Label Content="Zárás: " Grid.Column="3" Grid.Row="5"/>
+        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="7"/>
+        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="9"/>
+        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="11"/>
         
-        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="1"/>
-        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="3"/>
-        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="5"/>
-        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="7"/>
+        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="3"/>
+        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="5"/>
+        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="7"/>
+        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="9"/>
 
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="10"/>
 
-        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
+        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="11" FontWeight="Bold"/>
     </Grid>
 </Window>

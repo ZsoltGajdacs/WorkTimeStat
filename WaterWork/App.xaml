@@ -5,12 +5,16 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         
-        <DataTemplate x:Key="FlowerTemplate">
+        <DataTemplate x:Key="WorkLogTemplate">
             <Border Background="#FFF8F8F8" BorderBrush="#FF545454" BorderThickness="1" CornerRadius="5,5,5,5" Margin="0 0 0 5">
                 <DockPanel LastChildFill="True">
-                    <Image Tag="{Binding Path=QuoteText, Mode=OneWay}" ToolTip="Delete Quote" Source="Windows\Images\Red_X.png" Width="15" Height="15" DockPanel.Dock="Right" Margin="0 0 5 0" />
-                    <CheckBox IsChecked="{Binding Path=IsActive, Mode=TwoWay}" ToolTip="Activate/Deactivate Quote" Margin="0 0 5 0" DockPanel.Dock="Right" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Label HorizontalAlignment="Left" Content="{Binding Path=QuoteText, Mode=OneWay}" ToolTip="{Binding Path=QuoteText, Mode=OneWay}" Margin="0 0 10 0" />
+                    <Image ToolTip="Befejezés" Source="Images\RedX.png" Width="15" Height="15" DockPanel.Dock="Right" Margin="0 0 10 0" MouseLeftButtonUp="Done_MouseClick"/>
+                    <Image ToolTip="Megállítás" Source="Images\pause.png" Width="15" Height="15" DockPanel.Dock="Right" Margin="0 0 10 0" MouseLeftButtonUp="Pause_MouseClick"/>
+                    <Image ToolTip="Indítás" Source="Images\play.png" Width="15" Height="15" DockPanel.Dock="Right" Margin="0 0 10 0" MouseLeftButtonUp="Start_MouseClick"/>
+                    
+                    <Label HorizontalAlignment="Left" Content="{Binding Path=LogName, Mode=OneWay}" Margin="0 0 5 0" />
+                    <Label HorizontalAlignment="Left" Content="{Binding Path=TimeSpentText, Mode=OneWay}" Margin="0 0 5 0" />
+                    <Label HorizontalAlignment="Left" Content="{Binding Path=StartDateText, Mode=OneWay}" Margin="0 0 10 0" />
                 </DockPanel>
             </Border>
         </DataTemplate>

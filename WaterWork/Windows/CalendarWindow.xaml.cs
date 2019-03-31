@@ -21,12 +21,15 @@ namespace WaterWork.Windows
     /// </summary>
     public partial class CalendarWindow : Window
     {
-        private Keeper keeper;
+        private static string NO_DATA = "-";
 
-        internal CalendarWindow(ref Keeper keeper)
+        private WorkKeeper keeper;
+
+        internal CalendarWindow(ref WorkKeeper keeper)
         {
             InitializeComponent();
 
+            mainGrid.DataContext = this;
             this.keeper = keeper;
         }
 
@@ -39,11 +42,21 @@ namespace WaterWork.Windows
             workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
         }
 
+        private void SetEmptyLabels()
+        {
+            startTimeLabel.Content = NO_DATA;
+            endTimeLabel.Content = NO_DATA;
+            lunchBreakTimeLabel.Content = NO_DATA;
+            otherBreakTimeLabel.Content = NO_DATA;
+            workedTimeLabel.Content = NO_DATA;
+        }
+
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mainCalendar.SelectedDate.HasValue)
             {
                 DateTime date = mainCalendar.SelectedDate.Value;
+                chosenDateLabel.Content = date.ToLongDateString();
 
                 WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(date));
 
@@ -58,6 +71,10 @@ namespace WaterWork.Windows
                         if (workDay != null)
                         {
                             SetLabels(ref workDay);
+                        }
+                        else
+                        {
+                            SetEmptyLabels();
                         }
                     }
                 }

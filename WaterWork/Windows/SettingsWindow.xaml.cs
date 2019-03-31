@@ -20,9 +20,9 @@ namespace WaterWork.Windows
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private Keeper keeper;
+        private WorkKeeper keeper;
 
-        internal SettingsWindow(ref Keeper keeper)
+        internal SettingsWindow(ref WorkKeeper keeper)
         {
             InitializeComponent();
             this.keeper = keeper;

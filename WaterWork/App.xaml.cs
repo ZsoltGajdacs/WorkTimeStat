@@ -13,5 +13,19 @@ namespace WaterWork
     /// </summary>
     public partial class App : Application
     {
+        private void Done_MouseClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Start_MouseClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Pause_MouseClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
