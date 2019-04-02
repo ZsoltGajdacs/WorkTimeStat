@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using WaterWork.Helpers;
 
 namespace WaterWork.Models
 {
@@ -14,26 +17,62 @@ namespace WaterWork.Models
     [JsonObject(MemberSerialization.OptOut)]
     internal class LogKeeper : INotifyPropertyChanged
     {
-        public BindingList<LogEntry> WorkLogs { get; set; }
-        private Dictionary<string, Stopwatch> Watches { get; set; }
+        // Constants
+        private static readonly long TICK_TIME = 5 * 60 * 1000;
 
+        // Lists
+        public Dictionary<string, LogEntry> WorkLogs { get; set; }
+        [JsonIgnore]
+        public BindingList<LogEntry> ActiveWorkLogs { get; set; }
+
+        // Time stuff
+        private Timer timer;
+        private DateTime lastTickTime;
+
+        // Events
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LogKeeper()
+        private LogKeeper()
         {
-            WorkLogs = new BindingList<LogEntry>();
-            WorkLogs.AddingNew += WorkLogs_AddingNew;
+            WorkLogs = new Dictionary<string, LogEntry>();
+            ActiveWorkLogs = new BindingList<LogEntry>();
+
+            // Get current dateTime
+            lastTickTime = DateTime.Now;
+
+            // Tick every 5 minutes
+            timer = new Timer(TICK_TIME);
+            timer.AutoReset = true;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
         }
 
-        #region Event handlers
-        private void WorkLogs_AddingNew(object sender, AddingNewEventArgs e)
+        #region Singleton stuff
+        private static readonly Lazy<LogKeeper> lazy = new Lazy<LogKeeper>(() =>
         {
-            LogEntry logEntry = (LogEntry)e.NewObject;
+            string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetWorkLogFileName();
+            LogKeeper logkeeper = Serializer.JsonObjectDeserialize<LogKeeper>(path);
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+            return logkeeper ?? new LogKeeper();
+        });
 
-            Watches.Add(logEntry.LogName, watch);
+        public static LogKeeper Instance { get { return lazy.Value; } }
+        #endregion
+
+        #region Event handlers
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            lastTickTime = DateTime.Now;
+
+            // TODO Use thread lock here to avoid problems!
+            foreach (LogEntry entry in ActiveWorkLogs)
+            {
+                if (!entry.IsPaused)
+                {
+                    entry.TimeSpent += TimeSpan.FromMilliseconds(TICK_TIME);
+                    WorkLogs[entry.LogName].TimeSpent += TimeSpan.FromMilliseconds(TICK_TIME);
+                }
+            }
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

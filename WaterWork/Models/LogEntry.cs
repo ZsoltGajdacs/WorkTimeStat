@@ -13,7 +13,7 @@ namespace WaterWork.Models
     [JsonObject(MemberSerialization.OptOut)]
     internal class LogEntry : INotifyPropertyChanged
     {
-        private static readonly string DATETIME_FORMAT = "MM-dd hh\\:mm";
+        private static readonly string DATETIME_FORMAT = "MMMM dd\\. hh\\:mm";
         private static readonly string TIMESPAN_FORMAT = "hh\\:mm";
 
         public LogEntry(string logName)
@@ -32,15 +32,16 @@ namespace WaterWork.Models
 
         public string LogName { get; set; }
         public bool IsFinished { get; set; }
+        public bool IsPaused { get; set; }
         public DateTime EndDate { get; set; }
 
         private DateTime _startDate;
         private TimeSpan _timeSpent;
 
         [JsonIgnore]
-        internal string StartDateText { get; set; }
+        public string StartDateText { get; set; }
         [JsonIgnore]
-        internal string TimeSpentText { get; set; }
+        public string TimeSpentText { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,7 +54,7 @@ namespace WaterWork.Models
             set
             {
                 _startDate = value;
-                StartDateText = StartDate.ToString(DATETIME_FORMAT);
+                StartDateText = _startDate.ToString(DATETIME_FORMAT);
             }
         }
         public TimeSpan TimeSpent
@@ -65,7 +66,7 @@ namespace WaterWork.Models
             set
             {
                 _timeSpent = value;
-                TimeSpentText = TimeSpent.ToString(TIMESPAN_FORMAT);
+                TimeSpentText = _timeSpent.ToString(TIMESPAN_FORMAT);
             }
         }
 

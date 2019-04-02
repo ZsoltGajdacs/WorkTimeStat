@@ -20,32 +20,18 @@ namespace WaterWork
         private WorkKeeper workKeeper;
         private LogKeeper logKeeper;
 
-        private Serializer serializer;
-
-        private readonly string saveDirPath;
-        private readonly string waterWorkFileName;
-        private readonly string workLogFileName;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            serializer = new Serializer();
-
-            FileInfo file = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location);
-            saveDirPath = file.DirectoryName;
-
-            waterWorkFileName = "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
-            workLogFileName = "\\worklog" + DateTime.Now.ToString("yyyy-MM-dd") + ".json";
-
             InitializeWorkKeeper();
-            InitializeLogKeeper();
+            InitializeWorkLog();
         }
 
         #region Startup
         private void InitializeWorkKeeper()
         {
-            workKeeper = serializer.JsonObjectDeserialize<WorkKeeper>(saveDirPath + waterWorkFileName);
+            string filePath = FilesLocation.GetSaveDirPath() + FilesLocation.GetWaterWorkFileName();
+            workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(filePath);
 
             if (workKeeper == null)
                 workKeeper = new WorkKeeper();
@@ -53,21 +39,21 @@ namespace WaterWork
                 workKeeper.GetCurrentYear().CountWorkedDays();
         }
 
-        private void InitializeLogKeeper()
+        private void InitializeWorkLog()
         {
-            logKeeper = serializer.JsonObjectDeserialize<LogKeeper>(saveDirPath + workLogFileName);
-
-            if (logKeeper == null)
-                logKeeper = new LogKeeper();
+            logKeeper = LogKeeper.Instance;
         }
-
         #endregion
 
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper);
-            serializer.JsonObjectSerialize<LogKeeper>(saveDirPath + workLogFileName, ref logKeeper);
+            string saveDirPath = FilesLocation.GetSaveDirPath();
+            string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
+            string workLogFileName = FilesLocation.GetWorkLogFileName();
+
+            Serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper);
+            Serializer.JsonObjectSerialize<LogKeeper>(saveDirPath + workLogFileName, ref logKeeper);
         }
         #endregion
 

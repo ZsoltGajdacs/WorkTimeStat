@@ -31,7 +31,7 @@ namespace WaterWork.Windows
             this.logKeeper = logKeeper;
 
             workLogGrid.DataContext = logKeeper;
-            workLogItems.ItemsSource = logKeeper.WorkLogs;
+            workLogItems.ItemsSource = logKeeper.ActiveWorkLogs;
         }
 
         private void WorkLogInput_KeyUp(object sender, KeyEventArgs e)
@@ -41,7 +41,7 @@ namespace WaterWork.Windows
             {
                 if (!workLogInput.Text.Equals(INPUT_PLACEHOLDER))
                 {
-                    AddNewLogItem(logKeeper.WorkLogs, workLogInput.Text);
+                    AddNewLogItem(logKeeper.ActiveWorkLogs, logKeeper.WorkLogs, workLogInput.Text);
                     workLogInput.Text = INPUT_PLACEHOLDER;
                 }
             }
@@ -68,13 +68,16 @@ namespace WaterWork.Windows
         /// </summary>
         /// <param name="itemList"></param>
         /// <param name="itemName"></param>
-        private void AddNewLogItem(BindingList<LogEntry> itemList, string itemName)
+        private void AddNewLogItem(BindingList<LogEntry> itemList, Dictionary<string, LogEntry> archiveList, string itemName)
         {
-            LogEntry logEntry = itemList.Where(q => q.LogName.Equals(itemName)).SingleOrDefault();
+            archiveList.TryGetValue(itemName, out LogEntry logEntry);
 
             if (logEntry == null)
             {
-                itemList.Add(new LogEntry(itemName));
+                logEntry = new LogEntry(itemName);
+
+                itemList.Add(logEntry);
+                archiveList.Add(itemName, logEntry);
             }
             else
             {

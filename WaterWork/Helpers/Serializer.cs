@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace WaterWork.Helpers
 {
-    internal class Serializer
+    /// <summary>
+    /// Keeps all the serializer methods
+    /// </summary>
+    internal static class Serializer
     {
-        public void JsonObjectSerialize<T>(string path, ref T serializable)
+        internal static void JsonObjectSerialize<T>(string path, ref T serializable)
         {
             TextWriter writer = null;
             try
@@ -25,7 +28,7 @@ namespace WaterWork.Helpers
             }
         }
 
-        public T JsonObjectDeserialize<T>(string path)
+        internal static T JsonObjectDeserialize<T>(string path)
         {
             if (new FileInfo(path).Exists)
             {
