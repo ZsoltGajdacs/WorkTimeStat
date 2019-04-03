@@ -13,7 +13,7 @@ namespace WaterWork.Models
     [JsonObject(MemberSerialization.OptOut)]
     internal class LogEntry : INotifyPropertyChanged
     {
-        private static readonly string DATETIME_FORMAT = "MMMM dd\\. hh\\:mm";
+        private static readonly string DATETIME_FORMAT = "MMMM dd\\. HH\\:mm";
         private static readonly string TIMESPAN_FORMAT = "hh\\:mm";
 
         public LogEntry(string logName)
