@@ -52,13 +52,16 @@ namespace WaterWork.Models
         private static readonly Lazy<LogKeeper> lazy = new Lazy<LogKeeper>(() =>
         {
             string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetWorkLogFileName();
-            LogKeeper logkeeper = Serializer.JsonObjectDeserialize<LogKeeper>(path);
+            LogKeeper logKeeper = Serializer.JsonObjectDeserialize<LogKeeper>(path);
 
             // Fill active list from archives
-            List<LogEntry> activeEntries = logkeeper.WorkLogs.Values.Where(w => w.IsFinished == false).ToList();
-            logkeeper.ActiveWorkLogs = new BindingList<LogEntry>(activeEntries);
+            if (logKeeper != null)
+            {
+                List<LogEntry> activeEntries = logKeeper.WorkLogs.Values.Where(w => w.IsFinished == false).ToList();
+                logKeeper.ActiveWorkLogs = new BindingList<LogEntry>(activeEntries);
+            }
 
-            return logkeeper ?? new LogKeeper();
+            return logKeeper ?? new LogKeeper();
         });
 
         public static LogKeeper Instance { get { return lazy.Value; } }

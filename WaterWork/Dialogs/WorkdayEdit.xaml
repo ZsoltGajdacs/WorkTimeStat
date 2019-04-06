@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WaterWork.Dialogs"
         xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Munkaidő szerkesztés" Height="115" Width="675" ResizeMode="NoResize" FontSize="14" Background="#FF434343" Foreground="White" Icon="/WaterWork;component/water_white.ico" Topmost="True">
+        Title="Munkaidő szerkesztés" Height="115" Width="675" ResizeMode="NoResize" FontSize="14" Background="#FF434343" Foreground="White" Icon="/Icons/water_black.ico" Topmost="True">
     <Grid x:Name="editGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
