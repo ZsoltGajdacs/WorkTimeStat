@@ -37,7 +37,7 @@ namespace WaterWork.Helpers
         /// <returns></returns>
         internal static string GetWorkLogFileName()
         {
-            return "\\worklog" + DateTime.Now.ToString("yyyy-MM-dd") + ".json";
+            return "\\worklog.json";
         }
     }
 }
