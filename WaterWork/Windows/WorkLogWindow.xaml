@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterWork.Windows"
         mc:Ignorable="d"
-        Title="Munkanapló" Width="600" Height="400" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" Background="#FF434343" Foreground="White" FontSize="14">
+        Title="Munkanapló" Width="800" Height="400" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" Background="#FF434343" Foreground="White" FontSize="14">
     <Grid x:Name="workLogGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
@@ -13,7 +13,7 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 

@@ -78,7 +78,10 @@ namespace WaterWork.Models
                 if (!entry.IsPaused)
                 {
                     entry.TimeSpent += TimeSpan.FromMilliseconds(TICK_TIME);
-                    WorkLogs[entry.LogName].TimeSpent += TimeSpan.FromMilliseconds(TICK_TIME);
+
+                    // Currently the active and archive list share the same reference object
+                    // Because of this the entry below prodiuces double times!
+                    // WorkLogs[entry.LogName].TimeSpent += TimeSpan.FromMilliseconds(TICK_TIME);
 
                     WorkLogs[entry.LogName].IsPaused = false;
                 }
