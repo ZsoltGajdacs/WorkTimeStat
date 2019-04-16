@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterWork.Windows"
+        xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Beállítások" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF434343" Foreground="White" FontSize="14">
     <Window.Resources>
@@ -18,17 +19,22 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="Az ebédszünet munkaidő?" Grid.Column="1" Grid.Row="1"/>
         <CheckBox IsChecked="{Binding IsLunchTimeWorkTimeDefault, Mode=TwoWay}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Label Content="Szabadnapok száma egy évben?" Grid.Column="1" Grid.Row="3"/>
+        <xce:IntegerUpDown Value="{Binding YearlyLeaveNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
     </Grid>
 </Window>

@@ -16,13 +16,16 @@ namespace WaterWork.Models
     internal class WorkKeeper : INotifyPropertyChanged
     {
         public Dictionary<int, WorkYear> WorkYears { get; set; }
+        public List<DateTime> LeaveDays { get; set; }
         public Boolean IsLunchTimeWorkTimeDefault { get; set; }
+        public int YearlyLeaveNumber { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         internal WorkKeeper()
         {
             WorkYears = new Dictionary<int, WorkYear>();
+            LeaveDays = new List<DateTime>();
         }
 
         #region Worktime

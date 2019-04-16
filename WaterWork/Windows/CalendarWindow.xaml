@@ -28,6 +28,10 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -42,21 +46,26 @@
 
         <Label x:Name="chosenDateLabel" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center"/>
 
-        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="11" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Foreground="White" Background="#FFC9C9C9" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="13" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Foreground="White" Background="#FFC9C9C9" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
 
-        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="3"/>
-        <Label Content="Zárás: " Grid.Column="3" Grid.Row="5"/>
-        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="7"/>
-        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="9"/>
-        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="11"/>
+        <Label Content="Szabadnap? " Grid.Column="3" Grid.Row="3"/>
+        <Label Content="Kivehető még: " Grid.Column="3" Grid.Row="5"/>
+        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="7"/>
+        <Label Content="Zárás: " Grid.Column="3" Grid.Row="9"/>
+        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="11"/>
+        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="13"/>
+        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="15"/>
+
+        <CheckBox x:Name="leaveDayChkbox" Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="LeaveDayChkbox_Checked" MouseDown="LeaveDayChkbox_MouseDown"/>
+        <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="5"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="6"/>
         
-        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="3"/>
-        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="5"/>
-        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="7"/>
-        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="9"/>
+        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="7"/>
+        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="9"/>
+        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="11"/>
+        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="13"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="14"/>
 
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="10"/>
-
-        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="11" FontWeight="Bold"/>
+        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="15" FontWeight="Bold"/>
     </Grid>
 </Window>

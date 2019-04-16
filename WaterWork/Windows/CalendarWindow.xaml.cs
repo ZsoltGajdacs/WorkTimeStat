@@ -24,6 +24,10 @@ namespace WaterWork.Windows
         private static string NO_DATA = "-";
 
         private WorkKeeper keeper;
+        private DateTime currDate;
+        private int numOfLeavesLeft;
+        private bool autochk;
+        private DateTime selectedDate;
 
         internal CalendarWindow(ref WorkKeeper keeper)
         {
@@ -31,6 +35,30 @@ namespace WaterWork.Windows
 
             mainGrid.DataContext = this;
             this.keeper = keeper;
+
+            currDate = DateTime.Now.Date;
+
+            // SetToday();
+            UpdateLeaveDays();
+        }
+
+        private void UpdateLeaveDays()
+        {
+            numOfLeavesLeft = keeper.YearlyLeaveNumber - keeper.LeaveDays.Count;
+            leaveDayNum.Content = numOfLeavesLeft;
+        }
+
+        /// <summary>
+        /// INCOMPLETE! Sets the initial day
+        /// Make it so it doesn't generate a new day!
+        /// </summary>
+        private void SetToday()
+        {
+            WorkDay workDay = keeper.GetCurrentDay();
+            if (workDay != null)
+            {
+                SetLabels(ref workDay);
+            }
         }
 
         private void SetLabels(ref WorkDay workDay)
@@ -51,22 +79,42 @@ namespace WaterWork.Windows
             workedTimeLabel.Content = NO_DATA;
         }
 
+        private void SetLeaveDay(DateTime selectedDate)
+        {
+            if (keeper.LeaveDays.Contains(selectedDate))
+            {
+                autochk = true;
+                leaveDayChkbox.IsChecked = true;
+                leaveDayChkbox.IsEnabled = false;
+            }
+            else if (selectedDate <= currDate)
+            {
+                leaveDayChkbox.IsEnabled = false;
+            }
+            else
+            {
+                autochk = true;
+                leaveDayChkbox.IsChecked = false;
+                leaveDayChkbox.IsEnabled = true;
+            }
+        }
+
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mainCalendar.SelectedDate.HasValue)
             {
-                DateTime date = mainCalendar.SelectedDate.Value;
-                chosenDateLabel.Content = date.ToLongDateString();
+                selectedDate = mainCalendar.SelectedDate.Value.Date;
+                chosenDateLabel.Content = selectedDate.ToLongDateString();
 
-                WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(date));
+                WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(selectedDate));
 
                 if (workYear != null)
                 {
-                    WorkMonth workMonth = workYear.GetMonth(StatisticsService.GetMonthForDate(date));
+                    WorkMonth workMonth = workYear.GetMonth(StatisticsService.GetMonthForDate(selectedDate));
 
                     if (workMonth != null)
                     {
-                        WorkDay workDay = workMonth.GetDay(StatisticsService.GetDayForDate(date));
+                        WorkDay workDay = workMonth.GetDay(StatisticsService.GetDayForDate(selectedDate));
 
                         if (workDay != null)
                         {
@@ -75,12 +123,33 @@ namespace WaterWork.Windows
                         else
                         {
                             SetEmptyLabels();
+                            SetLeaveDay(selectedDate);
                         }
                     }
                 }
-                
-                
             }
+        }
+
+        private void LeaveDayChkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (numOfLeavesLeft > 0 && !keeper.LeaveDays.Contains(selectedDate))
+            {
+                keeper.LeaveDays.Add(selectedDate);
+            }
+            else if (keeper.LeaveDays.Contains(selectedDate) && !autochk)
+            {
+                keeper.LeaveDays.Remove(selectedDate);
+            }
+
+            UpdateLeaveDays();
+        }
+
+        /// <summary>
+        /// So I know it was me and not the code (code checking generates event too)
+        /// </summary>
+        private void LeaveDayChkbox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            autochk = false;
         }
     }
 }
