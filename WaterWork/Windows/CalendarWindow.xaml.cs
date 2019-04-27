@@ -81,19 +81,20 @@ namespace WaterWork.Windows
 
         private void SetLeaveDay(DateTime selectedDate)
         {
+            autochk = true; //To know that this was auto checked and not the user did it
+
             if (keeper.LeaveDays.Contains(selectedDate))
             {
-                autochk = true;
                 leaveDayChkbox.IsChecked = true;
                 leaveDayChkbox.IsEnabled = false;
             }
             else if (selectedDate <= currDate)
             {
+                leaveDayChkbox.IsChecked = false;
                 leaveDayChkbox.IsEnabled = false;
             }
             else
             {
-                autochk = true;
                 leaveDayChkbox.IsChecked = false;
                 leaveDayChkbox.IsEnabled = true;
             }
@@ -105,6 +106,8 @@ namespace WaterWork.Windows
             {
                 selectedDate = mainCalendar.SelectedDate.Value.Date;
                 chosenDateLabel.Content = selectedDate.ToLongDateString();
+
+                SetLeaveDay(selectedDate);
 
                 WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(selectedDate));
 
@@ -123,7 +126,6 @@ namespace WaterWork.Windows
                         else
                         {
                             SetEmptyLabels();
-                            SetLeaveDay(selectedDate);
                         }
                     }
                 }
