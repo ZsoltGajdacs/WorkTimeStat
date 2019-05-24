@@ -26,7 +26,8 @@ namespace WaterWork.Windows
         private WorkKeeper keeper;
         private DateTime currDate;
         private int numOfLeavesLeft;
-        private bool autochk;
+        private bool leaveAutochk;
+        private bool sickAutochk;
         private DateTime selectedDate;
 
         internal CalendarWindow(ref WorkKeeper keeper)
@@ -40,6 +41,9 @@ namespace WaterWork.Windows
 
             // SetToday();
             UpdateLeaveDays();
+
+            // Since it always starts at today, disable is right away
+            leaveDayChkbox.IsEnabled = false;
         }
 
         private void UpdateLeaveDays()
@@ -81,7 +85,7 @@ namespace WaterWork.Windows
 
         private void SetLeaveDay(DateTime selectedDate)
         {
-            autochk = true; //To know that this was auto checked and not the user did it
+            leaveAutochk = true; //To know that this was auto checked and not the user did it
 
             if (keeper.LeaveDays.Contains(selectedDate))
             {
@@ -100,6 +104,27 @@ namespace WaterWork.Windows
             }
         }
 
+        private void SetSickDay(DateTime selectedDate)
+        {
+            sickAutochk = true; //To know that this was auto checked and not the user did it
+
+            if (keeper.SickDays.Contains(selectedDate))
+            {
+                sickDayChkbox.IsChecked = true;
+                sickDayChkbox.IsEnabled = false;
+            }
+            else if (selectedDate < currDate)
+            {
+                sickDayChkbox.IsChecked = false;
+                sickDayChkbox.IsEnabled = false;
+            }
+            else
+            {
+                sickDayChkbox.IsChecked = false;
+                sickDayChkbox.IsEnabled = true;
+            }
+        }
+
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mainCalendar.SelectedDate.HasValue)
@@ -108,6 +133,7 @@ namespace WaterWork.Windows
                 chosenDateLabel.Content = selectedDate.ToLongDateString();
 
                 SetLeaveDay(selectedDate);
+                SetSickDay(selectedDate);
 
                 WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(selectedDate));
 
@@ -138,7 +164,7 @@ namespace WaterWork.Windows
             {
                 keeper.LeaveDays.Add(selectedDate);
             }
-            else if (keeper.LeaveDays.Contains(selectedDate) && !autochk)
+            else if (keeper.LeaveDays.Contains(selectedDate) && !leaveAutochk)
             {
                 keeper.LeaveDays.Remove(selectedDate);
             }
@@ -146,12 +172,32 @@ namespace WaterWork.Windows
             UpdateLeaveDays();
         }
 
+        private void SickDayChkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!keeper.SickDays.Contains(selectedDate))
+            {
+                keeper.SickDays.Add(selectedDate);
+            }
+            else if (keeper.SickDays.Contains(selectedDate) && !sickAutochk)
+            {
+                keeper.SickDays.Remove(selectedDate);
+            }
+        }
+
         /// <summary>
         /// So I know it was me and not the code (code checking generates event too)
         /// </summary>
         private void LeaveDayChkbox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            autochk = false;
+            leaveAutochk = false;
+        }
+        
+        /// <summary>
+        /// So I know it was me and not the code (code checking generates event too)
+        /// </summary>
+        private void SickDayChkbox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            sickAutochk = false;
         }
     }
 }

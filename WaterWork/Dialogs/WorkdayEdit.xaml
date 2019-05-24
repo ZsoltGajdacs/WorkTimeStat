@@ -44,22 +44,24 @@
 
         <Label x:Name="workLunchLabel" Content="Ebédszünet:" Grid.Row="1" Grid.Column="5" Foreground="White"/>
         <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
-                           Minimum="0" Maximum="30" ClipValueToMinMax="True" 
+                           Minimum="0" Maximum="30" ClipValueToMinMax="True" Increment="15"
                            Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workbreakLabel" Content="Egyéb szünet:" Grid.Row="1" Grid.Column="7" Foreground="White"/>
         <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
-                           Minimum="0" Maximum="240" ClipValueToMinMax="True" 
+                           Minimum="0" Maximum="240" ClipValueToMinMax="True" Increment="5"
                            Grid.Row="3" Grid.Column="7" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
         <xce:DecimalUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
-                           Minimum="0" Maximum="6" ClipValueToMinMax="True" 
+                           Minimum="0" Maximum="6" ClipValueToMinMax="True" FormatString="0.0"
+                           Increment="0.5"
                            Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="11" Foreground="White"/>
         <xce:DecimalUpDown x:Name="workBottleCount" Value="{Binding BottleSize, Mode=TwoWay}" 
-                           Minimum="0" Maximum="5" ClipValueToMinMax="True" 
+                           Minimum="0" Maximum="5" ClipValueToMinMax="True" FormatString="0.0"
+                           Increment="0.5"
                            Grid.Row="3" Grid.Column="11" Background="#FF434343" Foreground="White"/>
     </Grid>
 </Window>

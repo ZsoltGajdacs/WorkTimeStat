@@ -17,6 +17,7 @@ namespace WaterWork.Models
     {
         public Dictionary<int, WorkYear> WorkYears { get; set; }
         public List<DateTime> LeaveDays { get; set; }
+        public List<DateTime> SickDays { get; set; }
         public Boolean IsLunchTimeWorkTimeDefault { get; set; }
         public int YearlyLeaveNumber { get; set; }
 
@@ -26,6 +27,7 @@ namespace WaterWork.Models
         {
             WorkYears = new Dictionary<int, WorkYear>();
             LeaveDays = new List<DateTime>();
+            SickDays = new List<DateTime>();
         }
 
         #region Worktime
@@ -96,10 +98,6 @@ namespace WaterWork.Models
             return StatisticsService.GetThisYearNum();
         }
         #endregion
-
-        #endregion
-
-        #region Flowers
 
         #endregion
 

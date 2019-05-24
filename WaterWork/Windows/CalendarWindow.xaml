@@ -32,6 +32,8 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -44,28 +46,39 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="chosenDateLabel" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center"/>
+        <Label x:Name="chosenDateLabel" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" 
+               HorizontalAlignment="Center"/>
 
-        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="13" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Foreground="White" Background="#FFC9C9C9" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+        <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="15" 
+                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  FontWeight="Bold" FontSize="18" Foreground="White" Background="#FFC9C9C9" 
+                  SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
 
-        <Label Content="Szabadnap? " Grid.Column="3" Grid.Row="3"/>
-        <Label Content="Kivehető még: " Grid.Column="3" Grid.Row="5"/>
-        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="7"/>
-        <Label Content="Zárás: " Grid.Column="3" Grid.Row="9"/>
-        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="11"/>
-        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="13"/>
-        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="15"/>
+        <Label Content="Táppénzen? " Grid.Column="3" Grid.Row="3"/>
+        <Label Content="Szabadnap? " Grid.Column="3" Grid.Row="5"/>
+        <Label Content="Kivehető még: " Grid.Column="3" Grid.Row="7"/>
+        <Label Content="Kezdés: " Grid.Column="3" Grid.Row="9"/>
+        <Label Content="Zárás: " Grid.Column="3" Grid.Row="11"/>
+        <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="13"/>
+        <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="15"/>
+        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="17"/>
 
-        <CheckBox x:Name="leaveDayChkbox" Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="LeaveDayChkbox_Checked" MouseDown="LeaveDayChkbox_MouseDown"/>
-        <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="5"/>
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="6"/>
+        <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
+                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  Checked="SickDayChkbox_Checked" MouseDown="SickDayChkbox_MouseDown"/>
         
-        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="7"/>
-        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="9"/>
-        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="11"/>
-        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="13"/>
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="14"/>
+        <CheckBox x:Name="leaveDayChkbox" Grid.Column="5" Grid.Row="5" 
+                  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                  Checked="LeaveDayChkbox_Checked" MouseDown="LeaveDayChkbox_MouseDown"/>
+        <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="7"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8"/>
+        
+        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="9"/>
+        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="11"/>
+        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="13"/>
+        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="15"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="16"/>
 
-        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="15" FontWeight="Bold"/>
+        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="17" FontWeight="Bold"/>
     </Grid>
 </Window>
