@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WaterWork.Models;
 
 namespace WaterWork.Services
 {
     internal static class StatisticsService
     {
-        private static readonly int WORKDAY_HOUR_LENGTH = 8;
-
         #region Year counters
         internal static double GetYearlyWorkedHours(ref WorkYear year)
         {
@@ -23,9 +17,9 @@ namespace WaterWork.Services
             return result;
         }
 
-        internal static double GetYearlyTotalHours(ref WorkYear year)
+        internal static double GetYearlyTotalHours(ref WorkYear year, double workdayHourLength)
         {
-            return year.NoOfDaysWorked * WORKDAY_HOUR_LENGTH;
+            return year.NoOfDaysWorked * workdayHourLength;
         }
         #endregion
 
@@ -42,18 +36,24 @@ namespace WaterWork.Services
             return result;
         }
 
-        internal static double GetMonthlyTotalHours(WorkMonth month)
+        internal static double GetMonthlyTotalHours(WorkMonth month, double workdayHourLength)
         {
-            return month.NoOfDaysWorked * WORKDAY_HOUR_LENGTH;
+            return month.NoOfDaysWorked * workdayHourLength;
         }
         #endregion
 
         #region Day Counters
         internal static double GetDailyWorkedHours(WorkDay day)
         {
+            if (day == null)
+            {
+                return 0;
+            }
+
             double minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
 
             minutesWorked -= day.OtherBreakDuration;
+            minutesWorked -= day.OverWorkDuration;
 
             if (!day.IsLunchTimeWorkTime)
             {
@@ -61,11 +61,6 @@ namespace WaterWork.Services
             }
 
             return minutesWorked / 60;
-        }
-
-        internal static double GetDailyTotalHours()
-        {
-            return WORKDAY_HOUR_LENGTH;
         }
         #endregion
 

@@ -29,6 +29,8 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
@@ -52,16 +54,21 @@
                            Minimum="0" Maximum="240" ClipValueToMinMax="True" Increment="5"
                            Grid.Row="3" Grid.Column="7" Background="#FF434343" Foreground="White"/>
 
-        <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
+        <Label x:Name="nonworkLabel" Content="Túlmunka:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
+        <xce:IntegerUpDown x:Name="nonworkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
+                           Minimum="0" Maximum="240" ClipValueToMinMax="True" Increment="15"
+                           Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
+
+        <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="11" Foreground="White"/>
         <xce:DecimalUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
                            Minimum="0" Maximum="6" ClipValueToMinMax="True" FormatString="0.0"
                            Increment="0.5"
-                           Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
+                           Grid.Row="3" Grid.Column="11" Background="#FF434343" Foreground="White"/>
 
-        <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="11" Foreground="White"/>
+        <Label x:Name="workBottleLabel" Content="Flakon(liter):" Grid.Row="1" Grid.Column="13" Foreground="White"/>
         <xce:DecimalUpDown x:Name="workBottleCount" Value="{Binding BottleSize, Mode=TwoWay}" 
                            Minimum="0" Maximum="5" ClipValueToMinMax="True" FormatString="0.0"
                            Increment="0.5"
-                           Grid.Row="3" Grid.Column="11" Background="#FF434343" Foreground="White"/>
+                           Grid.Row="3" Grid.Column="13" Background="#FF434343" Foreground="White"/>
     </Grid>
 </Window>

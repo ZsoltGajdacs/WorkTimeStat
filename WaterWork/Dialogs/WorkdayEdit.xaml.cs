@@ -31,6 +31,7 @@ namespace WaterWork.Dialogs
         public DateTime EndTime { get; set; }
         public int LunchBreakDuration { get; set; }
         public int OtherBreakDuration { get; set; }
+        public int OverWorkDuration { get; set; }
         public decimal ConsumptionCount { get; set; }
         public decimal BottleSize { get; set; }
 
@@ -49,6 +50,7 @@ namespace WaterWork.Dialogs
             EndTime = dateToday + today.EndTime;
             LunchBreakDuration = today.LunchBreakDuration;
             OtherBreakDuration = today.OtherBreakDuration;
+            OverWorkDuration = today.OverWorkDuration;
             ConsumptionCount = today.WaterConsumptionCount;
             BottleSize = today.AmountOfLitreInOneUnit;
 
@@ -63,6 +65,7 @@ namespace WaterWork.Dialogs
             today.EndTime = EndTime - dateToday;
             today.LunchBreakDuration = LunchBreakDuration;
             today.OtherBreakDuration = OtherBreakDuration;
+            today.OverWorkDuration = OverWorkDuration;
             today.WaterConsumptionCount = ConsumptionCount;
             today.AmountOfLitreInOneUnit = BottleSize;
 

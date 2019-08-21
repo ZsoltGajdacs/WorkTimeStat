@@ -101,7 +101,10 @@ namespace WaterWork
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWindow statisticsWindow = new StatisticsWindow(workKeeper.GetCurrentYear(), workKeeper.IsLunchTimeWorkTimeDefault);
+            StatisticsWindow statisticsWindow = 
+                new StatisticsWindow(workKeeper.GetCurrentYear(), 
+                                        workKeeper.IsLunchTimeWorkTimeDefault, 
+                                        workKeeper.DailyWorkHours);
             statisticsWindow.Show();
         }
 

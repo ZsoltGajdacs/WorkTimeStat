@@ -34,6 +34,8 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -61,7 +63,8 @@
         <Label Content="Zárás: " Grid.Column="3" Grid.Row="11"/>
         <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="13"/>
         <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="15"/>
-        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="17"/>
+        <Label Content="Túlmunka: " Grid.Column="3" Grid.Row="17"/>
+        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="19"/>
 
         <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -77,8 +80,9 @@
         <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="11"/>
         <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="13"/>
         <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="15"/>
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="16"/>
+        <Label x:Name="overWorkTimeLabel" Grid.Column="5" Grid.Row="17"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="18"/>
 
-        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="17" FontWeight="Bold"/>
+        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="19" FontWeight="Bold"/>
     </Grid>
 </Window>

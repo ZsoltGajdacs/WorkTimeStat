@@ -49,7 +49,7 @@ namespace WaterWork.Windows
         private void UpdateLeaveDays()
         {
             numOfLeavesLeft = keeper.YearlyLeaveNumber - keeper.LeaveDays.Count;
-            leaveDayNum.Content = numOfLeavesLeft;
+            leaveDayNum.Content = numOfLeavesLeft + " / " + keeper.YearlyLeaveNumber;
         }
 
         /// <summary>
@@ -71,6 +71,7 @@ namespace WaterWork.Windows
             endTimeLabel.Content = workDay.EndTime;
             lunchBreakTimeLabel.Content = workDay.LunchBreakDuration + " perc";
             otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
+            overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
             workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
         }
 
@@ -80,6 +81,7 @@ namespace WaterWork.Windows
             endTimeLabel.Content = NO_DATA;
             lunchBreakTimeLabel.Content = NO_DATA;
             otherBreakTimeLabel.Content = NO_DATA;
+            overWorkTimeLabel.Content = NO_DATA;
             workedTimeLabel.Content = NO_DATA;
         }
 

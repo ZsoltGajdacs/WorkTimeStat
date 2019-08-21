@@ -20,6 +20,7 @@ namespace WaterWork.Models
         public List<DateTime> SickDays { get; set; }
         public Boolean IsLunchTimeWorkTimeDefault { get; set; }
         public int YearlyLeaveNumber { get; set; }
+        public double DailyWorkHours { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
