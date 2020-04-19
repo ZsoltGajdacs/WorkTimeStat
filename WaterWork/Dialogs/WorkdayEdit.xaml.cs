@@ -84,7 +84,7 @@ namespace WaterWork.Dialogs
             }
             else
             {
-                posY -= Height + 300;
+                posY -= Height + 275;
                 posX -= (Width / 2) + 300;
             }
 
