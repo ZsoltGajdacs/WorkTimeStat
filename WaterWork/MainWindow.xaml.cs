@@ -12,9 +12,6 @@ using WaterWork.Windows;
 
 namespace WaterWork
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private WorkKeeper workKeeper;
@@ -81,12 +78,6 @@ namespace WaterWork
         #endregion
 
         #region Menu Click Events
-        private void WorkLogItem_Click(object sender, RoutedEventArgs e)
-        {
-            WorkLogWindow workLogWindow = new WorkLogWindow(ref logKeeper);
-            workLogWindow.Show();
-        }
-
         private void CalendarItem_Click(object sender, RoutedEventArgs e)
         {
             CalendarWindow calendarWindow = new CalendarWindow(ref workKeeper);
