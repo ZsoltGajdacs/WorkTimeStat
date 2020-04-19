@@ -16,9 +16,6 @@ using WaterWork.Services;
 
 namespace WaterWork.Windows
 {
-    /// <summary>
-    /// Interaction logic for CalendarWindow.xaml
-    /// </summary>
     public partial class CalendarWindow : Window
     {
         private static string NO_DATA = "-";
@@ -41,9 +38,6 @@ namespace WaterWork.Windows
 
             // SetToday();
             UpdateLeaveDays();
-
-            // Since it always starts at today, disable is right away
-            leaveDayChkbox.IsEnabled = false;
         }
 
         private void UpdateLeaveDays()
@@ -52,12 +46,9 @@ namespace WaterWork.Windows
             leaveDayNum.Content = numOfLeavesLeft + " / " + keeper.YearlyLeaveNumber;
         }
 
-        /// <summary>
-        /// INCOMPLETE! Sets the initial day
-        /// Make it so it doesn't generate a new day!
-        /// </summary>
         private void SetToday()
         {
+            // TODO: INCOMPLETE! Sets the initial day, Make it so it doesn't generate a new day!
             WorkDay workDay = keeper.GetCurrentDay();
             if (workDay != null)
             {
@@ -94,7 +85,7 @@ namespace WaterWork.Windows
                 leaveDayChkbox.IsChecked = true;
                 leaveDayChkbox.IsEnabled = false;
             }
-            else if (selectedDate <= currDate)
+            else if (selectedDate < currDate)
             {
                 leaveDayChkbox.IsChecked = false;
                 leaveDayChkbox.IsEnabled = false;
@@ -200,6 +191,16 @@ namespace WaterWork.Windows
         private void SickDayChkbox_MouseDown(object sender, MouseButtonEventArgs e)
         {
             sickAutochk = false;
+        }
+
+        /// <summary>
+        /// Enélkül a Calendarra kattintva kétszer kell máshová kattintani, hogy vegye a lapot!
+        /// https://stackoverflow.com/questions/5543119/wpf-button-takes-two-clicks-to-fire-click-event#6420914
+        /// </summary>
+        private void Window_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseUp(e);
+            Mouse.Capture(null);
         }
     }
 }

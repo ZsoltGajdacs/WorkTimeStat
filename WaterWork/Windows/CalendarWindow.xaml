@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterWork.Windows"
         mc:Ignorable="d"
-        Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF434343" Foreground="White" FontSize="14">
+        Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF434343" Foreground="White" FontSize="14" PreviewMouseUp="Window_PreviewMouseUp">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White" />
