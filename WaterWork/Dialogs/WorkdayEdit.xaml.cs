@@ -69,20 +69,14 @@ namespace WaterWork.Dialogs
             return today;
         }
 
-        /// <summary>
-        /// https://james-ramsden.com/c-get-dpi-screen/
-        /// 1 is 100%, 2 is 200% in custom scaling
-        /// </summary>
         private void SetWindowPos()
         {
-            Point pos = NativeMethods.GetMousePosition();
-            //var presSource = PresentationSource.FromVisual(this);
-            //double customScaleFactor = presSource.CompositionTarget.TransformToDevice.M11;
+            Point cursorPos = NativeMethods.GetMousePosition();
             //System.Drawing.Rectangle resolution = Screen.PrimaryScreen.Bounds;
             double scaling = DPI.GetScaling();
 
-            Top = pos.Y - (Height + 100);
-            Left = pos.X - (Width / 2) - 100;
+            Top = cursorPos.Y - ((Height + 180) * scaling);
+            Left = cursorPos.X - ((Width / 2 + 180) * scaling);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

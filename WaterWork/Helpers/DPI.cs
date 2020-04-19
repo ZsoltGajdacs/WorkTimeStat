@@ -35,13 +35,14 @@ namespace WaterWork.Helpers
         }
 
         /// <summary>
-        /// 96 DPI = 100%
+        /// Returns a number between 1 and 2.5
         /// </summary>
-        public static int GetScaling()
+        public static double GetScaling()
         {
             float xDpi = GetDpiX();
             float scale = xDpi / BaseScaleUnit;
-            return (int)Math.Round(scale);
+
+            return Math.Round(scale) / 100;
         }
     }
 }
