@@ -46,17 +46,17 @@
 
         <Label x:Name="workLunchLabel" Content="Ebédszünet:" Grid.Row="1" Grid.Column="5" Foreground="White"/>
         <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
-                           Minimum="0" Maximum="30" ClipValueToMinMax="True" Increment="15"
+                           Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
                            Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workbreakLabel" Content="Egyéb szünet:" Grid.Row="1" Grid.Column="7" Foreground="White"/>
         <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
-                           Minimum="0" Maximum="240" ClipValueToMinMax="True" Increment="5"
+                           Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
                            Grid.Row="3" Grid.Column="7" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="nonworkLabel" Content="Túlmunka:" Grid.Row="1" Grid.Column="9" Foreground="White"/>
         <xce:IntegerUpDown x:Name="nonworkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
-                           Minimum="0" Maximum="240" ClipValueToMinMax="True" Increment="15"
+                           Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
                            Grid.Row="3" Grid.Column="9" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workWaterLabel" Content="Töltés szám:" Grid.Row="1" Grid.Column="11" Foreground="White"/>

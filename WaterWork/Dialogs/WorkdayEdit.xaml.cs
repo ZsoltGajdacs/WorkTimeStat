@@ -19,9 +19,6 @@ using WaterWork.Models;
 
 namespace WaterWork.Dialogs
 {
-    /// <summary>
-    /// Interaction logic for WorkdayEdit.xaml
-    /// </summary>
     public partial class WorkdayEdit : Window, INotifyPropertyChanged
     {
         private WorkDay today;
@@ -41,8 +38,6 @@ namespace WaterWork.Dialogs
         {
             InitializeComponent();
 
-            SetWindowPos();
-
             this.today = today;
             dateToday = DateTime.Now.Date;
 
@@ -59,6 +54,8 @@ namespace WaterWork.Dialogs
 
         internal new WorkDay ShowDialog()
         {
+            SetWindowPos();
+
             base.ShowDialog();
 
             today.StartTime = StartTime - dateToday;
