@@ -74,9 +74,22 @@ namespace WaterWork.Dialogs
             Point cursorPos = NativeMethods.GetMousePosition();
             //System.Drawing.Rectangle resolution = Screen.PrimaryScreen.Bounds;
             double scaling = DPI.GetScaling();
+            double posY = cursorPos.Y;
+            double posX = cursorPos.X;
 
-            Top = cursorPos.Y - ((Height + 180) * scaling);
-            Left = cursorPos.X - ((Width / 2 + 180) * scaling);
+            if (scaling < 1.15)
+            {
+                posY -= Height + 100;
+                posX -= (Width / 2) - 100;
+            }
+            else
+            {
+                posY -= Height + 300;
+                posX -= (Width / 2) + 300;
+            }
+
+            Top = posY;
+            Left = posX;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
