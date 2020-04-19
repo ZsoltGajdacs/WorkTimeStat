@@ -79,8 +79,8 @@ namespace WaterWork.Dialogs
 
             if (scaling < 1.15)
             {
-                posY -= Height + 100;
-                posX -= (Width / 2) - 100;
+                posY -= Height + 75;
+                posX -= (Width / 2) + 50;
             }
             else
             {
