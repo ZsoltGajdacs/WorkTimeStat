@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using WaterWork.Models;
 using WaterWork.Services;
 
-namespace WaterWork.Models
+namespace WaterWork.Storage
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
@@ -58,7 +55,7 @@ namespace WaterWork.Models
         {
             return GetCurrentMonth().GetCurrentDay(IsLunchTimeWorkTimeDefault);
         }
-        
+
         internal WorkYear GetYear(int year)
         {
             WorkYears.TryGetValue(year, out WorkYear yearResult);

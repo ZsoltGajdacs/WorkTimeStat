@@ -13,7 +13,7 @@ namespace WaterWork.Helpers
     internal static class DPI
     {
         private const float BaseScaleNum = 96;
-        private static readonly float BaseScaleUnit = BaseScaleNum / 100;
+        private const float BaseScaleUnit = BaseScaleNum / 100;
 
         /// <summary>
         /// It gives back the currentDPI of the screen. You need this one!

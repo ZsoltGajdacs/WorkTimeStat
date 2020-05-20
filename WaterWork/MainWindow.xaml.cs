@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using WaterWork.Dialogs;
 using WaterWork.Helpers;
 using WaterWork.Models;
+using WaterWork.Storage;
 using WaterWork.Windows;
 
 namespace WaterWork
@@ -15,13 +11,13 @@ namespace WaterWork
     public partial class MainWindow : Window
     {
         private WorkKeeper workKeeper;
-        private LogKeeper logKeeper;
+        private UsageKeeper usageKeeper;
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeWorkKeeper();
-            InitializeWorkLog();
+            InitializeUsageWatcher();
         }
 
         #region Startup
@@ -36,9 +32,9 @@ namespace WaterWork
                 workKeeper.GetCurrentYear().CountWorkedDays();
         }
 
-        private void InitializeWorkLog()
+        private void InitializeUsageWatcher()
         {
-            logKeeper = LogKeeper.Instance;
+            usageKeeper = UsageKeeper.Instance;
         }
         #endregion
 
@@ -50,7 +46,6 @@ namespace WaterWork
             string workLogFileName = FilesLocation.GetWorkLogFileName();
 
             Serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper);
-            Serializer.JsonObjectSerialize<LogKeeper>(saveDirPath + workLogFileName, ref logKeeper);
         }
         #endregion
 
@@ -70,7 +65,7 @@ namespace WaterWork
 
             decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
 
-            taskbarIcon.ShowBalloonTip("Vízfogyasztás", "Már " + waterAmount + "l vizet ittál ma!", 
+            taskbarIcon.ShowBalloonTip("Vízfogyasztás", "Már " + waterAmount + "l vizet ittál ma!",
                                             Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);
             Thread.Sleep(3000);
             taskbarIcon.HideBalloonTip();
@@ -92,9 +87,9 @@ namespace WaterWork
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWindow statisticsWindow = 
-                new StatisticsWindow(workKeeper.GetCurrentYear(), 
-                                        workKeeper.IsLunchTimeWorkTimeDefault, 
+            StatisticsWindow statisticsWindow =
+                new StatisticsWindow(workKeeper.GetCurrentYear(),
+                                        workKeeper.IsLunchTimeWorkTimeDefault,
                                         workKeeper.DailyWorkHours);
             statisticsWindow.Show();
         }

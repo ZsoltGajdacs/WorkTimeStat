@@ -1,5 +1,6 @@
 ﻿using System;
 using WaterWork.Models;
+using WaterWork.Storage;
 
 namespace WaterWork.Services
 {
@@ -61,6 +62,13 @@ namespace WaterWork.Services
             }
 
             return minutesWorked / 60;
+        }
+        #endregion
+
+        #region UsageCounter
+        internal static TimeSpan GetWatchedUsage()
+        {
+            return UsageKeeper.Instance.GetWatchedUsage();
         }
         #endregion
 
