@@ -1,18 +1,35 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UsageWatcher;
+using WaterWork.Helpers;
 
 namespace WaterWork.Storage
 {
+    [Serializable]
+    [JsonObject(MemberSerialization.OptOut)]
     internal class UsageKeeper : IDisposable
     {
-        private Watcher watcher;
+        [NonSerialized]
+        private readonly Watcher watcher;
+
+        public Dictionary<DateTime, double> UsageHistory { get; private set; }
 
         internal TimeSpan GetWatchedUsage()
         {
             return watcher.UsageSoFar();
+        }
+
+        internal TimeSpan GetUsageForTimeframe(DateTime start, DateTime end)
+        {
+            return watcher.UsageForGivenTimeframe(start, end);
+        }
+
+        internal void AddUsage(DateTime today, double usageInHours)
+        {
+            UsageHistory.Add(today, usageInHours);
         }
 
         #region Singleton stuff
@@ -23,17 +40,18 @@ namespace WaterWork.Storage
 
         private static readonly Lazy<UsageKeeper> lazy = new Lazy<UsageKeeper>(() =>
         {
-            /*string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetWorkLogFileName();
-            UsageKeeper usageKeeper = Serializer.JsonObjectDeserialize<LogKeeper>(path);
+            string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetUsageLogName();
+            UsageKeeper usageKeeper = Serializer.JsonObjectDeserialize<UsageKeeper>(path);
 
             // Fill active list from archives
-            if (logKeeper != null)
+            if (usageKeeper != null)
             {
-                List<LogEntry> activeEntries = logKeeper.WorkLogs.Values.Where(w => w.IsFinished == false).ToList();
-                logKeeper.ActiveWorkLogs = new BindingList<LogEntry>(activeEntries);
-            }*/
+                Dictionary<DateTime, double> usageTransfer = usageKeeper.UsageHistory;
+                usageKeeper = new UsageKeeper();
+                usageKeeper.UsageHistory = usageTransfer;
+            }
 
-            return new UsageKeeper();
+            return usageKeeper ?? new UsageKeeper();
         });
 
         public static UsageKeeper Instance { get { return lazy.Value; } }

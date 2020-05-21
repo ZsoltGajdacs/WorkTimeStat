@@ -1,8 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 using WaterWork.Dialogs;
 using WaterWork.Helpers;
 using WaterWork.Models;
+using WaterWork.Services;
 using WaterWork.Storage;
 using WaterWork.Windows;
 
@@ -41,11 +43,17 @@ namespace WaterWork
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            // Usage needs to be saved here, becuase this is the only place
+            // where I can be certain that I have the complete time
+            usageKeeper.AddUsage(DateTime.Now.Date, GetTodaysUsageForSave());
+            
+            // Serialization stuff
             string saveDirPath = FilesLocation.GetSaveDirPath();
             string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
-            string workLogFileName = FilesLocation.GetWorkLogFileName();
+            string usageFileName = FilesLocation.GetUsageLogName();
 
             Serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper);
+            Serializer.JsonObjectSerialize<UsageKeeper>(saveDirPath + usageFileName, ref usageKeeper);
         }
         #endregion
 
@@ -97,6 +105,14 @@ namespace WaterWork
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+        #endregion
+
+        #region Helpers
+        private double GetTodaysUsageForSave()
+        {
+            WorkDay today = workKeeper.GetCurrentDay();
+            return StatisticsService.GetUsageForDay(today);
         }
         #endregion
 

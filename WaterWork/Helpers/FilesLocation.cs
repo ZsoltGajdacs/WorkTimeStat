@@ -32,12 +32,12 @@ namespace WaterWork.Helpers
         }
 
         /// <summary>
-        /// Gives back the name of the LogKeeper
+        /// Gives back the name of the UsageKeeper
         /// </summary>
         /// <returns></returns>
-        internal static string GetWorkLogFileName()
+        internal static string GetUsageLogName()
         {
-            return "\\worklog.json";
+            return "\\usage" + DateTime.Now.Year.ToString() + ".json";
         }
     }
 }

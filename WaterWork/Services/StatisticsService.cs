@@ -15,7 +15,7 @@ namespace WaterWork.Services
                 result += GetMonthlyWorkedHours(workMonth);
             }
 
-            return result;
+            return RoundToMidWithTwoPrecision(result);
         }
 
         internal static double GetYearlyTotalHours(ref WorkYear year, double workdayHourLength)
@@ -34,7 +34,7 @@ namespace WaterWork.Services
                 result += GetDailyWorkedHours(workDay);
             }
 
-            return result;
+            return RoundToMidWithTwoPrecision(result);
         }
 
         internal static double GetMonthlyTotalHours(WorkMonth month, double workdayHourLength)
@@ -66,9 +66,38 @@ namespace WaterWork.Services
         #endregion
 
         #region UsageCounter
-        internal static TimeSpan GetWatchedUsage()
+        /// <summary>
+        /// Gives back the usage data for the given day
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
+        internal static double GetUsageForDay(WorkDay day)
         {
-            return UsageKeeper.Instance.GetWatchedUsage();
+            if (day != null)
+            {
+                UsageKeeper usage = UsageKeeper.Instance;
+                DateTime dateToday = DateTime.Now.Date;
+                DateTime startDate = dateToday + day.StartTime;
+                DateTime endDate = dateToday + day.EndTime;
+
+                TimeSpan usageInTimeframe = usage.GetUsageForTimeframe(startDate, endDate);
+                double roundedHours = RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+                return roundedHours;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
+
+        internal static double GetUsageForMonth(WorkMonth month)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static double GetUsageForYear(ref WorkYear year)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
@@ -101,6 +130,14 @@ namespace WaterWork.Services
         internal static int GetDayForDate(DateTime date)
         {
             return int.Parse(date.ToString("dd"));
+        }
+
+        /// <summary>
+        /// Gives back the midpoint rounded number with two digits after zero for the given double
+        /// </summary>
+        private static double RoundToMidWithTwoPrecision(double num)
+        {
+            return Math.Round(num, 2, MidpointRounding.ToEven);
         }
         #endregion
 

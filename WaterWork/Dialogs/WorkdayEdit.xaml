@@ -36,12 +36,12 @@
 
         <Label x:Name="workStartLabel" Content="Kezdés:" Grid.Row="1" Grid.Column="1" Foreground="White"/>
         <xce:TimePicker x:Name="workStart" Value="{Binding StartTime, Mode=TwoWay}" ShowButtonSpinner="False"
-                        StartTime="7:00" EndTime="12:00" TimeInterval="00:15" ClipValueToMinMax="True" 
+                        StartTime="6:00" EndTime="12:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                         Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workEndLabel" Content="Befejezés:" Grid.Row="1" Grid.Column="3" Foreground="White"/>
         <xce:TimePicker x:Name="workEnd" Value="{Binding EndTime, Mode=TwoWay}" ShowButtonSpinner="False"
-                        StartTime="12:00" EndTime="20:00" TimeInterval="00:15" ClipValueToMinMax="True" 
+                        StartTime="12:00" EndTime="22:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                         Grid.Row="3" Grid.Column="3" Background="#FF434343" Foreground="White"/>
 
         <Label x:Name="workLunchLabel" Content="Ebédszünet:" Grid.Row="1" Grid.Column="5" Foreground="White"/>

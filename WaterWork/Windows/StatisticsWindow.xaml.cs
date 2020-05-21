@@ -15,35 +15,36 @@ namespace WaterWork.Windows
 
             // Get data
             // Yearly
-            double yWorkedHours = Math.Round(StatisticsService.GetYearlyWorkedHours(ref thisYear), 
-                                            2, MidpointRounding.ToEven);
+            double yWorkedHours = StatisticsService.GetYearlyWorkedHours(ref thisYear);
             double yFullHours = StatisticsService.GetYearlyTotalHours(ref thisYear, dailyWorkHours);
+            //double yCalcHours = StatisticsService.GetUsageForYear(ref thisYear);
 
             // Monthly
-            double mWorkedHours = Math.Round(StatisticsService.GetMonthlyWorkedHours(thisYear.GetCurrentMonth()), 
-                                            2, MidpointRounding.ToEven);
-            double mFullHours = StatisticsService.GetMonthlyTotalHours(thisYear.GetCurrentMonth(), 
-                                                                        dailyWorkHours);
+            WorkMonth thisMonth = thisYear.GetCurrentMonth();
+            double mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisMonth);
+            double mFullHours = StatisticsService.GetMonthlyTotalHours(thisMonth, dailyWorkHours);
+            //double mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
 
             // Daily
-            double dWorkedHours = StatisticsService.GetDailyWorkedHours(
-                                            thisYear.GetCurrentMonth().GetCurrentDay(isLunchTimeWorkTime));
-            double dFullHours = (double)dailyWorkHours;
-            double dCalcHours = Math.Round(StatisticsService.GetWatchedUsage().TotalHours, 
-                                            2, MidpointRounding.ToEven);
+            WorkDay today = thisYear.GetCurrentMonth().GetCurrentDay(isLunchTimeWorkTime);
+            double dWorkedHours = StatisticsService.GetDailyWorkedHours(today);
+            double dCalcHours = StatisticsService.GetUsageForDay(today);
 
             // Yesterday
-            double ywdWorkedHours = StatisticsService.GetDailyWorkedHours(thisYear.GetCurrentMonth().GetYesterWorkDay());
+            WorkDay yesterWorkday = thisYear.GetCurrentMonth().GetYesterWorkDay();
+            double ywdWorkedHours = StatisticsService.GetDailyWorkedHours(yesterWorkday);
+            double ywdCalcHours = StatisticsService.GetUsageForDay(yesterWorkday);
 
             // Assign to Labels
             yesterworkdayWorkedHours.Content = ywdWorkedHours;
-            yesterworkdayFullHours.Content = dFullHours;
-            yesterworkdayLeftHours.Content = AddPlusIfNeeded(ywdWorkedHours - dFullHours);
+            yesterworkdayFullHours.Content = dailyWorkHours;
+            yesterworkdayCalcHours.Content = ywdCalcHours;
+            yesterworkdayLeftHours.Content = AddPlusIfNeeded(ywdWorkedHours - dailyWorkHours);
 
             todayWorkedHours.Content = dWorkedHours;
-            todayFullHours.Content = dFullHours;
+            todayFullHours.Content = dailyWorkHours;
             todayCalcHours.Content = dCalcHours;
-            todayLeftHours.Content = AddPlusIfNeeded(dWorkedHours - dFullHours);
+            todayLeftHours.Content = AddPlusIfNeeded(dWorkedHours - dailyWorkHours);
 
             yearlyWorkedHours.Content = yWorkedHours;
             yearlyFullHours.Content = yFullHours;
