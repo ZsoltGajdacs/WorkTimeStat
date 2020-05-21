@@ -118,6 +118,7 @@
     <Compile Include="Helpers\DPI.cs" />
     <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Models\UsageTime.cs" />
     <Compile Include="Models\WorkMonth.cs" />
     <Compile Include="Services\StatisticsService.cs" />
     <Compile Include="Storage\UsageKeeper.cs" />

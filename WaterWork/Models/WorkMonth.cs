@@ -47,31 +47,17 @@ namespace WaterWork.Models
             NotifyPropertyChanged();
         }
 
-        // This is a risky method as it ASSUMES that the Dictionary is in ORDER.
-        // TAKE CARE!!!!!
         internal WorkDay GetYesterWorkDay()
         {
-            bool todayFlag = false;
-            int todayNum = GetTodayNum();
-            List<int> keyList = WorkDays.Keys.ToList();
+            var days = WorkDays.Values.ToList();
+            DateTime today = DateTime.Now.Date;
 
-            WorkDay yesterWorkDay = null;
+            WorkDay yesterWorkday = days
+                .Where(d => d.DayDate.Date < today)
+                .OrderByDescending(o => o.DayDate)
+                .FirstOrDefault();
 
-            for (int i = keyList.Count - 1; i >= 0; --i)
-            {
-                if (todayFlag)
-                {
-                    yesterWorkDay = WorkDays[keyList[i]];
-                    break;
-                }
-
-                if (keyList[i] == todayNum)
-                {
-                    todayFlag = true;
-                }
-            }
-
-            return yesterWorkDay;
+            return yesterWorkday;
         }
 
         internal WorkDay GetDay(int day)

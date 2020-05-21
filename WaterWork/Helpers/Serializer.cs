@@ -38,7 +38,12 @@ namespace WaterWork.Helpers
                     reader = new StreamReader(path);
                     var fileContents = reader.ReadToEnd();
 
-                    return JsonConvert.DeserializeObject<T>(fileContents);
+                    var jsonSerializerSettings = new JsonSerializerSettings
+                    {
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+
+                    return JsonConvert.DeserializeObject<T>(fileContents, jsonSerializerSettings);
                 }
                 finally
                 {

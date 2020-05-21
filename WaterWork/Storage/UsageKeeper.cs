@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UsageWatcher;
 using WaterWork.Helpers;
+using WaterWork.Models;
 
 namespace WaterWork.Storage
 {
@@ -15,27 +15,60 @@ namespace WaterWork.Storage
         [NonSerialized]
         private readonly Watcher watcher;
 
-        public Dictionary<DateTime, double> UsageHistory { get; private set; }
+        public List<UsageTime> UsageHistory { get; private set; }
 
-        internal TimeSpan GetWatchedUsage()
+        internal TimeSpan GetUsageForTimeframe(DateTime start, DateTime end, bool onlyNewData = false)
         {
-            return watcher.UsageSoFar();
+            TimeSpan usage = GetLatestDataFromWatcher(start, end);
+
+            if (!onlyNewData)
+            {
+                UsageTime savedUsage = GetSavedUsageForDay(start.Date);
+                // If there is a saved usage for today then the app must have been stopped at some point,
+                // since saving only occurs at shutdown. In this case the new usage data must be added to
+                // the saved one
+                if (savedUsage != null)
+                {
+                    usage += savedUsage.Usage;
+                }
+            }
+
+            return usage;
         }
 
-        internal TimeSpan GetUsageForTimeframe(DateTime start, DateTime end)
+        internal void AddUsage(DateTime day, TimeSpan usage)
+        {
+            UsageTime savedTime = UsageHistory.Where(u => u.Day.Date == day.Date).FirstOrDefault();
+            // If there is already data saved for this date, then there must have been a shutdown at some point
+            // since this is so, the data that was collected since then is only valid for the day
+            // if it's added to the already saved amount
+            if (savedTime != null)
+            {
+                savedTime.Usage += usage;
+            }
+            else
+            {
+                UsageTime newTime = new UsageTime(day, usage);
+                UsageHistory.Add(newTime);
+            }
+        }
+
+        private TimeSpan GetLatestDataFromWatcher(DateTime start, DateTime end)
         {
             return watcher.UsageForGivenTimeframe(start, end);
         }
 
-        internal void AddUsage(DateTime today, double usageInHours)
+        private UsageTime GetSavedUsageForDay(DateTime date)
         {
-            UsageHistory.Add(today, usageInHours);
+            UsageTime time = UsageHistory.Where(u => u.Day.Date == date.Date).FirstOrDefault();
+            return time;
         }
 
         #region Singleton stuff
         private UsageKeeper()
         {
             watcher = new Watcher(Resolution.TWO_MINUTES);
+            UsageHistory = new List<UsageTime>();
         }
 
         private static readonly Lazy<UsageKeeper> lazy = new Lazy<UsageKeeper>(() =>
@@ -46,7 +79,7 @@ namespace WaterWork.Storage
             // Fill active list from archives
             if (usageKeeper != null)
             {
-                Dictionary<DateTime, double> usageTransfer = usageKeeper.UsageHistory;
+                List<UsageTime> usageTransfer = usageKeeper.UsageHistory;
                 usageKeeper = new UsageKeeper();
                 usageKeeper.UsageHistory = usageTransfer;
             }

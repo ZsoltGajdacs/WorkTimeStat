@@ -13,6 +13,7 @@ namespace WaterWork.Models
     [JsonObject(MemberSerialization.OptOut)]
     internal class WorkDay : INotifyPropertyChanged
     {
+        public DateTime DayDate { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int LunchBreakDuration { get; set; }
@@ -24,11 +25,14 @@ namespace WaterWork.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #region CTORS
         public WorkDay(bool isLunchTimeWorkTime)
         {
             AmountOfLitreInOneUnit = 1;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
+            DayDate = DateTime.Now.Date;
         }
+        #endregion
 
         internal void IncreaseWaterConsumption()
         {

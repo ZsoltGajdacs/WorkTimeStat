@@ -40,6 +40,8 @@ namespace WaterWork
         }
         #endregion
 
+        // TODO: App start and exit times must be saved, and checked against the daily start/end times
+        // so that the app know if it was shut down during the day, and also whether it was a crash!
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -109,10 +111,13 @@ namespace WaterWork
         #endregion
 
         #region Helpers
-        private double GetTodaysUsageForSave()
+        private TimeSpan GetTodaysUsageForSave()
         {
             WorkDay today = workKeeper.GetCurrentDay();
-            return StatisticsService.GetUsageForDay(today);
+            DateTime start = today.DayDate.Date + today.StartTime;
+            DateTime end = today.DayDate.Date + today.EndTime;
+
+            return usageKeeper.GetUsageForTimeframe(start, end, true);
         }
         #endregion
 

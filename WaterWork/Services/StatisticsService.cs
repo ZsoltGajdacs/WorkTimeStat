@@ -76,9 +76,8 @@ namespace WaterWork.Services
             if (day != null)
             {
                 UsageKeeper usage = UsageKeeper.Instance;
-                DateTime dateToday = DateTime.Now.Date;
-                DateTime startDate = dateToday + day.StartTime;
-                DateTime endDate = dateToday + day.EndTime;
+                DateTime startDate = day.DayDate.Date + day.StartTime;
+                DateTime endDate = day.DayDate.Date + day.EndTime;
 
                 TimeSpan usageInTimeframe = usage.GetUsageForTimeframe(startDate, endDate);
                 double roundedHours = RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
