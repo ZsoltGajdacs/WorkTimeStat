@@ -19,8 +19,11 @@ namespace WaterWork.Models
             get => _usage;
             set 
             { 
-                _usage = value;
-                LastRefreshDate = DateTime.Now;
+                if (value != _usage )
+                {
+                    _usage = value;
+                    LastRefreshDate = DateTime.Now;
+                }
             }
         }
         public DateTime LastRefreshDate { get; private set; }

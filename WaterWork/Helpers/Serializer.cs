@@ -13,8 +13,13 @@ namespace WaterWork.Helpers
     /// </summary>
     internal static class Serializer
     {
-        internal static void JsonObjectSerialize<T>(string path, ref T serializable)
+        internal static void JsonObjectSerialize<T>(string path, ref T serializable, bool doBackup)
         {
+            if (doBackup)
+            {
+                CreateBackup(path);
+            }
+
             TextWriter writer = null;
             try
             {
@@ -54,6 +59,20 @@ namespace WaterWork.Helpers
             else
             {
                 return default(T);
+            }
+        }
+
+        private static void CreateBackup(string path)
+        {
+            if (File.Exists(path))
+            {
+                string backupPath = path + ".bak";
+                if (File.Exists(backupPath))
+                {
+                    File.Delete(backupPath);
+                }
+                
+                File.Copy(path, backupPath);
             }
         }
     }
