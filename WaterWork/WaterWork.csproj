@@ -119,9 +119,9 @@
     <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\Serializer.cs" />
     <Compile Include="Models\UsageTime.cs" />
-    <Compile Include="Models\WorkMonth.cs" />
     <Compile Include="Services\StatisticsService.cs" />
-    <Compile Include="Storage\UsageKeeper.cs" />
+    <Compile Include="Services\UsageService.cs" />
+    <Compile Include="Services\WorkDayService.cs" />
     <Compile Include="Windows\CalendarWindow.xaml.cs">
       <DependentUpon>CalendarWindow.xaml</DependentUpon>
     </Compile>
@@ -167,7 +167,6 @@
   <ItemGroup>
     <Compile Include="Storage\WorkKeeper.cs" />
     <Compile Include="Models\WorkDay.cs" />
-    <Compile Include="Models\WorkYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
