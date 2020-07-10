@@ -16,6 +16,7 @@ namespace WaterWork.Models
         public DateTime DayDate { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
+        public UsageTime UsageTime { get; set; }
         public int LunchBreakDuration { get; set; }
         public int OtherBreakDuration { get; set; }
         public int OverWorkDuration { get; set; }

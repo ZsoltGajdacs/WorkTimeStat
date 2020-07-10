@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using UsageWatcher;
+using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Services;
 
@@ -10,9 +12,12 @@ namespace WaterWork.Storage
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    internal class WorkKeeper : INotifyPropertyChanged
+    internal class WorkKeeper : INotifyPropertyChanged, IDisposable
     {
-        public Dictionary<int, WorkYear> WorkYears { get; set; }
+        [NonSerialized]
+        private readonly Watcher watcher;
+
+        public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
         public Boolean IsLunchTimeWorkTimeDefault { get; set; }
@@ -21,88 +26,67 @@ namespace WaterWork.Storage
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal WorkKeeper()
-        {
-            WorkYears = new Dictionary<int, WorkYear>();
-            LeaveDays = new List<DateTime>();
-            SickDays = new List<DateTime>();
-        }
-
-        #region Worktime
-
-        #region GETs
-        internal WorkYear GetCurrentYear()
-        {
-            WorkYears.TryGetValue(GetCurrentYearNum(), out WorkYear thisYear);
-
-            if (thisYear != null)
-                return thisYear;
-            else
-            {
-                WorkYear year = new WorkYear();
-                SetCurrentYear(ref year);
-
-                return year;
-            }
-        }
-
-        internal WorkMonth GetCurrentMonth()
-        {
-            return GetCurrentYear().GetCurrentMonth();
-        }
-
-        internal WorkDay GetCurrentDay()
-        {
-            return GetCurrentMonth().GetCurrentDay(IsLunchTimeWorkTimeDefault);
-        }
-
-        internal WorkYear GetYear(int year)
-        {
-            WorkYears.TryGetValue(year, out WorkYear yearResult);
-            return yearResult;
-        }
-        #endregion
-
-        #region SETs
-        internal void SetCurrentYear(ref WorkYear thisYear)
-        {
-            WorkYears[GetCurrentYearNum()] = thisYear;
-        }
-
-        internal void SetCurrentMonth(ref WorkMonth thisMonth)
-        {
-            GetCurrentYear().SetCurrentMonth(ref thisMonth);
-        }
-
-        internal void SetCurrentDay(ref WorkDay today)
-        {
-            // Get day count before change
-            int countBefAdd = GetCurrentMonth().NoOfDaysWorked;
-
-            // Do change
-            GetCurrentMonth().SetCurrentDay(ref today);
-
-            // Check if a new day was added
-            if (countBefAdd != GetCurrentMonth().NoOfDaysWorked)
-            {
-                GetCurrentYear().CountWorkedDays();
-            }
-        }
-        #endregion
-
-        #region Helpers
-        private int GetCurrentYearNum()
-        {
-            return StatisticsService.GetThisYearNum();
-        }
-        #endregion
-
-        #endregion
-
         #region Event handler
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Singleton
+        public static WorkKeeper Instance { get { return lazy.Value; } }
+
+        private WorkKeeper()
+        {
+            watcher = new Watcher(Resolution.TWO_MINUTES);
+            WorkDays = new Dictionary<DateTime, WorkDay>();
+            LeaveDays = new List<DateTime>();
+            SickDays = new List<DateTime>();
+        }
+
+        private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>
+        {
+            string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetWaterWorkFileName();
+            WorkKeeper workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(path);
+
+            return workKeeper ?? new WorkKeeper();
+        });
+
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+                watcher.Dispose();
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~UsageKeeper()
+        // {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
         }
         #endregion
     }

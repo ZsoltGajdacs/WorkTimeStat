@@ -30,14 +30,5 @@ namespace WaterWork.Helpers
         {
             return "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
         }
-
-        /// <summary>
-        /// Gives back the name of the UsageKeeper
-        /// </summary>
-        /// <returns></returns>
-        internal static string GetUsageLogName()
-        {
-            return "\\usage" + DateTime.Now.Year.ToString() + ".json";
-        }
     }
 }
