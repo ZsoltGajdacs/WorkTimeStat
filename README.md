@@ -4,3 +4,5 @@ This allows you to keep track of your hours, so you always know how much more yo
 
 It also includes a simple tracker app which watches mouse and keyboard usage and gives an indicative amount of how much you actually used the computer. 
 The time resolution of this can be set in settings.
+
+For the time being it's only available in Hungarian.
