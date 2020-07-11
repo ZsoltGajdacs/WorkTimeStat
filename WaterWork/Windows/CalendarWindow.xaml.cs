@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WaterWork.Models;
 using WaterWork.Services;
 using WaterWork.Storage;
@@ -132,7 +123,7 @@ namespace WaterWork.Windows
 
                 SetLeaveDay(selectedDate);
                 SetSickDay(selectedDate);
-                
+
                 WorkDay workDay = WorkDayService.GetDayAtDate(selectedDate);
 
                 if (workDay != null)
@@ -179,7 +170,7 @@ namespace WaterWork.Windows
         {
             leaveAutochk = false;
         }
-        
+
         /// <summary>
         /// So I know it was me and not the code (code checking generates event too)
         /// </summary>

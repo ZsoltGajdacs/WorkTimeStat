@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Storage;
@@ -23,7 +19,7 @@ namespace WaterWork.Services
             // Serialization stuff
             string saveDirPath = FilesLocation.GetSaveDirPath();
             string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
 
             Serializer.JsonObjectSerialize(saveDirPath + waterWorkFileName, ref keeper, true);
         }

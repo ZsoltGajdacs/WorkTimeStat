@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WaterWork.Models;
 using WaterWork.Storage;
 
@@ -12,7 +9,7 @@ namespace WaterWork.Services
     {
         internal static WorkDay GetDayAtDate(DateTime date)
         {
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
             bool isPresent = keeper.WorkDays.TryGetValue(date.Date, out WorkDay ma);
 
             return isPresent ? ma : null;
@@ -26,7 +23,7 @@ namespace WaterWork.Services
 
         internal static WorkDay GetYesterWorkDay()
         {
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
             DateTime now = DateTime.Now.Date;
             return keeper.WorkDays.Where(d => d.Key.Date != now.Date)
                                     .OrderByDescending(d => d.Key.Date)
@@ -36,7 +33,7 @@ namespace WaterWork.Services
 
         internal static void SetDayAtDate(DateTime date, ref WorkDay day)
         {
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
             keeper.WorkDays[date] = day;
         }
 

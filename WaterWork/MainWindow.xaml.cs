@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows;
 using WaterWork.Dialogs;
-using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Services;
 using WaterWork.Storage;
@@ -20,7 +19,7 @@ namespace WaterWork
             InitializeComponent();
             InitializeWorkKeeper();
         }
-        
+
         private void InitializeWorkKeeper()
         {
             workKeeper = WorkKeeper.Instance;
@@ -29,7 +28,7 @@ namespace WaterWork
         #endregion
 
         // TODO: App start and exit times must be saved, and checked against the daily start/end times
-        // so that the app know if it was shut down during the day, and also whether it was a crash!
+        // so that the app knows if it was shut down during the day, and also whether it was a crash!
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -38,6 +37,7 @@ namespace WaterWork
 
         private void DayEdit_Closed(object sender, EventArgs e)
         {
+            StatisticsService.FullReCountWorkedDays();
             SaveService.SaveData(false);
         }
         #endregion

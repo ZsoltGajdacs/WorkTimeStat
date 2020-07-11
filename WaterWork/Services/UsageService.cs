@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WaterWork.Models;
 using WaterWork.Storage;
 
@@ -12,7 +8,7 @@ namespace WaterWork.Services
     {
         internal static void AddUsageForToday(TimeSpan usage)
         {
-            var day = WorkDayService.GetCurrentDay();
+            WorkDay day = WorkDayService.GetCurrentDay();
             // If there is already data saved for this date, then there must have been a shutdown at some point
             // since this is so, the data that was collected since then is only valid for the day
             // if it's added to the already saved amount
@@ -47,13 +43,13 @@ namespace WaterWork.Services
 
         internal static UsageTime GetSavedUsageForDay(DateTime date)
         {
-            var day = WorkDayService.GetDayAtDate(date);
+            WorkDay day = WorkDayService.GetDayAtDate(date);
             return day.UsageTime;
         }
 
         private static TimeSpan GetLatestDataFromWatcher(DateTime start, DateTime end)
         {
-            var watcher = WorkKeeper.Instance.GetWatcher();
+            UsageWatcher.Watcher watcher = WorkKeeper.Instance.GetWatcher();
             return watcher.UsageForGivenTimeframe(start, end);
         }
     }

@@ -18,15 +18,15 @@ namespace WaterWork.Services
         #region Month counters
         internal static void CountWorkedDaysInMonth(int month)
         {
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
             int workedDays = keeper.WorkDays.Where(d => d.Key.Date.Month == month).Count();
             keeper.DaysWorkedInMonth[month] = workedDays;
         }
 
         internal static double GetMonthlyWorkedHours(int month)
         {
-            var keeper = WorkKeeper.Instance;
-            var workDaysInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
+            WorkKeeper keeper = WorkKeeper.Instance;
+            System.Collections.Generic.IEnumerable<WorkDay> workDaysInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
                                                     .Select(d => d.Value);
             double result = 0;
             foreach (WorkDay workDay in workDaysInMonth)
@@ -40,7 +40,7 @@ namespace WaterWork.Services
 
         internal static double GetMonthlyTotalHours(int month, double workdayHourLength)
         {
-            var keeper = WorkKeeper.Instance;
+            WorkKeeper keeper = WorkKeeper.Instance;
             return keeper.DaysWorkedInMonth[month] * workdayHourLength;
         }
         #endregion
@@ -96,7 +96,7 @@ namespace WaterWork.Services
 
         internal static double GetUsageForToday()
         {
-            var day = WorkDayService.GetCurrentDay();
+            WorkDay day = WorkDayService.GetCurrentDay();
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
@@ -106,11 +106,11 @@ namespace WaterWork.Services
 
         internal static double GetUsageForMonth(int month)
         {
-            var keeper = WorkKeeper.Instance;
-            var usagesInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
+            WorkKeeper keeper = WorkKeeper.Instance;
+            System.Collections.Generic.IEnumerable<UsageTime> usagesInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
                                                 .Select(d => d.Value.UsageTime);
             double result = 0;
-            foreach (var usage in usagesInMonth)
+            foreach (UsageTime usage in usagesInMonth)
             {
                 if (usage != null)
                 {

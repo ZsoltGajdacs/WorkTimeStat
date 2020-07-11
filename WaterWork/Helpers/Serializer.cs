@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WaterWork.Helpers
 {
@@ -41,9 +36,9 @@ namespace WaterWork.Helpers
                 try
                 {
                     reader = new StreamReader(path);
-                    var fileContents = reader.ReadToEnd();
+                    string fileContents = reader.ReadToEnd();
 
-                    var jsonSerializerSettings = new JsonSerializerSettings
+                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                     {
                         MissingMemberHandling = MissingMemberHandling.Ignore
                     };
@@ -71,7 +66,7 @@ namespace WaterWork.Helpers
                 {
                     File.Delete(backupPath);
                 }
-                
+
                 File.Copy(path, backupPath);
             }
         }
