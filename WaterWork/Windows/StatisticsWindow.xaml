@@ -46,7 +46,7 @@
 
         <Label Content="Ledolgozott órák: " Grid.Column="1" Grid.Row="3"/>
         <Label Content="Szükséges órák: " Grid.Column="1" Grid.Row="5"/>
-        <Label Content="Számolt órák: " Grid.Column="1" Grid.Row="7"/>
+        <Label Content="Mért órák: " Grid.Column="1" Grid.Row="7"/>
         <Label Content="Különbség: " Grid.Column="1" Grid.Row="9"/>
 
         <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
