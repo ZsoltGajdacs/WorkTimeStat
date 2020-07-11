@@ -6,7 +6,9 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:WaterWork"
         mc:Ignorable="d"
-        Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowState="Minimized" Visibility="Hidden" Closing="Window_Closing">
+        Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" 
+        WindowStartupLocation="CenterScreen" WindowState="Minimized" 
+        Visibility="Hidden" Closing="Window_Closing">
     <Grid>
         <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons\water_white.ico" 
                         ToolTip="Bal gomb munkaidő, Jobb gomb víz fogyasztás növelése" 

@@ -23,6 +23,8 @@ namespace WaterWork
         private void InitializeWorkKeeper()
         {
             workKeeper = WorkKeeper.Instance;
+            workKeeper.InitWatcher();
+
             StatisticsService.FullReCountWorkedDays();
         }
         #endregion
@@ -92,6 +94,5 @@ namespace WaterWork
             Application.Current.Shutdown();
         }
         #endregion
-
     }
 }

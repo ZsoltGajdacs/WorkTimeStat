@@ -14,7 +14,7 @@ namespace WaterWork.Storage
     internal class WorkKeeper : INotifyPropertyChanged, IDisposable
     {
         [NonSerialized]
-        private readonly Watcher watcher;
+        private Watcher watcher;
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
@@ -29,6 +29,11 @@ namespace WaterWork.Storage
             return watcher;
         }
 
+        internal void InitWatcher()
+        {
+            watcher = new Watcher(Settings.WatcherResolution);
+        }
+
         #region Event handler
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -41,12 +46,12 @@ namespace WaterWork.Storage
 
         private WorkKeeper()
         {
-            watcher = new Watcher(Resolution.TWO_MINUTES);
             WorkDays = new Dictionary<DateTime, WorkDay>();
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
             Settings = new WorkSettings();
+            Settings.WatcherResolution = Resolution.TWO_MINUTES;
         }
 
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
+using UsageWatcher;
 
 namespace WaterWork.Models
 {
@@ -12,6 +13,7 @@ namespace WaterWork.Models
         public decimal AmountOfLitreInOneUnit { get; set; }
         public int YearlyLeaveNumber { get; set; }
         public double DailyWorkHours { get; set; }
+        public Resolution WatcherResolution { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
