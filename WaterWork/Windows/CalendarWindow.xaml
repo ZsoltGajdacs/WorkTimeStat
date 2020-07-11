@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" 
         WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" 
-        Background="#FF434343" Foreground="White" FontSize="14" 
-        PreviewMouseUp="Window_PreviewMouseUp">
+        Background="#FF434343" Foreground="White" FontSize="14" >
     
     <Window.Resources>
         <Style TargetType="Label">
@@ -60,7 +59,8 @@
         <Calendar x:Name="mainCalendar" Grid.Column="1" Grid.Row="1" Grid.RowSpan="15" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
                   FontWeight="Bold" FontSize="18" Foreground="White" Background="#FFC9C9C9" 
-                  SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+                  SelectedDatesChanged="MainCalendar_SelectedDatesChanged"
+                  PreviewMouseUp="Calendar_PreviewMouseUp"/>
 
         <Label Content="Táppénzen? " Grid.Column="3" Grid.Row="3"/>
         <Label Content="Szabadnap? " Grid.Column="3" Grid.Row="5"/>
@@ -75,11 +75,12 @@
 
         <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                  Checked="SickDayChkbox_Checked" MouseDown="SickDayChkbox_MouseDown"/>
+                  PreviewMouseDown="SickDayChkbox_MouseDown" Click="SickDayChkbox_Click"/>
         
         <CheckBox x:Name="leaveDayChkbox" Grid.Column="5" Grid.Row="5" 
                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                  Checked="LeaveDayChkbox_Checked" MouseDown="LeaveDayChkbox_MouseDown"/>
+                  PreviewMouseDown="LeaveDayChkbox_MouseDown" Click="LeaveDayChkbox_Click"/>
+        
         <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="7"/>
         <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8"/>
         

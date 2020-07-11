@@ -28,7 +28,7 @@ namespace WaterWork.Windows
 
             currDate = DateTime.Now.Date;
 
-            // SetToday();
+            SetToday();
             UpdateLeaveDays();
         }
 
@@ -44,73 +44,12 @@ namespace WaterWork.Windows
             if (workDay != null)
             {
                 SetLabels(ref workDay);
+                selectedDate = currDate.Date;
+                chosenDateLabel.Content = selectedDate.ToLongDateString();
             }
             else
             {
                 SetEmptyLabels();
-            }
-        }
-
-        private void SetLabels(ref WorkDay workDay)
-        {
-            startTimeLabel.Content = workDay.StartTime;
-            endTimeLabel.Content = workDay.EndTime;
-            lunchBreakTimeLabel.Content = workDay.LunchBreakDuration + " perc";
-            otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
-            overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
-            workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
-            watchedTimeLabel.Content = StatisticsService.GetUsageForDay(ref workDay);
-        }
-
-        private void SetEmptyLabels()
-        {
-            startTimeLabel.Content = NO_DATA;
-            endTimeLabel.Content = NO_DATA;
-            lunchBreakTimeLabel.Content = NO_DATA;
-            otherBreakTimeLabel.Content = NO_DATA;
-            overWorkTimeLabel.Content = NO_DATA;
-            workedTimeLabel.Content = NO_DATA;
-        }
-
-        private void SetLeaveDay(DateTime selectedDate)
-        {
-            leaveAutochk = true; //To know that this was auto checked and not the user did it
-
-            if (keeper.LeaveDays.Contains(selectedDate))
-            {
-                leaveDayChkbox.IsChecked = true;
-                leaveDayChkbox.IsEnabled = false;
-            }
-            else if (selectedDate < currDate)
-            {
-                leaveDayChkbox.IsChecked = false;
-                leaveDayChkbox.IsEnabled = false;
-            }
-            else
-            {
-                leaveDayChkbox.IsChecked = false;
-                leaveDayChkbox.IsEnabled = true;
-            }
-        }
-
-        private void SetSickDay(DateTime selectedDate)
-        {
-            sickAutochk = true; //To know that this was auto checked and not the user did it
-
-            if (keeper.SickDays.Contains(selectedDate))
-            {
-                sickDayChkbox.IsChecked = true;
-                sickDayChkbox.IsEnabled = false;
-            }
-            else if (selectedDate < currDate)
-            {
-                sickDayChkbox.IsChecked = false;
-                sickDayChkbox.IsEnabled = false;
-            }
-            else
-            {
-                sickDayChkbox.IsChecked = false;
-                sickDayChkbox.IsEnabled = true;
             }
         }
 
@@ -121,8 +60,8 @@ namespace WaterWork.Windows
                 selectedDate = mainCalendar.SelectedDate.Value.Date;
                 chosenDateLabel.Content = selectedDate.ToLongDateString();
 
-                SetLeaveDay(selectedDate);
-                SetSickDay(selectedDate);
+                CalendarSetLeaveDay(selectedDate);
+                CalendarSetSickDay(selectedDate);
 
                 WorkDay workDay = WorkDayService.GetDayAtDate(selectedDate);
 
@@ -137,11 +76,82 @@ namespace WaterWork.Windows
             }
         }
 
-        private void LeaveDayChkbox_Checked(object sender, RoutedEventArgs e)
+        private void SetLabels(ref WorkDay workDay)
+        {
+            startTimeLabel.Content = workDay.StartTime;
+            endTimeLabel.Content = workDay.EndTime;
+            lunchBreakTimeLabel.Content = workDay.LunchBreakDuration + " perc";
+            otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
+            overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
+            workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
+
+            double daysUsage = StatisticsService.GetUsageForDay(ref workDay);
+            watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString() : NO_DATA;
+        }
+
+        private void SetEmptyLabels()
+        {
+            startTimeLabel.Content = NO_DATA;
+            endTimeLabel.Content = NO_DATA;
+            lunchBreakTimeLabel.Content = NO_DATA;
+            otherBreakTimeLabel.Content = NO_DATA;
+            overWorkTimeLabel.Content = NO_DATA;
+            workedTimeLabel.Content = NO_DATA;
+            watchedTimeLabel.Content = NO_DATA;
+        }
+
+        private void CalendarSetLeaveDay(DateTime selectedDate)
+        {
+            leaveAutochk = true; //To know that this was auto checked and not the user did it
+
+            if (keeper.LeaveDays.Contains(selectedDate))
+            {
+                leaveDayChkbox.IsChecked = true;
+                leaveDayChkbox.IsEnabled = selectedDate >= currDate;
+            }
+            else if (selectedDate < currDate)
+            {
+                leaveDayChkbox.IsChecked = false;
+                leaveDayChkbox.IsEnabled = false;
+            }
+            else
+            {
+                leaveDayChkbox.IsChecked = false;
+                leaveDayChkbox.IsEnabled = true;
+            }
+        }
+
+        private void CalendarSetSickDay(DateTime selectedDate)
+        {
+            sickAutochk = true; //To know that this was auto checked and not the user did it
+
+            if (keeper.SickDays.Contains(selectedDate))
+            {
+                sickDayChkbox.IsChecked = true;
+                sickDayChkbox.IsEnabled = selectedDate >= currDate;
+            }
+            else if (selectedDate < currDate)
+            {
+                sickDayChkbox.IsChecked = false;
+                sickDayChkbox.IsEnabled = false;
+            }
+            else
+            {
+                sickDayChkbox.IsChecked = false;
+                sickDayChkbox.IsEnabled = true;
+            }
+        }
+
+        #region Click events
+        private void LeaveDayChkbox_Click(object sender, RoutedEventArgs e)
         {
             if (numOfLeavesLeft > 0 && !keeper.LeaveDays.Contains(selectedDate))
             {
                 keeper.LeaveDays.Add(selectedDate);
+
+                // Ha szabin vagyok nem lehetek betegen!
+                sickDayChkbox.IsChecked = false;
+                keeper.SickDays.Remove(selectedDate);
             }
             else if (keeper.LeaveDays.Contains(selectedDate) && !leaveAutochk)
             {
@@ -151,17 +161,26 @@ namespace WaterWork.Windows
             UpdateLeaveDays();
         }
 
-        private void SickDayChkbox_Checked(object sender, RoutedEventArgs e)
+        private void SickDayChkbox_Click(object sender, RoutedEventArgs e)
         {
             if (!keeper.SickDays.Contains(selectedDate))
             {
                 keeper.SickDays.Add(selectedDate);
+
+                // Ha betegre megyek nem lehetek szabin....
+                leaveDayChkbox.IsChecked = false;
+                keeper.LeaveDays.Remove(selectedDate);
+                UpdateLeaveDays();
             }
             else if (keeper.SickDays.Contains(selectedDate) && !sickAutochk)
             {
                 keeper.SickDays.Remove(selectedDate);
             }
         }
+
+        #endregion
+
+        #region Fixes
 
         /// <summary>
         /// So I know it was me and not the code (code checking generates event too)
@@ -183,10 +202,12 @@ namespace WaterWork.Windows
         /// Enélkül a Calendarra kattintva kétszer kell máshová kattintani, hogy vegye a lapot!
         /// https://stackoverflow.com/questions/5543119/wpf-button-takes-two-clicks-to-fire-click-event#6420914
         /// </summary>
-        private void Window_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Calendar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             base.OnPreviewMouseUp(e);
             Mouse.Capture(null);
         }
+
+        #endregion
     }
 }
