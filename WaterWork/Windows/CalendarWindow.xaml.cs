@@ -43,17 +43,20 @@ namespace WaterWork.Windows
 
         private void UpdateLeaveDays()
         {
-            numOfLeavesLeft = keeper.YearlyLeaveNumber - keeper.LeaveDays.Count;
-            leaveDayNum.Content = numOfLeavesLeft + " / " + keeper.YearlyLeaveNumber;
+            numOfLeavesLeft = keeper.Settings.YearlyLeaveNumber - keeper.LeaveDays.Count;
+            leaveDayNum.Content = numOfLeavesLeft + " / " + keeper.Settings.YearlyLeaveNumber;
         }
 
         private void SetToday()
         {
-            // TODO: INCOMPLETE! Sets the initial day, Make it so it doesn't generate a new day!
-            WorkDay workDay = keeper.GetCurrentDay();
+            WorkDay workDay = WorkDayService.GetCurrentDay();
             if (workDay != null)
             {
                 SetLabels(ref workDay);
+            }
+            else
+            {
+                SetEmptyLabels();
             }
         }
 
@@ -65,6 +68,7 @@ namespace WaterWork.Windows
             otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
             overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
             workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
+            watchedTimeLabel.Content = StatisticsService.GetUsageForDay(ref workDay);
         }
 
         private void SetEmptyLabels()
@@ -128,26 +132,16 @@ namespace WaterWork.Windows
 
                 SetLeaveDay(selectedDate);
                 SetSickDay(selectedDate);
+                
+                WorkDay workDay = WorkDayService.GetDayAtDate(selectedDate);
 
-                WorkYear workYear = keeper.GetYear(StatisticsService.GetYearForDate(selectedDate));
-
-                if (workYear != null)
+                if (workDay != null)
                 {
-                    WorkMonth workMonth = workYear.GetMonth(StatisticsService.GetMonthForDate(selectedDate));
-
-                    if (workMonth != null)
-                    {
-                        WorkDay workDay = workMonth.GetDay(StatisticsService.GetDayForDate(selectedDate));
-
-                        if (workDay != null)
-                        {
-                            SetLabels(ref workDay);
-                        }
-                        else
-                        {
-                            SetEmptyLabels();
-                        }
-                    }
+                    SetLabels(ref workDay);
+                }
+                else
+                {
+                    SetEmptyLabels();
                 }
             }
         }

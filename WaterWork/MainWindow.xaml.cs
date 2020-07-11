@@ -13,30 +13,18 @@ namespace WaterWork
     public partial class MainWindow : Window
     {
         private WorkKeeper workKeeper;
-        private UsageKeeper usageKeeper;
 
+        #region Startup
         public MainWindow()
         {
             InitializeComponent();
             InitializeWorkKeeper();
-            InitializeUsageWatcher();
         }
-
-        #region Startup
+        
         private void InitializeWorkKeeper()
         {
-            string filePath = FilesLocation.GetSaveDirPath() + FilesLocation.GetWaterWorkFileName();
-            workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(filePath);
-
-            if (workKeeper == null)
-                workKeeper = new WorkKeeper();
-            else
-                workKeeper.GetCurrentYear().CountWorkedDays();
-        }
-
-        private void InitializeUsageWatcher()
-        {
-            usageKeeper = UsageKeeper.Instance;
+            workKeeper = WorkKeeper.Instance;
+            StatisticsService.FullReCountWorkedDays();
         }
         #endregion
 
@@ -45,28 +33,28 @@ namespace WaterWork
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SaveData();
+            SaveService.SaveData();
         }
 
         private void DayEdit_Closed(object sender, EventArgs e)
         {
-            SaveData();
+            SaveService.SaveData();
         }
         #endregion
 
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.GetCurrentDay());
+            WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.Settings, WorkDayService.GetCurrentDay());
             dayEdit.Closed += DayEdit_Closed;
             WorkDay today = dayEdit.ShowDialog();
 
-            workKeeper.SetCurrentDay(ref today);
+            WorkDayService.SetCurrentDay(ref today);
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkDay today = workKeeper.GetCurrentDay();
+            WorkDay today = WorkDayService.GetCurrentDay();
             today.IncreaseWaterConsumption();
 
             decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
@@ -94,41 +82,14 @@ namespace WaterWork
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
             StatisticsWindow statisticsWindow =
-                new StatisticsWindow(workKeeper.GetCurrentYear(),
-                                        workKeeper.IsLunchTimeWorkTimeDefault,
-                                        workKeeper.DailyWorkHours);
+                new StatisticsWindow(workKeeper.Settings.IsLunchTimeWorkTimeDefault,
+                                        workKeeper.Settings.DailyWorkHours);
             statisticsWindow.Show();
         }
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-        #endregion
-
-        #region Helpers
-        private TimeSpan GetTodaysUsageForSave()
-        {
-            WorkDay today = workKeeper.GetCurrentDay();
-            DateTime start = today.DayDate.Date + today.StartTime;
-            DateTime end = today.DayDate.Date + today.EndTime;
-
-            return usageKeeper.GetUsageForTimeframe(start, end, true);
-        }
-
-        private void SaveData()
-        {
-            // Usage needs to be saved here, becuase this is the only place
-            // where I can be certain that I have the complete time
-            usageKeeper.AddUsage(DateTime.Now.Date, GetTodaysUsageForSave());
-
-            // Serialization stuff
-            string saveDirPath = FilesLocation.GetSaveDirPath();
-            string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
-            string usageFileName = FilesLocation.GetUsageLogName();
-
-            Serializer.JsonObjectSerialize<WorkKeeper>(saveDirPath + waterWorkFileName, ref workKeeper, true);
-            Serializer.JsonObjectSerialize<UsageKeeper>(saveDirPath + usageFileName, ref usageKeeper, true);
         }
         #endregion
 

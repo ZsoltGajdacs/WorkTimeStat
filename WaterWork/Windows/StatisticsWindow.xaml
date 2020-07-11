@@ -37,15 +37,12 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="Tegnap: " Grid.Column="3" Grid.Row="1"/>
         <Label Content="Ma: " Grid.Column="5" Grid.Row="1"/>
         <Label Content="Hónapban: " Grid.Column="7" Grid.Row="1"/>
-        <Label Content="Évben: " Grid.Column="9" Grid.Row="1"/>
 
         <Label Content="Ledolgozott órák: " Grid.Column="1" Grid.Row="3"/>
         <Label Content="Szükséges órák: " Grid.Column="1" Grid.Row="5"/>
@@ -68,10 +65,5 @@
         <Label Name="monthlyFullHours" Grid.Column="7" Grid.Row="5"/>
         <Label Name="monthlyCalcHours" Grid.Column="7" Grid.Row="7"/>
         <Label Name="monthlyLeftHours" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
-
-        <Label Name="yearlyWorkedHours" Grid.Column="9" Grid.Row="3"/>
-        <Label Name="yearlyFullHours" Grid.Column="9" Grid.Row="5"/>
-        <Label Name="yearlyCalcHours" Grid.Column="9" Grid.Row="7"/>
-        <Label Name="yearlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
     </Grid>
 </Window>

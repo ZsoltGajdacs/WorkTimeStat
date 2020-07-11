@@ -27,9 +27,9 @@ namespace WaterWork.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region CTORS
-        public WorkDay(bool isLunchTimeWorkTime)
+        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit)
         {
-            AmountOfLitreInOneUnit = 1;
+            AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
         }
@@ -37,7 +37,7 @@ namespace WaterWork.Models
 
         internal void IncreaseWaterConsumption()
         {
-            WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, 0.5m);
+            WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, AmountOfLitreInOneUnit);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

@@ -119,6 +119,8 @@
     <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\Serializer.cs" />
     <Compile Include="Models\UsageTime.cs" />
+    <Compile Include="Models\WorkSettings.cs" />
+    <Compile Include="Services\SaveService.cs" />
     <Compile Include="Services\StatisticsService.cs" />
     <Compile Include="Services\UsageService.cs" />
     <Compile Include="Services\WorkDayService.cs" />

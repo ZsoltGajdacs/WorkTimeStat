@@ -25,7 +25,7 @@ namespace WaterWork.Windows
             InitializeComponent();
             this.keeper = keeper;
 
-            mainGrid.DataContext = keeper;
+            mainGrid.DataContext = keeper.Settings;
         }
     }
 }

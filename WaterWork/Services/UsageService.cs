@@ -10,22 +10,19 @@ namespace WaterWork.Services
 {
     internal static class UsageService
     {
-        internal static void AddUsage(DateTime day, TimeSpan usage)
+        internal static void AddUsageForToday(TimeSpan usage)
         {
-            var keeper = WorkKeeper.Instance;
-            
-            UsageTime savedTime = UsageHistory.Where(u => u.Day.Date == day.Date).FirstOrDefault();
+            var day = WorkDayService.GetCurrentDay();
             // If there is already data saved for this date, then there must have been a shutdown at some point
             // since this is so, the data that was collected since then is only valid for the day
             // if it's added to the already saved amount
-            if (savedTime != null)
+            if (day.UsageTime != null)
             {
-                savedTime.Usage += usage;
+                day.UsageTime.Usage += usage;
             }
             else
             {
-                UsageTime newTime = new UsageTime(day, usage);
-                UsageHistory.Add(newTime);
+                day.UsageTime = new UsageTime(day.DayDate.Date, usage);
             }
         }
 
@@ -48,15 +45,16 @@ namespace WaterWork.Services
             return usage;
         }
 
-        private static TimeSpan GetLatestDataFromWatcher(DateTime start, DateTime end)
+        internal static UsageTime GetSavedUsageForDay(DateTime date)
         {
-            return watcher.UsageForGivenTimeframe(start, end);
+            var day = WorkDayService.GetDayAtDate(date);
+            return day.UsageTime;
         }
 
-        private static UsageTime GetSavedUsageForDay(DateTime date)
+        private static TimeSpan GetLatestDataFromWatcher(DateTime start, DateTime end)
         {
-            UsageTime time = UsageHistory.Where(u => u.Day.Date == date.Date).FirstOrDefault();
-            return time;
+            var watcher = WorkKeeper.Instance.GetWatcher();
+            return watcher.UsageForGivenTimeframe(start, end);
         }
     }
 }

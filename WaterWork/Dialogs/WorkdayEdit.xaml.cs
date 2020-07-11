@@ -4,13 +4,14 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using WaterWork.Helpers;
 using WaterWork.Models;
+using WaterWork.Storage;
 
 namespace WaterWork.Dialogs
 {
     public partial class WorkdayEdit : Window, INotifyPropertyChanged
     {
-        private WorkDay today;
-        private DateTime dateToday;
+        private readonly WorkDay today;
+        private readonly DateTime dateToday;
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -22,20 +23,15 @@ namespace WaterWork.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal WorkdayEdit(WorkDay today)
+        internal WorkdayEdit(WorkSettings settings, WorkDay today)
         {
             InitializeComponent();
 
-            this.today = today;
+            this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault,
+                                                settings.AmountOfLitreInOneUnit);
             dateToday = DateTime.Now.Date;
 
-            StartTime = dateToday + today.StartTime;
-            EndTime = dateToday + today.EndTime;
-            LunchBreakDuration = today.LunchBreakDuration;
-            OtherBreakDuration = today.OtherBreakDuration;
-            OverWorkDuration = today.OverWorkDuration;
-            ConsumptionCount = today.WaterConsumptionCount;
-            BottleSize = today.AmountOfLitreInOneUnit;
+            InitValues();
 
             editGrid.DataContext = this;
         }
@@ -46,6 +42,16 @@ namespace WaterWork.Dialogs
 
             base.ShowDialog();
 
+            SaveValues();
+
+            return today;
+        }
+
+        /// <summary>
+        /// Saves the window's vars to the object that is passed back
+        /// </summary>
+        private void SaveValues()
+        {
             today.StartTime = StartTime - dateToday;
             today.EndTime = EndTime - dateToday;
             today.LunchBreakDuration = LunchBreakDuration;
@@ -53,8 +59,20 @@ namespace WaterWork.Dialogs
             today.OverWorkDuration = OverWorkDuration;
             today.WaterConsumptionCount = ConsumptionCount;
             today.AmountOfLitreInOneUnit = BottleSize;
+        }
 
-            return today;
+        /// <summary>
+        /// Initializes the window's vars
+        /// </summary>
+        private void InitValues()
+        {
+            StartTime = dateToday + today.StartTime;
+            EndTime = dateToday + today.EndTime;
+            LunchBreakDuration = today.LunchBreakDuration;
+            OtherBreakDuration = today.OtherBreakDuration;
+            OverWorkDuration = today.OverWorkDuration;
+            ConsumptionCount = today.WaterConsumptionCount;
+            BottleSize = today.AmountOfLitreInOneUnit;
         }
 
         private void SetWindowPos()

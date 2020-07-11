@@ -23,6 +23,8 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -36,11 +38,15 @@
         <Label Content="Az ebédszünet munkaidő?" Grid.Column="1" Grid.Row="1"/>
         <CheckBox IsChecked="{Binding IsLunchTimeWorkTimeDefault, Mode=TwoWay}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <Label Content="Napi munkaórák száma?" Grid.Column="1" Grid.Row="3"/>
-        <xce:DoubleUpDown Value="{Binding DailyWorkHours, Mode=TwoWay}" Grid.Column="3" Grid.Row="3"
+        <Label Content="Hány literes amiből iszol?" Grid.Column="1" Grid.Row="3"/>
+        <xce:DecimalUpDown Value="{Binding AmountOfLitreInOneUnit, Mode=TwoWay}" Grid.Column="3" Grid.Row="3"
+                           Increment="0.25" FormatString="0.00" />
+
+        <Label Content="Napi munkaórák száma?" Grid.Column="1" Grid.Row="5"/>
+        <xce:DoubleUpDown Value="{Binding DailyWorkHours, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"
                            Increment="0.5" FormatString="0.0"/>
         
-        <Label Content="Szabadnapok száma egy évben?" Grid.Column="1" Grid.Row="5"/>
-        <xce:IntegerUpDown Value="{Binding YearlyLeaveNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+        <Label Content="Szabadnapok száma egy évben?" Grid.Column="1" Grid.Row="7"/>
+        <xce:IntegerUpDown Value="{Binding YearlyLeaveNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="7"/>
     </Grid>
 </Window>

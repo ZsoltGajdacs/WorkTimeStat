@@ -18,13 +18,17 @@ namespace WaterWork.Storage
         private readonly Watcher watcher;
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
+        public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
-        public Boolean IsLunchTimeWorkTimeDefault { get; set; }
-        public int YearlyLeaveNumber { get; set; }
-        public double DailyWorkHours { get; set; }
+        public WorkSettings Settings { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Watcher GetWatcher()
+        {
+            return watcher;
+        }
 
         #region Event handler
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -40,6 +44,7 @@ namespace WaterWork.Storage
         {
             watcher = new Watcher(Resolution.TWO_MINUTES);
             WorkDays = new Dictionary<DateTime, WorkDay>();
+            DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
         }

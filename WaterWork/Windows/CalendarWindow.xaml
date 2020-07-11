@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WaterWork.Windows"
         mc:Ignorable="d"
-        Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="#FF434343" Foreground="White" FontSize="14" PreviewMouseUp="Window_PreviewMouseUp">
+        Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" 
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" 
+        Background="#FF434343" Foreground="White" FontSize="14" 
+        PreviewMouseUp="Window_PreviewMouseUp">
+    
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White" />
@@ -15,6 +19,8 @@
     
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
@@ -65,6 +71,7 @@
         <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="15"/>
         <Label Content="Túlmunka: " Grid.Column="3" Grid.Row="17"/>
         <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="19"/>
+        <Label Content="Mért órák: " Grid.Column="3" Grid.Row="21"/>
 
         <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -84,5 +91,6 @@
         <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="18"/>
 
         <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="19" FontWeight="Bold"/>
+        <Label x:Name="watchedTimeLabel" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
     </Grid>
 </Window>

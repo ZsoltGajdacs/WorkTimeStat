@@ -7,33 +7,27 @@ namespace WaterWork.Windows
 {
     public partial class StatisticsWindow : Window
     {
-
-        internal StatisticsWindow(WorkYear thisYear, bool isLunchTimeWorkTime, double dailyWorkHours)
+        internal StatisticsWindow(bool isLunchTimeWorkTime, double dailyWorkHours)
         {
             InitializeComponent();
             mainGrid.DataContext = this;
 
             // Get data
-            // Yearly
-            double yWorkedHours = StatisticsService.GetYearlyWorkedHours(ref thisYear);
-            double yFullHours = StatisticsService.GetYearlyTotalHours(ref thisYear, dailyWorkHours);
-            //double yCalcHours = StatisticsService.GetUsageForYear(ref thisYear);
-
             // Monthly
-            WorkMonth thisMonth = thisYear.GetCurrentMonth();
+            int thisMonth = DateTime.Now.Month;
             double mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisMonth);
             double mFullHours = StatisticsService.GetMonthlyTotalHours(thisMonth, dailyWorkHours);
-            //double mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
+            double mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
 
             // Daily
-            WorkDay today = thisYear.GetCurrentMonth().GetCurrentDay(isLunchTimeWorkTime);
+            WorkDay today = WorkDayService.GetCurrentDay();
             double dWorkedHours = StatisticsService.GetDailyWorkedHours(today);
-            double dCalcHours = StatisticsService.GetUsageForDay(today);
+            double dCalcHours = StatisticsService.GetUsageForToday();
 
             // Yesterday
-            WorkDay yesterWorkday = thisYear.GetCurrentMonth().GetYesterWorkDay();
+            WorkDay yesterWorkday = WorkDayService.GetYesterWorkDay();
             double ywdWorkedHours = StatisticsService.GetDailyWorkedHours(yesterWorkday);
-            double ywdCalcHours = StatisticsService.GetUsageForDay(yesterWorkday);
+            double ywdCalcHours = StatisticsService.GetUsageForDay(ref yesterWorkday);
 
             // Assign to Labels
             yesterworkdayWorkedHours.Content = ywdWorkedHours;
@@ -46,16 +40,13 @@ namespace WaterWork.Windows
             todayCalcHours.Content = dCalcHours;
             todayLeftHours.Content = AddPlusIfNeeded(dWorkedHours - dailyWorkHours);
 
-            yearlyWorkedHours.Content = yWorkedHours;
-            yearlyFullHours.Content = yFullHours;
-            yearlyLeftHours.Content = AddPlusIfNeeded(yWorkedHours - yFullHours);
-
             monthlyWorkedHours.Content = mWorkedHours;
             monthlyFullHours.Content = mFullHours;
+            monthlyCalcHours.Content = mCalcHours;
             monthlyLeftHours.Content = AddPlusIfNeeded(mWorkedHours - mFullHours);
         }
 
-        private string AddPlusIfNeeded(double num)
+        private static string AddPlusIfNeeded(double num)
         {
             num = Math.Round(num, 2, MidpointRounding.ToEven);
             return num > 0 ? "+" + num : num.ToString();

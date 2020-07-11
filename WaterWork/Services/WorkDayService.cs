@@ -24,6 +24,16 @@ namespace WaterWork.Services
             return GetDayAtDate(today);
         }
 
+        internal static WorkDay GetYesterWorkDay()
+        {
+            var keeper = WorkKeeper.Instance;
+            DateTime now = DateTime.Now.Date;
+            return keeper.WorkDays.Where(d => d.Key.Date != now.Date)
+                                    .OrderByDescending(d => d.Key.Date)
+                                    .First()
+                                    .Value;
+        }
+
         internal static void SetDayAtDate(DateTime date, ref WorkDay day)
         {
             var keeper = WorkKeeper.Instance;

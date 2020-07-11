@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using WaterWork.Models;
 using WaterWork.Storage;
 
@@ -6,29 +7,29 @@ namespace WaterWork.Services
 {
     internal static class StatisticsService
     {
-        #region Year counters
-        internal static double GetYearlyWorkedHours(ref WorkYear year)
+        internal static void FullReCountWorkedDays()
         {
-            double result = 0;
-            foreach (WorkMonth workMonth in year.WorkMonths.Values)
+            for (int monthNum = 1; monthNum < 13; ++monthNum)
             {
-                result += GetMonthlyWorkedHours(workMonth);
+                CountWorkedDaysInMonth(monthNum);
             }
-
-            return RoundToMidWithTwoPrecision(result);
         }
-
-        internal static double GetYearlyTotalHours(ref WorkYear year, double workdayHourLength)
-        {
-            return year.NoOfDaysWorked * workdayHourLength;
-        }
-        #endregion
 
         #region Month counters
-        internal static double GetMonthlyWorkedHours(WorkMonth month)
+        internal static void CountWorkedDaysInMonth(int month)
         {
+            var keeper = WorkKeeper.Instance;
+            int workedDays = keeper.WorkDays.Where(d => d.Key.Date.Month == month).Count();
+            keeper.DaysWorkedInMonth.Add(month, workedDays);
+        }
+
+        internal static double GetMonthlyWorkedHours(int month)
+        {
+            var keeper = WorkKeeper.Instance;
+            var workDaysInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
+                                                    .Select(d => d.Value);
             double result = 0;
-            foreach (WorkDay workDay in month.WorkDays.Values)
+            foreach (WorkDay workDay in workDaysInMonth)
             {
 
                 result += GetDailyWorkedHours(workDay);
@@ -37,9 +38,10 @@ namespace WaterWork.Services
             return RoundToMidWithTwoPrecision(result);
         }
 
-        internal static double GetMonthlyTotalHours(WorkMonth month, double workdayHourLength)
+        internal static double GetMonthlyTotalHours(int month, double workdayHourLength)
         {
-            return month.NoOfDaysWorked * workdayHourLength;
+            var keeper = WorkKeeper.Instance;
+            return keeper.DaysWorkedInMonth[month] * workdayHourLength;
         }
         #endregion
 
@@ -71,66 +73,53 @@ namespace WaterWork.Services
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
-        internal static double GetUsageForDay(WorkDay day)
+        internal static double GetUsageForDay(ref WorkDay day)
         {
-            if (day != null)
-            {
-                UsageKeeper usage = UsageKeeper.Instance;
-                DateTime startDate = day.DayDate.Date + day.StartTime;
-                DateTime endDate = day.DayDate.Date + day.EndTime;
-
-                TimeSpan usageInTimeframe = usage.GetUsageForTimeframe(startDate, endDate);
-                double roundedHours = RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
-                return roundedHours;
-            }
-            else
+            if (day == null)
             {
                 return 0.0;
             }
+
+            if (day.DayDate != DateTime.Today)
+            {
+                DateTime startDate = day.DayDate.Date + day.StartTime;
+                DateTime endDate = day.DayDate.Date + day.EndTime;
+
+                TimeSpan usageInTimeframe = UsageService.GetUsageForTimeframe(startDate, endDate);
+                return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+            }
+            else
+            {
+                return GetUsageForToday();
+            }
         }
 
-        internal static double GetUsageForMonth(WorkMonth month)
+        internal static double GetUsageForToday()
         {
-            throw new NotImplementedException();
+            var day = WorkDayService.GetCurrentDay();
+            DateTime startDate = day.DayDate.Date + day.StartTime;
+            DateTime endDate = day.DayDate.Date + day.EndTime;
+
+            TimeSpan usageInTimeframe = UsageService.GetUsageForTimeframe(startDate, endDate);
+            return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
         }
 
-        internal static double GetUsageForYear(ref WorkYear year)
+        internal static double GetUsageForMonth(int month)
         {
-            throw new NotImplementedException();
+            var keeper = WorkKeeper.Instance;
+            var usagesInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
+                                                .Select(d => d.Value.UsageTime);
+            double result = 0;
+            foreach (var usage in usagesInMonth)
+            {
+                result += usage.Usage.TotalHours;
+            }
+
+            return RoundToMidWithTwoPrecision(result);
         }
         #endregion
 
         #region Helpers
-        internal static int GetTodayNum()
-        {
-            return GetDayForDate(DateTime.Today);
-        }
-
-        internal static int GetThisMonthNum()
-        {
-            return GetMonthForDate(DateTime.Today);
-        }
-
-        internal static int GetThisYearNum()
-        {
-            return GetYearForDate(DateTime.Today);
-        }
-
-        internal static int GetYearForDate(DateTime date)
-        {
-            return int.Parse(date.ToString("yyyy"));
-        }
-
-        internal static int GetMonthForDate(DateTime date)
-        {
-            return int.Parse(date.ToString("MM"));
-        }
-
-        internal static int GetDayForDate(DateTime date)
-        {
-            return int.Parse(date.ToString("dd"));
-        }
-
         /// <summary>
         /// Gives back the midpoint rounded number with two digits after zero for the given double
         /// </summary>
