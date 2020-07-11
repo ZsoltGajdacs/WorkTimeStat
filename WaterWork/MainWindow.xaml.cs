@@ -33,12 +33,12 @@ namespace WaterWork
         #region Window Events
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SaveService.SaveData();
+            SaveService.SaveData(true);
         }
 
         private void DayEdit_Closed(object sender, EventArgs e)
         {
-            SaveService.SaveData();
+            SaveService.SaveData(false);
         }
         #endregion
 

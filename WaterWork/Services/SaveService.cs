@@ -11,11 +11,14 @@ namespace WaterWork.Services
 {
     internal static class SaveService
     {
-        internal static void SaveData()
+        internal static void SaveData(bool saveUsage)
         {
-            // Usage needs to be saved here, becuase this is the only place
-            // where I can be certain that I have the complete time
-            UsageService.AddUsageForToday(GetTodaysUsageForSave());
+            if (saveUsage)
+            {
+                // Usage needs to be saved here, becuase this is the only place
+                // where I can be certain that I have the complete time
+                UsageService.AddUsageForToday(GetTodaysUsageForSave());
+            }
 
             // Serialization stuff
             string saveDirPath = FilesLocation.GetSaveDirPath();

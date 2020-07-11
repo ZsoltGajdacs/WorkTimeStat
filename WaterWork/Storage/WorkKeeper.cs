@@ -47,6 +47,7 @@ namespace WaterWork.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
+            Settings = new WorkSettings();
         }
 
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>

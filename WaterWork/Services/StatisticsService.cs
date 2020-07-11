@@ -20,7 +20,7 @@ namespace WaterWork.Services
         {
             var keeper = WorkKeeper.Instance;
             int workedDays = keeper.WorkDays.Where(d => d.Key.Date.Month == month).Count();
-            keeper.DaysWorkedInMonth.Add(month, workedDays);
+            keeper.DaysWorkedInMonth[month] = workedDays;
         }
 
         internal static double GetMonthlyWorkedHours(int month)
@@ -112,7 +112,10 @@ namespace WaterWork.Services
             double result = 0;
             foreach (var usage in usagesInMonth)
             {
-                result += usage.Usage.TotalHours;
+                if (usage != null)
+                {
+                    result += usage.Usage.TotalHours;
+                }
             }
 
             return RoundToMidWithTwoPrecision(result);

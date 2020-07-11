@@ -30,14 +30,14 @@ namespace WaterWork.Services
             DateTime now = DateTime.Now.Date;
             return keeper.WorkDays.Where(d => d.Key.Date != now.Date)
                                     .OrderByDescending(d => d.Key.Date)
-                                    .First()
-                                    .Value;
+                                    .Select(d => d.Value)
+                                    .FirstOrDefault();
         }
 
         internal static void SetDayAtDate(DateTime date, ref WorkDay day)
         {
             var keeper = WorkKeeper.Instance;
-            keeper.WorkDays.Add(date, day);
+            keeper.WorkDays[date] = day;
         }
 
         internal static void SetCurrentDay(ref WorkDay today)
