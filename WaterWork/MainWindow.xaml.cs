@@ -39,8 +39,7 @@ namespace WaterWork
 
         private void DayEdit_Closed(object sender, EventArgs e)
         {
-            StatisticsService.FullReCountWorkedDays();
-            SaveService.SaveData(false);
+            
         }
         #endregion
 
@@ -52,6 +51,8 @@ namespace WaterWork
             WorkDay today = dayEdit.ShowDialog();
 
             WorkDayService.SetCurrentDay(ref today);
+            StatisticsService.FullReCountWorkedDays();
+            SaveService.SaveData(false);
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
