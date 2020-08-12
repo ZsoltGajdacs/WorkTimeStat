@@ -115,6 +115,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\WorkDayEditControl.xaml.cs">
+      <DependentUpon>WorkDayEditControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DPI.cs" />
     <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\Serializer.cs" />
@@ -133,6 +136,10 @@
     <Compile Include="Windows\StatisticsWindow.xaml.cs">
       <DependentUpon>StatisticsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\WorkDayEditControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\WorkdayEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

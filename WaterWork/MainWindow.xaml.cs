@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using WaterWork.Controls;
 using WaterWork.Dialogs;
 using WaterWork.Models;
 using WaterWork.Services;
@@ -37,22 +38,24 @@ namespace WaterWork
             SaveService.SaveData(true);
         }
 
-        private void DayEdit_Closed(object sender, EventArgs e)
+        private void TaskbarIcon_TrayBalloonTipClosed(object sender, RoutedEventArgs e)
         {
-            
+            /*WorkDayService.SetCurrentDay(ref today);
+            StatisticsService.FullReCountWorkedDays();
+            SaveService.SaveData(false);*/
         }
         #endregion
 
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.Settings, WorkDayService.GetCurrentDay());
+            WorkDayEditControl dayEdit = new WorkDayEditControl(ref workKeeper, WorkDayService.GetCurrentDay());
+            taskbarIcon.TrayBalloonTipClosed += TaskbarIcon_TrayBalloonTipClosed;
+            taskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            
+            /*WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.Settings, WorkDayService.GetCurrentDay());
             dayEdit.Closed += DayEdit_Closed;
-            WorkDay today = dayEdit.ShowDialog();
-
-            WorkDayService.SetCurrentDay(ref today);
-            StatisticsService.FullReCountWorkedDays();
-            SaveService.SaveData(false);
+            WorkDay today = dayEdit.ShowDialog();*/
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
