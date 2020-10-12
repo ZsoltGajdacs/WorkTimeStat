@@ -49,7 +49,7 @@ namespace WaterWork.Services
 
         private static TimeSpan GetLatestDataFromWatcher(DateTime start, DateTime end)
         {
-            UsageWatcher.Watcher watcher = WorkKeeper.Instance.GetWatcher();
+            UsageWatcher.IWatcher watcher = WorkKeeper.Instance.GetWatcher();
             return watcher.UsageForGivenTimeframe(start, end);
         }
     }

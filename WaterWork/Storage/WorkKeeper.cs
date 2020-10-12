@@ -14,7 +14,7 @@ namespace WaterWork.Storage
     internal class WorkKeeper : INotifyPropertyChanged, IDisposable
     {
         [NonSerialized]
-        private Watcher watcher;
+        private IWatcher watcher;
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
@@ -24,14 +24,15 @@ namespace WaterWork.Storage
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Watcher GetWatcher()
+        public IWatcher GetWatcher()
         {
             return watcher;
         }
 
         internal void InitWatcher()
         {
-            watcher = new Watcher(Settings.WatcherResolution);
+            watcher = new Watcher("WaterWork", Settings.WatcherResolution, 
+                Settings.WatcherSavePreference, Settings.WatcherDataPrecision);
         }
 
         #region Event handler
@@ -51,7 +52,9 @@ namespace WaterWork.Storage
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
             Settings = new WorkSettings();
-            Settings.WatcherResolution = Resolution.TWO_MINUTES;
+            Settings.WatcherResolution = Resolution.TwoMinutes;
+            Settings.WatcherSavePreference = SavePreference.KeepDataForever;
+            Settings.WatcherDataPrecision = DataPrecision.HighPrecision;
         }
 
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>
@@ -73,17 +76,17 @@ namespace WaterWork.Storage
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    //  dispose managed state (managed objects).
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+                // free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // set large fields to null.
                 watcher.Dispose();
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        //  override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~UsageKeeper()
         // {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -95,8 +98,8 @@ namespace WaterWork.Storage
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            // uncomment the following line if the finalizer is overridden above.
+            //GC.SuppressFinalize(this);
         }
         #endregion
     }

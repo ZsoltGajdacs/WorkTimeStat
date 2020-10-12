@@ -14,6 +14,8 @@ namespace WaterWork.Models
         public int YearlyLeaveNumber { get; set; }
         public double DailyWorkHours { get; set; }
         public Resolution WatcherResolution { get; set; }
+        public DataPrecision WatcherDataPrecision { get; set; }
+        public SavePreference WatcherSavePreference { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

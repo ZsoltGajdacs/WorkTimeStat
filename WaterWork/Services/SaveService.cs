@@ -21,7 +21,7 @@ namespace WaterWork.Services
             string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
             WorkKeeper keeper = WorkKeeper.Instance;
 
-            Serializer.JsonObjectSerialize(saveDirPath + waterWorkFileName, ref keeper, true);
+            Serializer.JsonObjectSerialize(saveDirPath, waterWorkFileName, ref keeper, DoBackup.Yes);
         }
 
         private static TimeSpan GetTodaysUsageForSave()
