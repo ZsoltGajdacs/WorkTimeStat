@@ -8,12 +8,11 @@ namespace WaterWork.Helpers
     /// </summary>
     internal static class Serializer
     {
-        internal static void JsonObjectSerialize<T>(string path, ref T serializable, bool doBackup)
+        internal static void JsonObjectSerialize<T>(string saveDir, string fileName, ref T serializable, DoBackup doBackup)
         {
-            if (doBackup)
-            {
-                CreateBackup(path);
-            }
+            string path = CreateSavePath(saveDir, fileName);
+            CreateDirIfDoesntExist(saveDir);
+            CreateBackupIfNeeded(path, doBackup);
 
             TextWriter writer = null;
             try
@@ -53,13 +52,31 @@ namespace WaterWork.Helpers
             }
             else
             {
-                return default(T);
+                return default;
             }
         }
 
-        private static void CreateBackup(string path)
+        private static string CreateSavePath(string dirName, string fileName)
         {
-            if (File.Exists(path))
+            if (!dirName.EndsWith("\\", System.StringComparison.Ordinal))
+            {
+                dirName += "\\";
+            }
+
+            return dirName + fileName;
+        }
+
+        private static void CreateDirIfDoesntExist(string dirName)
+        {
+            if (!Directory.Exists(dirName))
+            {
+                Directory.CreateDirectory(dirName);
+            }
+        }
+
+        private static void CreateBackupIfNeeded(string path, DoBackup doBackup)
+        {
+            if (DoBackup.Yes == doBackup && File.Exists(path))
             {
                 string backupPath = path + ".bak";
                 if (File.Exists(backupPath))
@@ -70,5 +87,11 @@ namespace WaterWork.Helpers
                 File.Copy(path, backupPath);
             }
         }
+    }
+
+    internal enum DoBackup
+    {
+        Yes,
+        No
     }
 }

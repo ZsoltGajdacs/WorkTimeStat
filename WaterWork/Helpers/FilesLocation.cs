@@ -24,7 +24,7 @@ namespace WaterWork.Helpers
         /// <returns></returns>
         internal static string GetWaterWorkFileName()
         {
-            return "\\waterwork" + DateTime.Now.Year.ToString() + ".json";
+            return "waterwork" + DateTime.Now.Year.ToString() + ".json";
         }
     }
 }
