@@ -51,10 +51,13 @@ namespace WaterWork.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
-            Settings = new WorkSettings();
-            Settings.WatcherResolution = Resolution.TwoMinutes;
-            Settings.WatcherSavePreference = SavePreference.KeepDataForever;
-            Settings.WatcherDataPrecision = DataPrecision.HighPrecision;
+            
+            Settings = new WorkSettings
+            {
+                WatcherResolution = Resolution.TwoMinutes,
+                WatcherSavePreference = SavePreference.KeepDataForToday,
+                WatcherDataPrecision = DataPrecision.HighPrecision
+            };
         }
 
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>

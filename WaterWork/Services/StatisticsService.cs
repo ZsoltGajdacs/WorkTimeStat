@@ -107,14 +107,15 @@ namespace WaterWork.Services
         internal static double GetUsageForMonth(int month)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
-            System.Collections.Generic.IEnumerable<UsageTime> usagesInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
+            System.Collections.Generic.IEnumerable<TimeSpan> usagesInMonth = 
+                    keeper.WorkDays.Where(d => d.Key.Month == month)
                                                 .Select(d => d.Value.UsageTime);
             double result = 0;
-            foreach (UsageTime usage in usagesInMonth)
+            foreach (TimeSpan usage in usagesInMonth)
             {
                 if (usage != null)
                 {
-                    result += usage.Usage.TotalHours;
+                    result += usage.TotalHours;
                 }
             }
 

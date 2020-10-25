@@ -12,13 +12,13 @@ namespace WaterWork.Models
         public DateTime DayDate { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        public UsageTime UsageTime { get; set; }
+        public TimeSpan UsageTime { get; set; }
         public int LunchBreakDuration { get; set; }
         public int OtherBreakDuration { get; set; }
         public int OverWorkDuration { get; set; }
         public decimal WaterConsumptionCount { get; set; }
         public decimal AmountOfLitreInOneUnit { get; set; }
-        public Boolean IsLunchTimeWorkTime { get; set; }
+        public bool IsLunchTimeWorkTime { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

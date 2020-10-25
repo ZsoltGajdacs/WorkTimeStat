@@ -2,17 +2,19 @@
 using System.Threading;
 using System.Windows;
 using WaterWork.Controls;
-using WaterWork.Dialogs;
 using WaterWork.Models;
 using WaterWork.Services;
 using WaterWork.Storage;
+using WaterWork.Timers;
 using WaterWork.Windows;
 
 namespace WaterWork
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
         private WorkKeeper workKeeper;
+        private SaveTimer saveTimer;
+        private bool disposedValue;
 
         #region Startup
         public MainWindow()
@@ -26,36 +28,41 @@ namespace WaterWork
             workKeeper = WorkKeeper.Instance;
             workKeeper.InitWatcher();
 
+            saveTimer = new SaveTimer(TimeSpan.FromMinutes(30));
+
             StatisticsService.FullReCountWorkedDays();
         }
         #endregion
 
-        // TODO: App start and exit times must be saved, and checked against the daily start/end times
-        // so that the app knows if it was shut down during the day, and also whether it was a crash!
         #region Window Events
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", 
+            Justification = "There is a crash when it tries to save at shutdown")]
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SaveService.SaveData(true);
+            try
+            {
+                SaveService.SaveData(SaveUsage.Yes);
+            }
+            catch (Exception)
+            {
+                // Log if something fails
+            }
+            
         }
 
-        private void TaskbarIcon_TrayBalloonTipClosed(object sender, RoutedEventArgs e)
+        private void DayEdit_CloseBallon()
         {
-            /*WorkDayService.SetCurrentDay(ref today);
-            StatisticsService.FullReCountWorkedDays();
-            SaveService.SaveData(false);*/
+            taskbarIcon.CloseBalloon();
         }
         #endregion
 
         #region Tray Click Events
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
-            WorkDayEditControl dayEdit = new WorkDayEditControl(ref workKeeper, WorkDayService.GetCurrentDay());
-            taskbarIcon.TrayBalloonTipClosed += TaskbarIcon_TrayBalloonTipClosed;
+            WorkDayEditControl dayEdit = new WorkDayEditControl(WorkDayService.GetCurrentDay());
+            dayEdit.CloseBallon += DayEdit_CloseBallon;
+
             taskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
-            
-            /*WorkdayEdit dayEdit = new WorkdayEdit(workKeeper.Settings, WorkDayService.GetCurrentDay());
-            dayEdit.Closed += DayEdit_Closed;
-            WorkDay today = dayEdit.ShowDialog();*/
         }
 
         private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
@@ -96,6 +103,39 @@ namespace WaterWork
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+        #endregion
+
+        #region Disposable
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed state (managed objects)
+                    saveTimer.Dispose();
+                }
+
+                //  free unmanaged resources (unmanaged objects) and override finalizer
+                //  set large fields to null
+                workKeeper.Dispose();
+                disposedValue = true;
+            }
+        }
+
+        // // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+         ~MainWindow()
+         {
+             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+             Dispose(disposing: false);
+         }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

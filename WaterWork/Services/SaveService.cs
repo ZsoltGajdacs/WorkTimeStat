@@ -7,12 +7,10 @@ namespace WaterWork.Services
 {
     internal static class SaveService
     {
-        internal static void SaveData(bool saveUsage)
+        internal static void SaveData(SaveUsage saveUsage)
         {
-            if (saveUsage)
+            if (SaveUsage.Yes == saveUsage)
             {
-                // Usage needs to be saved here, becuase this is the only place
-                // where I can be certain that I have the complete time
                 UsageService.AddUsageForToday(GetTodaysUsageForSave());
             }
 
@@ -30,7 +28,13 @@ namespace WaterWork.Services
             DateTime start = today.DayDate.Date + today.StartTime;
             DateTime end = today.DayDate.Date + today.EndTime;
 
-            return UsageService.GetUsageForTimeframe(start, end, true);
+            return UsageService.GetUsageForTimeframe(start, end);
         }
+    }
+
+    internal enum SaveUsage
+    {
+        Yes,
+        No
     }
 }
