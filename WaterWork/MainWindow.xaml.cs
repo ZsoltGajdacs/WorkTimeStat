@@ -95,8 +95,7 @@ namespace WaterWork
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
             StatisticsWindow statisticsWindow =
-                new StatisticsWindow(workKeeper.Settings.IsLunchTimeWorkTimeDefault,
-                                        workKeeper.Settings.DailyWorkHours);
+                new StatisticsWindow(workKeeper.Settings.DailyWorkHours);
             statisticsWindow.Show();
         }
 
@@ -124,16 +123,13 @@ namespace WaterWork
             }
         }
 
-        // // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
         ~MainWindow()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: false);
         }
 
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

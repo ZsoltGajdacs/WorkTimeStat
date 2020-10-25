@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -86,7 +87,7 @@ namespace WaterWork.Windows
             workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(ref workDay);
-            watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString() : NO_DATA;
+            watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString(CultureInfo.InvariantCulture) : NO_DATA;
         }
 
         private void SetEmptyLabels()

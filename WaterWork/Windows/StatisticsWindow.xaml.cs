@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using WaterWork.Models;
 using WaterWork.Services;
@@ -7,7 +8,7 @@ namespace WaterWork.Windows
 {
     public partial class StatisticsWindow : Window
     {
-        internal StatisticsWindow(bool isLunchTimeWorkTime, double dailyWorkHours)
+        internal StatisticsWindow(double dailyWorkHours)
         {
             InitializeComponent();
             mainGrid.DataContext = this;
@@ -49,7 +50,7 @@ namespace WaterWork.Windows
         private static string AddPlusIfNeeded(double num)
         {
             num = Math.Round(num, 2, MidpointRounding.ToEven);
-            return num > 0 ? "+" + num : num.ToString();
+            return num > 0 ? "+" + num : num.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

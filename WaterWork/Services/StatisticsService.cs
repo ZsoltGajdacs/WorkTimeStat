@@ -19,7 +19,7 @@ namespace WaterWork.Services
         internal static void CountWorkedDaysInMonth(int month)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
-            int workedDays = keeper.WorkDays.Where(d => d.Key.Date.Month == month).Count();
+            int workedDays = keeper.WorkDays.Count(d => d.Key.Date.Month == month);
             keeper.DaysWorkedInMonth[month] = workedDays;
         }
 
@@ -113,7 +113,7 @@ namespace WaterWork.Services
             double result = 0;
             foreach (TimeSpan usage in usagesInMonth)
             {
-                if (usage != null)
+                if (usage != default)
                 {
                     result += usage.TotalHours;
                 }

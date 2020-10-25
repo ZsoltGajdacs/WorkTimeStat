@@ -5,14 +5,14 @@ namespace WaterWork.Windows
 {
     public partial class SettingsWindow : Window
     {
-        private WorkKeeper keeper;
+        private readonly WorkKeeper keeper;
 
         internal SettingsWindow(ref WorkKeeper keeper)
         {
             InitializeComponent();
             this.keeper = keeper;
 
-            mainGrid.DataContext = keeper.Settings;
+            mainGrid.DataContext = this.keeper.Settings;
         }
     }
 }

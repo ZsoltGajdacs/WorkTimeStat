@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using UsageWatcher;
 using WaterWork.Helpers;
 using WaterWork.Models;
@@ -11,7 +9,7 @@ namespace WaterWork.Storage
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    internal class WorkKeeper : INotifyPropertyChanged, IDisposable
+    internal class WorkKeeper : IDisposable
     {
         [NonSerialized]
         private IWatcher watcher;
@@ -21,8 +19,6 @@ namespace WaterWork.Storage
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
         public WorkSettings Settings { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public IWatcher GetWatcher()
         {
@@ -34,13 +30,6 @@ namespace WaterWork.Storage
             watcher = new Watcher("WaterWork", Settings.WatcherResolution,
                 Settings.WatcherSavePreference, Settings.WatcherDataPrecision);
         }
-
-        #region Event handler
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
 
         #region Singleton
         public static WorkKeeper Instance { get { return lazy.Value; } }
@@ -71,7 +60,7 @@ namespace WaterWork.Storage
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -89,20 +78,15 @@ namespace WaterWork.Storage
             }
         }
 
-        //  override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~UsageKeeper()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
+        ~WorkKeeper()
+        {
+            Dispose(false);
+        }
 
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // uncomment the following line if the finalizer is overridden above.
-            //GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
