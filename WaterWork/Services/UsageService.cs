@@ -13,7 +13,7 @@ namespace WaterWork.Services
             {
                 day.UsageTime = usage;
             }
-            
+
         }
 
         internal static TimeSpan GetUsageForTimeframe(DateTime start, DateTime end)

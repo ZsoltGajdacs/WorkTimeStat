@@ -35,7 +35,7 @@ namespace WaterWork
         #endregion
 
         #region Window Events
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "There is a crash when it tries to save at shutdown")]
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -47,7 +47,7 @@ namespace WaterWork
             {
                 // Log if something fails
             }
-            
+
         }
 
         private void DayEdit_CloseBallon()
@@ -125,11 +125,11 @@ namespace WaterWork
         }
 
         // // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-         ~MainWindow()
-         {
-             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-             Dispose(disposing: false);
-         }
+        ~MainWindow()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
 
         public void Dispose()
         {

@@ -31,7 +31,7 @@ namespace WaterWork.Storage
 
         internal void InitWatcher()
         {
-            watcher = new Watcher("WaterWork", Settings.WatcherResolution, 
+            watcher = new Watcher("WaterWork", Settings.WatcherResolution,
                 Settings.WatcherSavePreference, Settings.WatcherDataPrecision);
         }
 
@@ -51,7 +51,7 @@ namespace WaterWork.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
-            
+
             Settings = new WorkSettings
             {
                 WatcherResolution = Resolution.TwoMinutes,
