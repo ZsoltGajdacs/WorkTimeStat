@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace WaterWork.Helpers
@@ -27,8 +28,9 @@ namespace WaterWork.Helpers
             }
         }
 
-        internal static T JsonObjectDeserialize<T>(string path)
+        internal static T JsonObjectDeserialize<T>(string saveDir, string fileName)
         {
+            string path = CreateSavePath(saveDir, fileName);
             if (new FileInfo(path).Exists)
             {
                 TextReader reader = null;
@@ -37,12 +39,12 @@ namespace WaterWork.Helpers
                     reader = new StreamReader(path);
                     string fileContents = reader.ReadToEnd();
 
-                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                    JsonSerializerSettings settings = new JsonSerializerSettings
                     {
                         MissingMemberHandling = MissingMemberHandling.Ignore
                     };
 
-                    return JsonConvert.DeserializeObject<T>(fileContents, jsonSerializerSettings);
+                    return JsonConvert.DeserializeObject<T>(fileContents, settings);
                 }
                 finally
                 {

@@ -52,7 +52,8 @@ namespace WaterWork.Storage
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>
         {
             string path = FilesLocation.GetSaveDirPath() + FilesLocation.GetWaterWorkFileName();
-            WorkKeeper workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(path);
+            WorkKeeper workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(
+                FilesLocation.GetSaveDirPath(), FilesLocation.GetWaterWorkFileName());
 
             return workKeeper ?? new WorkKeeper();
         });
