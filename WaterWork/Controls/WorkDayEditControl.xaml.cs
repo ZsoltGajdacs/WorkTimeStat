@@ -166,7 +166,13 @@ namespace WaterWork.Controls
         private void InitValues()
         {
             StartTime = dateToday + today.StartTime;
+            startTimeHour = today.StartTime.Hours;
+            startTimeMinute = today.StartTime.Minutes;
+
             EndTime = dateToday + today.EndTime;
+            endTimeHour = today.EndTime.Hours;
+            endTimeMinute = today.EndTime.Minutes;
+
             LunchBreakDuration = today.LunchBreakDuration;
             OtherBreakDuration = today.OtherBreakDuration;
             OverWorkDuration = today.OverWorkDuration;
