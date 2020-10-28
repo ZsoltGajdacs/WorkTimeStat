@@ -13,44 +13,63 @@ namespace WaterWork.Windows
             InitializeComponent();
             mainGrid.DataContext = this;
 
-            // Get data
+            StatisticsDto dto = new StatisticsDto();
+
             // Monthly
             int thisMonth = DateTime.Now.Month;
-            double mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisMonth);
-            double mFullHours = StatisticsService.GetMonthlyTotalHours(thisMonth, dailyWorkHours);
-            double mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
+            dto.mWorkedHours = StatisticsService.GetMonthlyWorkedHours(thisMonth);
+            dto.mFullHours = StatisticsService.GetMonthlyTotalHours(thisMonth, dailyWorkHours);
+            dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
 
             // Daily
             WorkDay today = WorkDayService.GetCurrentDay();
-            double dWorkedHours = StatisticsService.GetDailyWorkedHours(today);
-            double dCalcHours = StatisticsService.GetUsageForToday();
+            dto.dWorkedHours = StatisticsService.GetDailyWorkedHours(today);
+            dto.dCalcHours = StatisticsService.GetUsageForToday();
 
             // Yesterday
             WorkDay yesterWorkday = WorkDayService.GetYesterWorkDay();
-            double ywdWorkedHours = StatisticsService.GetDailyWorkedHours(yesterWorkday);
-            double ywdCalcHours = StatisticsService.GetUsageForDay(ref yesterWorkday);
+            dto.ywdWorkedHours = StatisticsService.GetDailyWorkedHours(yesterWorkday);
+            dto.ywdCalcHours = yesterWorkday.UsageTime.TotalHours;
 
-            // Assign to Labels
-            yesterworkdayWorkedHours.Content = ywdWorkedHours;
-            yesterworkdayFullHours.Content = dailyWorkHours;
-            yesterworkdayCalcHours.Content = ywdCalcHours;
-            yesterworkdayLeftHours.Content = AddPlusIfNeeded(ywdWorkedHours - dailyWorkHours);
+            AssignLabels(ref dto);
+        }
 
-            todayWorkedHours.Content = dWorkedHours;
-            todayFullHours.Content = dailyWorkHours;
-            todayCalcHours.Content = dCalcHours;
-            todayLeftHours.Content = AddPlusIfNeeded(dWorkedHours - dailyWorkHours);
+        private void AssignLabels(ref StatisticsDto dto)
+        {
+            yesterworkdayWorkedHours.Content = dto.ywdWorkedHours;
+            yesterworkdayFullHours.Content = dto.dailyWorkHours;
+            yesterworkdayCalcHours.Content = dto.ywdCalcHours;
+            yesterworkdayLeftHours.Content = AddPlusIfNeeded(dto.ywdWorkedHours - dto.dailyWorkHours);
 
-            monthlyWorkedHours.Content = mWorkedHours;
-            monthlyFullHours.Content = mFullHours;
-            monthlyCalcHours.Content = mCalcHours;
-            monthlyLeftHours.Content = AddPlusIfNeeded(mWorkedHours - mFullHours);
+            todayWorkedHours.Content = dto.dWorkedHours;
+            todayFullHours.Content = dto.dailyWorkHours;
+            todayCalcHours.Content = dto.dCalcHours;
+            todayLeftHours.Content = AddPlusIfNeeded(dto.dWorkedHours - dto.dailyWorkHours);
+
+            monthlyWorkedHours.Content = dto.mWorkedHours;
+            monthlyFullHours.Content = dto.mFullHours;
+            monthlyCalcHours.Content = dto.mCalcHours;
+            monthlyLeftHours.Content = AddPlusIfNeeded(dto.mWorkedHours - dto.mFullHours);
         }
 
         private static string AddPlusIfNeeded(double num)
         {
             num = Math.Round(num, 2, MidpointRounding.ToEven);
             return num > 0 ? "+" + num : num.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private class StatisticsDto
+        {
+            public double dailyWorkHours;
+
+            // Monthly
+            public double mWorkedHours, mFullHours, mCalcHours;
+
+            // Daily
+            public double dWorkedHours, dCalcHours;
+
+            // Yesterday
+            public double ywdWorkedHours, ywdCalcHours;
         }
     }
 }
