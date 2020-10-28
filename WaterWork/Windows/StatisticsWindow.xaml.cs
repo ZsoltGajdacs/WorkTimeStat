@@ -29,7 +29,7 @@ namespace WaterWork.Windows
             // Yesterday
             WorkDay yesterWorkday = WorkDayService.GetYesterWorkDay();
             dto.ywdWorkedHours = StatisticsService.GetDailyWorkedHours(yesterWorkday);
-            dto.ywdCalcHours = yesterWorkday.UsageTime.TotalHours;
+            dto.ywdCalcHours = StatisticsService.GetUsageForDay(yesterWorkday);
 
             AssignLabels(ref dto);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WaterWork.Models;
 using WaterWork.Storage;
@@ -73,20 +74,16 @@ namespace WaterWork.Services
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
-        internal static double GetUsageForDay(ref WorkDay day)
+        internal static double GetUsageForDay(WorkDay day)
         {
             if (day == null)
             {
-                return 0.0;
+                return 0;
             }
 
             if (day.DayDate != DateTime.Today)
             {
-                DateTime startDate = day.DayDate.Date + day.StartTime;
-                DateTime endDate = day.DayDate.Date + day.EndTime;
-
-                TimeSpan usageInTimeframe = UsageService.GetUsageForTimeframe(startDate, endDate);
-                return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+                return RoundToMidWithTwoPrecision(day.UsageTime.TotalHours);
             }
             else
             {
@@ -107,7 +104,7 @@ namespace WaterWork.Services
         internal static double GetUsageForMonth(int month)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
-            System.Collections.Generic.IEnumerable<TimeSpan> usagesInMonth =
+            IEnumerable<TimeSpan> usagesInMonth =
                     keeper.WorkDays.Where(d => d.Key.Month == month)
                                                 .Select(d => d.Value.UsageTime);
             double result = 0;

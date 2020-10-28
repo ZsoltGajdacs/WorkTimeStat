@@ -86,7 +86,7 @@ namespace WaterWork.Windows
             overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
             workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
 
-            double daysUsage = StatisticsService.GetUsageForDay(ref workDay);
+            double daysUsage = StatisticsService.GetUsageForDay(workDay);
             watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString(CultureInfo.InvariantCulture) : NO_DATA;
         }
 
