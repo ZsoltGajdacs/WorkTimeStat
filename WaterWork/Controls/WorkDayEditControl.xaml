@@ -56,7 +56,7 @@
                                Minimum="6" Maximum="14" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
                 <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
-                               Minimum="0" Maximum="59" ClipValueToMinMax="True" Increment="1"
+                               Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
 
@@ -69,7 +69,7 @@
                                Minimum="12" Maximum="23" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
                 <xce:IntegerUpDown x:Name="WorkEndMinute" Value="{Binding EndTimeMinute, Mode=TwoWay}" 
-                               Minimum="0" Maximum="59" ClipValueToMinMax="True" Increment="1"
+                               Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
 
