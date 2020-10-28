@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using UsageWatcher;
 using WaterWork.Storage;
 
 namespace WaterWork.Windows
@@ -12,6 +15,7 @@ namespace WaterWork.Windows
             InitializeComponent();
             this.keeper = keeper;
 
+            ResCombo.ItemsSource = Enum.GetValues(typeof(Resolution)).Cast<Resolution>();
             mainGrid.DataContext = this.keeper.Settings;
         }
     }
