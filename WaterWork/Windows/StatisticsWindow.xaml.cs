@@ -13,7 +13,10 @@ namespace WaterWork.Windows
             InitializeComponent();
             mainGrid.DataContext = this;
 
-            StatisticsDto dto = new StatisticsDto();
+            StatisticsDto dto = new StatisticsDto
+            {
+                dailyWorkHours = dailyWorkHours
+            };
 
             // Monthly
             int thisMonth = DateTime.Now.Month;
