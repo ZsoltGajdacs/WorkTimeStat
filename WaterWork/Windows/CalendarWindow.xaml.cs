@@ -84,7 +84,7 @@ namespace WaterWork.Windows
             lunchBreakTimeLabel.Content = workDay.LunchBreakDuration + " perc";
             otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
             overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
-            workedTimeLabel.Content = StatisticsService.GetDailyWorkedHours(workDay);
+            workedTimeLabel.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
             watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString(CultureInfo.InvariantCulture) : NO_DATA;

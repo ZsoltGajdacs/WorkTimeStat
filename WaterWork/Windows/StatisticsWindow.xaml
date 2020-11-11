@@ -40,7 +40,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Tegnap: " Grid.Column="3" Grid.Row="1"/>
+        <Label Content="Előző nap: " Grid.Column="3" Grid.Row="1"/>
         <Label Content="Ma: " Grid.Column="5" Grid.Row="1"/>
         <Label Content="Hónapban: " Grid.Column="7" Grid.Row="1"/>
 

@@ -12,42 +12,87 @@ namespace WaterWork.Services
         {
             for (int monthNum = 1; monthNum < 13; ++monthNum)
             {
-                CountWorkedDaysInMonth(monthNum);
+                CountOfficialWorkedDaysInMonth(monthNum);
             }
         }
 
         #region Month counters
-        internal static void CountWorkedDaysInMonth(int month)
+        internal static void CountOfficialWorkedDaysInMonth(int month)
         {
+            IEnumerable<WorkDay> monthlyWorkdays = FilterOfficalWorkdaysInMonth(month);
+
             WorkKeeper keeper = WorkKeeper.Instance;
-            int workedDays = keeper.WorkDays.Count(d => d.Key.Date.Month == month);
-            keeper.DaysWorkedInMonth[month] = workedDays;
+            keeper.DaysWorkedInMonth[month] = monthlyWorkdays.Count();
         }
 
-        internal static double GetMonthlyWorkedHours(int month)
+        internal static double CalcMonthlyWorkedHours(int month)
         {
-            WorkKeeper keeper = WorkKeeper.Instance;
-            System.Collections.Generic.IEnumerable<WorkDay> workDaysInMonth = keeper.WorkDays.Where(d => d.Key.Month == month)
-                                                    .Select(d => d.Value);
-            double result = 0;
-            foreach (WorkDay workDay in workDaysInMonth)
-            {
+            IEnumerable<WorkDay> workDaysInMonth = FilterDaysWithWorkedHoursInMonth(month);
 
-                result += GetDailyWorkedHours(workDay);
-            }
+            double result = CalcWorkedHoursOnGivenDays(workDaysInMonth);
 
             return RoundToMidWithTwoPrecision(result);
         }
 
-        internal static double GetMonthlyTotalHours(int month, double workdayHourLength)
+        /// <summary>
+        /// Gives back the amount of hours based on the number of official workdays. 
+        /// This excludes the sick and leave days on which worked hours were logged.
+        /// </summary>
+        internal static double CalcMonthlyTotalHours(int month)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
-            return keeper.DaysWorkedInMonth[month] * workdayHourLength;
+            return keeper.DaysWorkedInMonth[month] * keeper.Settings.DailyWorkHours;
+        }
+
+        /// <summary>
+        /// Gives back the difference of the actual worked hours and the required ones. 
+        /// Positive number: More hours than required
+        /// Negative number: Less hours than needed
+        /// </summary>
+        internal static double CalcMonthlyHoursDifference(int month)
+        {
+            var daysWithWorkedHours = FilterDaysWithWorkedHoursInMonth(month);
+            double mWorked = CalcWorkedHoursOnGivenDays(daysWithWorkedHours);
+
+            double mTotal = CalcMonthlyTotalHours(month);
+
+            return mWorked > mTotal ? mWorked - mTotal : mTotal - mWorked;
+        }
+
+        private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int month)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+
+            return keeper.WorkDays
+                .Where(w => w.Key.Date.Month == month)
+                .Where(d => !keeper.SickDays.Contains(d.Key))
+                .Where(l => !keeper.LeaveDays.Contains(l.Key))
+                .Select(d => d.Value);
+        }
+
+        private static IEnumerable<WorkDay> FilterDaysWithWorkedHoursInMonth(int month)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+
+            return keeper.WorkDays
+                .Where(w => w.Key.Date.Month == month)
+                .Select(d => d.Value);
+        }
+
+        private static double CalcWorkedHoursOnGivenDays(IEnumerable<WorkDay> workDays)
+        {
+            double workedHours = 0;
+            foreach (WorkDay day in workDays)
+            {
+                workedHours += CalcDailyWorkedHours(day);
+            }
+
+            return workedHours;
         }
         #endregion
 
         #region Day Counters
-        internal static double GetDailyWorkedHours(WorkDay day)
+        internal static double CalcDailyWorkedHours(WorkDay day)
         {
             if (day == null)
             {
@@ -65,6 +110,42 @@ namespace WaterWork.Services
             }
 
             return minutesWorked / 60;
+        }
+
+        /// <summary>
+        /// Calculates the daily needed work amount based on whether the day was a sickday or not.
+        /// </summary>
+        internal static double CalcFullHoursForDay(WorkDay day)
+        {
+            bool isSickday = IsDaySickDay(day);
+            return isSickday ? 0 : WorkKeeper.Instance.Settings.DailyWorkHours;
+        }
+
+        /// <summary>
+        /// Calculates the difference between the required and actually done worktime
+        /// </summary>
+        internal static double CalcDailyHoursDifference(WorkDay day)
+        {
+            double workedHours = CalcDailyWorkedHours(day);
+            double diff;
+
+            if (IsDaySickDay(day))
+            {
+                diff = workedHours;
+            }
+            else
+            {
+                double requiredHours = CalcFullHoursForDay(day);
+                diff = workedHours - requiredHours;
+            }
+
+            return diff;
+        }
+
+        private static bool IsDaySickDay(WorkDay day)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+            return keeper.SickDays.Exists(s => s.Date == day.DayDate);
         }
         #endregion
 
@@ -103,10 +184,9 @@ namespace WaterWork.Services
 
         internal static double GetUsageForMonth(int month)
         {
-            WorkKeeper keeper = WorkKeeper.Instance;
-            IEnumerable<TimeSpan> usagesInMonth =
-                    keeper.WorkDays.Where(d => d.Key.Month == month)
-                                                .Select(d => d.Value.UsageTime);
+            IEnumerable<WorkDay> workDays = FilterDaysWithWorkedHoursInMonth(month);
+            IEnumerable<TimeSpan> usagesInMonth = workDays.Select(d => d.UsageTime);
+
             double result = 0;
             foreach (TimeSpan usage in usagesInMonth)
             {
