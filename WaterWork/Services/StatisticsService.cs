@@ -117,6 +117,11 @@ namespace WaterWork.Services
         /// </summary>
         internal static double CalcFullHoursForDay(WorkDay day)
         {
+            if (day == null)
+            {
+                return 0;
+            }
+
             bool isSickday = IsDaySickDay(day);
             return isSickday ? 0 : WorkKeeper.Instance.Settings.DailyWorkHours;
         }
@@ -126,6 +131,11 @@ namespace WaterWork.Services
         /// </summary>
         internal static double CalcDailyHoursDifference(WorkDay day)
         {
+            if (day == null)
+            {
+                return 0;
+            }
+
             double workedHours = CalcDailyWorkedHours(day);
             double diff;
 
@@ -175,6 +185,11 @@ namespace WaterWork.Services
         internal static double GetUsageForToday()
         {
             WorkDay day = WorkDayService.GetCurrentDay();
+            if (day == null)
+            {
+                return 0;
+            }
+
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
