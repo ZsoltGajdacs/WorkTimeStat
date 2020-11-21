@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Services;
 
@@ -44,19 +45,19 @@ namespace WaterWork.Windows
 
         private void AssignLabels(ref StatisticsDto dto)
         {
-            yesterworkdayWorkedHours.Content = dto.ywdWorkedHours;
-            yesterworkdayFullHours.Content = dto.ywdFullHours;
-            yesterworkdayCalcHours.Content = dto.ywdCalcHours;
-            yesterworkdayLeftHours.Content =dto.ywdLeftHours;
+            yesterworkdayWorkedHours.Content = NumberFormatter.FormatNum(dto.ywdWorkedHours);
+            yesterworkdayFullHours.Content = NumberFormatter.FormatNum(dto.ywdFullHours);
+            yesterworkdayCalcHours.Content = NumberFormatter.FormatNum(dto.ywdCalcHours);
+            yesterworkdayLeftHours.Content = dto.ywdLeftHours;
 
-            todayWorkedHours.Content = dto.dWorkedHours;
-            todayFullHours.Content = dto.dFullHours;
-            todayCalcHours.Content = dto.dCalcHours;
+            todayWorkedHours.Content = NumberFormatter.FormatNum(dto.dWorkedHours);
+            todayFullHours.Content = NumberFormatter.FormatNum(dto.dFullHours);
+            todayCalcHours.Content = NumberFormatter.FormatNum(dto.dCalcHours);
             todayLeftHours.Content = dto.dLeftHours;
 
-            monthlyWorkedHours.Content = dto.mWorkedHours;
-            monthlyFullHours.Content = dto.mFullHours;
-            monthlyCalcHours.Content = dto.mCalcHours;
+            monthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.mWorkedHours);
+            monthlyFullHours.Content = NumberFormatter.FormatNum(dto.mFullHours);
+            monthlyCalcHours.Content = NumberFormatter.FormatNum(dto.mCalcHours);
             monthlyLeftHours.Content = dto.mLeftHours;
         }
 

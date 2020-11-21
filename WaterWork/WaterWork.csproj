@@ -129,6 +129,7 @@
     <Compile Include="Events\CloseTheBallonEvent.cs" />
     <Compile Include="Helpers\DPI.cs" />
     <Compile Include="Helpers\FilesLocation.cs" />
+    <Compile Include="Helpers\NumberFormatter.cs" />
     <Compile Include="Helpers\Serializer.cs" />
     <Compile Include="Models\WorkSettings.cs" />
     <Compile Include="Services\SaveService.cs" />

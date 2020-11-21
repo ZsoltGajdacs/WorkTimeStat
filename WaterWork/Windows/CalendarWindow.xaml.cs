@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WaterWork.Helpers;
 using WaterWork.Models;
 using WaterWork.Services;
 using WaterWork.Storage;
@@ -11,8 +11,6 @@ namespace WaterWork.Windows
 {
     public partial class CalendarWindow : Window
     {
-        private static string NO_DATA = "-";
-
         private WorkKeeper keeper;
         private DateTime currDate;
         private int numOfLeavesLeft;
@@ -87,18 +85,18 @@ namespace WaterWork.Windows
             workedTimeLabel.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
-            watchedTimeLabel.Content = daysUsage != 0 ? daysUsage.ToString(CultureInfo.InvariantCulture) : NO_DATA;
+            watchedTimeLabel.Content = NumberFormatter.FormatNum(daysUsage);
         }
 
         private void SetEmptyLabels()
         {
-            startTimeLabel.Content = NO_DATA;
-            endTimeLabel.Content = NO_DATA;
-            lunchBreakTimeLabel.Content = NO_DATA;
-            otherBreakTimeLabel.Content = NO_DATA;
-            overWorkTimeLabel.Content = NO_DATA;
-            workedTimeLabel.Content = NO_DATA;
-            watchedTimeLabel.Content = NO_DATA;
+            startTimeLabel.Content = NumberFormatter.NO_DATA;
+            endTimeLabel.Content = NumberFormatter.NO_DATA;
+            lunchBreakTimeLabel.Content = NumberFormatter.NO_DATA;
+            otherBreakTimeLabel.Content = NumberFormatter.NO_DATA;
+            overWorkTimeLabel.Content = NumberFormatter.NO_DATA;
+            workedTimeLabel.Content = NumberFormatter.NO_DATA;
+            watchedTimeLabel.Content = NumberFormatter.NO_DATA;
         }
 
         private void CalendarSetLeaveDay(DateTime selectedDate)
