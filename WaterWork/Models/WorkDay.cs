@@ -23,11 +23,13 @@ namespace WaterWork.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region CTORS
-        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit)
+        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit, double dailyWorkHours)
         {
             AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
+            StartTime = DateTime.Now.TimeOfDay;
+            EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
         }
         #endregion
 

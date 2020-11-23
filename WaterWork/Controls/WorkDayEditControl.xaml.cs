@@ -150,9 +150,9 @@ namespace WaterWork.Controls
         {
             InitializeComponent();
 
-            WorkKeeper keeper = WorkKeeper.Instance;
-            this.today = today ?? new WorkDay(keeper.Settings.IsLunchTimeWorkTimeDefault,
-                                                keeper.Settings.AmountOfLitreInOneUnit);
+            WorkSettings settings = WorkKeeper.Instance.Settings;
+            this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault,
+                                                settings.AmountOfLitreInOneUnit, settings.DailyWorkHours);
             dateToday = DateTime.Now.Date;
 
             InitValues();
