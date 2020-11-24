@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WaterWork.Helpers;
 
 namespace WaterWork.Models
 {
@@ -28,7 +29,7 @@ namespace WaterWork.Models
             AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
-            StartTime = DateTime.Now.TimeOfDay;
+            StartTime = NumberFormatter.RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
         }
         #endregion
