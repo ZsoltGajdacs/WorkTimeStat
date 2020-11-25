@@ -6,7 +6,7 @@ namespace WaterWork.Helpers
     /// <summary>
     /// https://www.codeproject.com/questions/558094/howplustoplusgetplustheplussystemplusdpiplusplusse
     /// </summary>
-    internal static class DPI
+    internal static class Dpi
     {
         private const float BaseScaleNum = 96;
         private const float BaseScaleUnit = BaseScaleNum / 100;

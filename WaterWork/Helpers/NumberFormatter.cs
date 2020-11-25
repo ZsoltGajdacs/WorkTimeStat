@@ -3,9 +3,9 @@ using System.Globalization;
 
 namespace WaterWork.Helpers
 {
-    internal class NumberFormatter
+    internal static class NumberFormatter
     {
-        public static string NO_DATA = "-";
+        public const string NO_DATA = "-";
 
         internal static string FormatNum(double num)
         {
