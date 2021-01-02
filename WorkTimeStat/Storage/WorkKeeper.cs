@@ -52,7 +52,7 @@ namespace WorkTimeStat.Storage
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>
         {
             WorkKeeper workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(
-                FilesLocation.GetSaveDirPath(), FilesLocation.GetWaterWorkFileName());
+                FilesLocation.GetSaveDirPath(), FilesLocation.GetSaveFileName());
 
             return workKeeper ?? new WorkKeeper();
         });

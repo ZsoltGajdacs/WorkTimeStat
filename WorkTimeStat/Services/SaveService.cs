@@ -16,7 +16,7 @@ namespace WorkTimeStat.Services
 
             // Serialization stuff
             string saveDirPath = FilesLocation.GetSaveDirPath();
-            string waterWorkFileName = FilesLocation.GetWaterWorkFileName();
+            string waterWorkFileName = FilesLocation.GetSaveFileName();
             WorkKeeper keeper = WorkKeeper.Instance;
 
             Serializer.JsonObjectSerialize(saveDirPath, waterWorkFileName, ref keeper, DoBackup.Yes);
