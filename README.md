@@ -1,4 +1,4 @@
-# WaterWork
+# WorkTimeStat
 A very small app for the purpose of keeping track of when you take up work and when you finish.
 This allows you to keep track of your hours, so you always know how much more you need to work on each day.
 
