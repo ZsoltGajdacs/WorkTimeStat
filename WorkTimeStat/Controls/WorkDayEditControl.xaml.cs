@@ -29,8 +29,8 @@ namespace WorkTimeStat.Controls
         private int _otherBreakDuration;
         private int _overWorkDuration;
 
-        public IEnumerable<string> OverWorkTypes { get; private set; }
-        private OverWorkType chosenOverWorkType;
+        public IEnumerable<string> WorkTypes { get; private set; }
+        private WorkDayType chosenOverWorkType;
 
         #region Properties
         public DateTime StartTime
@@ -158,16 +158,16 @@ namespace WorkTimeStat.Controls
             OtherBreakDuration = today.OtherBreakDuration;
             OverWorkDuration = today.OverWorkDuration;
 
-            OverWorkTypes = FillOverWorkList();
+            WorkTypes = FillWorkTypeList();
         }
 
         private void SetBindings()
         {
             editGrid.DataContext = this;
-            overWorkType.ItemsSource = OverWorkTypes;
+            WorkType.ItemsSource = WorkTypes;
 
-            chosenOverWorkType = today.OverWorkType;
-            overWorkType.SelectedIndex = (int)chosenOverWorkType;
+            chosenOverWorkType = today.WorkDayType;
+            WorkType.SelectedIndex = (int)chosenOverWorkType;
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace WorkTimeStat.Controls
             today.LunchBreakDuration = LunchBreakDuration;
             today.OtherBreakDuration = OtherBreakDuration;
             today.OverWorkDuration = OverWorkDuration;
-            today.OverWorkType = chosenOverWorkType;
+            today.WorkDayType = chosenOverWorkType;
 
             WorkDayService.SetCurrentDay(ref today);
             StatisticsService.FullReCountWorkedDays();
@@ -188,30 +188,28 @@ namespace WorkTimeStat.Controls
         }
 
         // TODO: This is probably not the best place for this. Find a better one!
-        private static List<string> FillOverWorkList()
+        private static List<string> FillWorkTypeList()
         {
-            IEnumerable<OverWorkType> enumList = EnumUtil.GetValues<OverWorkType>();
+            IEnumerable<WorkDayType> enumList = EnumUtil.GetValues<WorkDayType>();
 
-            List<string> enumNevek = new List<string>();
-            IEnumerator<OverWorkType> overWorkEnumerator = enumList.GetEnumerator();
+            List<string> enumNames = new List<string>();
+            IEnumerator<WorkDayType> overWorkEnumerator = enumList.GetEnumerator();
             while (overWorkEnumerator.MoveNext())
             {
-                OverWorkType workType = overWorkEnumerator.Current;
-                enumNevek.Add(workType.GetDescription());
+                WorkDayType workType = overWorkEnumerator.Current;
+                enumNames.Add(workType.GetDescription());
             }
 
-            return enumNevek;
+            return enumNames;
         }
 
         private TimeSpan CalcStartTime()
         {
-            //return StartTime - dateToday;
             return TimeSpan.FromHours(_startTimeHour) + TimeSpan.FromMinutes(_startTimeMinute);
         }
 
         private TimeSpan CalcEndTime()
         {
-            //return EndTime - dateToday;
             return TimeSpan.FromHours(EndTimeHour) + TimeSpan.FromMinutes(_endTimeMinute);
         }
 
@@ -232,10 +230,10 @@ namespace WorkTimeStat.Controls
             CloseBallon?.Invoke();
         }
 
-        private void OverWorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selection = overWorkType.SelectedValue.ToString();
-            EnumMatchResult<OverWorkType> result = EnumUtil.GetEnumForString<OverWorkType>(selection);
+            string selection = WorkType.SelectedValue.ToString();
+            EnumMatchResult<WorkDayType> result = EnumUtil.GetEnumForString<WorkDayType>(selection);
 
             if (result != null)
             {

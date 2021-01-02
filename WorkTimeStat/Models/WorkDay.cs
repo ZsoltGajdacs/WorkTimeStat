@@ -19,7 +19,7 @@ namespace WorkTimeStat.Models
         public int LunchBreakDuration { get; set; }
         public int OtherBreakDuration { get; set; }
         public int OverWorkDuration { get; set; }
-        public OverWorkType OverWorkType { get; set; }
+        public WorkDayType WorkDayType { get; set; }
         public decimal WaterConsumptionCount { get; set; }
         public decimal AmountOfLitreInOneUnit { get; set; }
         public bool IsLunchTimeWorkTime { get; set; }
@@ -34,6 +34,7 @@ namespace WorkTimeStat.Models
             DayDate = DateTime.Now.Date;
             StartTime = NumberFormatter.RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
+            WorkDayType = WorkDayType.NORMAL;
         }
         #endregion
 

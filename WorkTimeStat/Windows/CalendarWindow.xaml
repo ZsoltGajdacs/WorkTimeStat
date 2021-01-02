@@ -42,6 +42,8 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -70,9 +72,10 @@
         <Label Content="Zárás: " Grid.Column="3" Grid.Row="11"/>
         <Label Content="Ebédszünet: " Grid.Column="3" Grid.Row="13"/>
         <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="15"/>
-        <Label Content="Túlmunka: " Grid.Column="3" Grid.Row="17"/>
-        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="19"/>
-        <Label Content="Mért órák: " Grid.Column="3" Grid.Row="21"/>
+        <Label Content="Túlóra: " Grid.Column="3" Grid.Row="17"/>
+        <Label Content="Munkanap típusa: " Grid.Column="3" Grid.Row="19"/>
+        <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="21"/>
+        <Label Content="Mért órák: " Grid.Column="3" Grid.Row="23"/>
 
         <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -91,9 +94,10 @@
         <Label x:Name="lunchBreakTimeValue" Grid.Column="5" Grid.Row="13"/>
         <Label x:Name="otherBreakTimeValue" Grid.Column="5" Grid.Row="15"/>
         <Label x:Name="overWorkTimeValue" Grid.Column="5" Grid.Row="17"/>
+        <Label x:Name="WorkTypeValue" Grid.Column="5" Grid.Row="19"/>
         
         <!-- Edit controls -->
-        <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+        <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Visibility="Collapsed">
             <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
                                Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
@@ -102,7 +106,7 @@
                                Background="#FF434343" Foreground="White"/>
         </StackPanel>
 
-        <StackPanel x:Name="WorkEnd" Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
+        <StackPanel x:Name="WorkEnd" Grid.Row="3" Grid.Column="3" Orientation="Horizontal"  Visibility="Collapsed">
             <xce:IntegerUpDown x:Name="WorkEndHour" Value="{Binding EndTimeHour, Mode=TwoWay}" 
                                Minimum="10" Maximum="23" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
@@ -113,23 +117,26 @@
 
         <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
-                               Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
+                               Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"
+                                Visibility="Collapsed"/>
 
         <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="White"
+                                Visibility="Collapsed"/>
 
         <xce:IntegerUpDown x:Name="nonworkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="11" 
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="White"
+                                 Visibility="Collapsed"/>
         <xce:IntegerUpDown />
 
-        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="18"/>
+        <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="20"/>
 
-        <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="19" FontWeight="Bold"/>
-        <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
+        <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
+        <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="23" FontWeight="Bold"/>
 
 
         <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="21" LastChildFill="False" Visibility="Collapsed">
@@ -141,7 +148,7 @@
                     Click="CancelBtn_Click"/>
         </DockPanel>
         
-        <Button x:Name="EditBtn" Content="Javítás" Grid.Column="1" Grid.Row="21"
+        <Button x:Name="EditBtn" Content="Javítás" Grid.Column="1" Grid.Row="23"
                     Click="EditBtn_Click"/>
     </Grid>
 </Window>

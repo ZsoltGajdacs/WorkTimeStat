@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WorkTimeStat.Enums;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
@@ -85,6 +86,7 @@ namespace WorkTimeStat.Windows
             lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " perc";
             otherBreakTimeValue.Content = workDay.OtherBreakDuration + " perc";
             overWorkTimeValue.Content = workDay.OverWorkDuration + " perc";
+            WorkTypeValue.Content = workDay.WorkDayType.GetDescription();
             workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
@@ -98,6 +100,7 @@ namespace WorkTimeStat.Windows
             lunchBreakTimeValue.Content = NumberFormatter.NO_DATA;
             otherBreakTimeValue.Content = NumberFormatter.NO_DATA;
             overWorkTimeValue.Content = NumberFormatter.NO_DATA;
+            WorkTypeValue.Content = NumberFormatter.NO_DATA;
             workedTimeValue.Content = NumberFormatter.NO_DATA;
             watchedTimeValue.Content = NumberFormatter.NO_DATA;
         }

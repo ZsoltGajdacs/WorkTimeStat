@@ -2,10 +2,10 @@
 
 namespace WorkTimeStat.Enums
 {
-    internal enum OverWorkType
+    internal enum WorkDayType
     {
-        [Description("-")]
-        NINCS,
+        [Description("Normál")]
+        NORMAL,
 
         [Description("Rendkívüli")]
         RENDKIVULI,

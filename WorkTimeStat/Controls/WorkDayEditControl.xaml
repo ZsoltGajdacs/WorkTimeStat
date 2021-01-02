@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkTimeStat.Controls"
-             xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             d:DataContext="{d:DesignInstance Type=local:WorkDayEditControl}"
              mc:Ignorable="d" 
              d:DesignHeight="130" d:DesignWidth="720" FontSize="14" 
              Background="#FF434343" Foreground="White">
@@ -40,7 +41,7 @@
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -84,7 +85,7 @@
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="overWorkLabel" Content="Túlmunka:" 
+            <Label x:Name="overWorkLabel" Content="Túlóra:"
                    Grid.Row="1" Grid.Column="11" 
                    Foreground="White"/>
             <xce:IntegerUpDown x:Name="overWorkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
@@ -92,21 +93,21 @@
                                Grid.Row="3" Grid.Column="11" 
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="overWorkTypeLabel" Content="Túlmunka típusa:" 
+            <Label x:Name="WorkTypeLabel" Content="Munkanap típusa:" 
                    Grid.Row="1" Grid.Column="13" 
                    Foreground="White"/>
-            <ComboBox x:Name="overWorkType"
+            <ComboBox x:Name="WorkType"
                                Grid.Row="3" Grid.Column="13" 
                                Background="#FF434343" Foreground="Black"
-                               SelectionChanged="OverWorkType_SelectionChanged"/>
+                               SelectionChanged="WorkType_SelectionChanged"/>
 
-            <Button x:Name="closeBtn" Content="Bezárás" FontSize="12"
-                    Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7"
-                    Click="CloseBtn_Click"/>
-            
             <Button x:Name="saveBtn" Content="Mentés" FontSize="12"
-                    Grid.Row="5" Grid.Column="9" Grid.ColumnSpan="7"
+                    Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7"
                     Click="SaveBtn_Click"/>
+            
+            <Button x:Name="closeBtn" Content="Bezárás" FontSize="12"
+                    Grid.Row="5" Grid.Column="9" Grid.ColumnSpan="5"
+                    Click="CloseBtn_Click"/>
         </Grid>
     </Border>
 </UserControl>
