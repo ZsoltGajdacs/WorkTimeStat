@@ -64,19 +64,6 @@ namespace WorkTimeStat
 
             taskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
-
-        private void TaskbarIcon_TrayRightMouseUp(object sender, RoutedEventArgs e)
-        {
-            WorkDay today = WorkDayService.GetCurrentDay();
-            today.IncreaseWaterConsumption();
-
-            decimal waterAmount = today.WaterConsumptionCount * today.AmountOfLitreInOneUnit;
-
-            taskbarIcon.ShowBalloonTip("Vízfogyasztás", "Már " + waterAmount + "l vizet ittál ma!",
-                                            Hardcodet.Wpf.TaskbarNotification.BalloonIcon.None);
-            Thread.Sleep(3000);
-            taskbarIcon.HideBalloonTip();
-        }
         #endregion
 
         #region Menu Click Events

@@ -11,9 +11,8 @@
         Visibility="Hidden" Closing="Window_Closing">
     <Grid>
         <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons\water_white.ico" 
-                        ToolTip="Bal gomb munkaidő, Jobb gomb víz fogyasztás növelése" 
-                        MenuActivation="MiddleClick" TrayRightMouseUp="TaskbarIcon_TrayRightMouseUp" 
-                        TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
+                        ToolTip="Bal gomb munkaidő, Jobb gomb menü" 
+                        MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
