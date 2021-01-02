@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
-using WaterWork.Helpers;
-using WaterWork.Models;
-using WaterWork.Services;
+using WorkTimeStat.Helpers;
+using WorkTimeStat.Models;
+using WorkTimeStat.Services;
 
-namespace WaterWork.Windows
+namespace WorkTimeStat.Windows
 {
     public partial class StatisticsWindow : Window
     {

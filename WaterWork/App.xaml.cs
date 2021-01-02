@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WaterWork
+namespace WorkTimeStat
 {
     /// <summary>
     /// Interaction logic for App.xaml

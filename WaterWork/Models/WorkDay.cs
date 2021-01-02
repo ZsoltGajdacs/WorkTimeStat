@@ -2,10 +2,10 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WaterWork.Enums;
-using WaterWork.Helpers;
+using WorkTimeStat.Enums;
+using WorkTimeStat.Helpers;
 
-namespace WaterWork.Models
+namespace WorkTimeStat.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]

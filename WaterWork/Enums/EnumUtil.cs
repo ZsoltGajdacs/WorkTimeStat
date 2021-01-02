@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WaterWork.Enums
+namespace WorkTimeStat.Enums
 {
     internal static class EnumUtil
     {

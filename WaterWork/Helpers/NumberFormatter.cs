@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace WaterWork.Helpers
+namespace WorkTimeStat.Helpers
 {
     internal static class NumberFormatter
     {

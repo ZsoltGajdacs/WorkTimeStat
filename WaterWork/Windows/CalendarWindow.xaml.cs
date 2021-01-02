@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WaterWork.Helpers;
-using WaterWork.Models;
-using WaterWork.Services;
-using WaterWork.Storage;
+using WorkTimeStat.Helpers;
+using WorkTimeStat.Models;
+using WorkTimeStat.Services;
+using WorkTimeStat.Storage;
 
-namespace WaterWork.Windows
+namespace WorkTimeStat.Windows
 {
     public partial class CalendarWindow : Window
     {

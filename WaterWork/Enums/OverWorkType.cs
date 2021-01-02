@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WaterWork.Enums
+namespace WorkTimeStat.Enums
 {
     internal enum OverWorkType
     {

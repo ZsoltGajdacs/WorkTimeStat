@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 
-namespace WaterWork.Helpers
+namespace WorkTimeStat.Helpers
 {
     /// <summary>
     /// Keeps the path strings for all serialized files

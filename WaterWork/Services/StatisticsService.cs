@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WaterWork.Models;
-using WaterWork.Storage;
+using WorkTimeStat.Models;
+using WorkTimeStat.Storage;
 
-namespace WaterWork.Services
+namespace WorkTimeStat.Services
 {
     internal static class StatisticsService
     {

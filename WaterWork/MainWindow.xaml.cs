@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
-using WaterWork.Controls;
-using WaterWork.Models;
-using WaterWork.Services;
-using WaterWork.Storage;
-using WaterWork.Timers;
-using WaterWork.Windows;
+using WorkTimeStat.Controls;
+using WorkTimeStat.Models;
+using WorkTimeStat.Services;
+using WorkTimeStat.Storage;
+using WorkTimeStat.Timers;
+using WorkTimeStat.Windows;
 
-namespace WaterWork
+namespace WorkTimeStat
 {
     public partial class MainWindow : Window, IDisposable
     {

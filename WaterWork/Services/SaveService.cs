@@ -1,9 +1,9 @@
 ﻿using System;
-using WaterWork.Helpers;
-using WaterWork.Models;
-using WaterWork.Storage;
+using WorkTimeStat.Helpers;
+using WorkTimeStat.Models;
+using WorkTimeStat.Storage;
 
-namespace WaterWork.Services
+namespace WorkTimeStat.Services
 {
     internal static class SaveService
     {

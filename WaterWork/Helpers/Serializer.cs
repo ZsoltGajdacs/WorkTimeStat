@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace WaterWork.Helpers
+namespace WorkTimeStat.Helpers
 {
     /// <summary>
     /// Keeps all the serializer methods

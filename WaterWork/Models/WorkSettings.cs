@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using UsageWatcher;
 
-namespace WaterWork.Models
+namespace WorkTimeStat.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]

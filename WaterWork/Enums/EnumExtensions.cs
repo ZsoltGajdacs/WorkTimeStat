@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace WaterWork.Enums
+namespace WorkTimeStat.Enums
 {
     /// <summary>
     /// Taken from: https://stackoverflow.com/a/19621488

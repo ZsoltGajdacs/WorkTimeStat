@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using UsageWatcher;
-using WaterWork.Helpers;
-using WaterWork.Models;
+using WorkTimeStat.Helpers;
+using WorkTimeStat.Models;
 
-namespace WaterWork.Storage
+namespace WorkTimeStat.Storage
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]

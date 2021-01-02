@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-namespace WaterWork.Helpers
+namespace WorkTimeStat.Helpers
 {
     internal class NativeMethods
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Timers;
-using WaterWork.Services;
+using WorkTimeStat.Services;
 
-namespace WaterWork.Timers
+namespace WorkTimeStat.Timers
 {
     internal class SaveTimer : IDisposable
     {

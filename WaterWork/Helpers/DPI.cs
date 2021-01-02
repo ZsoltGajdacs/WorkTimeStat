@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace WaterWork.Helpers
+namespace WorkTimeStat.Helpers
 {
     /// <summary>
     /// https://www.codeproject.com/questions/558094/howplustoplusgetplustheplussystemplusdpiplusplusse

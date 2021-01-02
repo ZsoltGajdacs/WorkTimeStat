@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows;
 using UsageWatcher;
-using WaterWork.Storage;
+using WorkTimeStat.Storage;
 
-namespace WaterWork.Windows
+namespace WorkTimeStat.Windows
 {
     public partial class SettingsWindow : Window
     {

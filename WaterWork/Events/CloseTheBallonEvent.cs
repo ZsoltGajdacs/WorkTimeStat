@@ -1,4 +1,4 @@
-﻿namespace WaterWork.Events
+﻿namespace WorkTimeStat.Events
 {
     internal delegate void CloseTheBallonEventHandler();
 }

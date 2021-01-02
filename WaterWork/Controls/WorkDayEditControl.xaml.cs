@@ -4,13 +4,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using WaterWork.Enums;
-using WaterWork.Events;
-using WaterWork.Models;
-using WaterWork.Services;
-using WaterWork.Storage;
+using WorkTimeStat.Enums;
+using WorkTimeStat.Events;
+using WorkTimeStat.Models;
+using WorkTimeStat.Services;
+using WorkTimeStat.Storage;
 
-namespace WaterWork.Controls
+namespace WorkTimeStat.Controls
 {
     public partial class WorkDayEditControl : UserControl, INotifyPropertyChanged
     {

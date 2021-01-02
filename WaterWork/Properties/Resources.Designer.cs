@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WaterWork.Properties {
+namespace WorkTimeStat.Properties {
     using System;
     
     
