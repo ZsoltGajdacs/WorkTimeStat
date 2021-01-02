@@ -20,12 +20,12 @@ namespace WorkTimeStat.Helpers
         }
 
         /// <summary>
-        /// Gives back the name of the WorkKeeper
+        /// Gives back the name of the save file
         /// </summary>
         /// <returns></returns>
-        internal static string GetWaterWorkFileName()
+        internal static string GetSaveFileName()
         {
-            return "waterwork" + DateTime.Now.Year.ToString(CultureInfo.InvariantCulture) + ".json";
+            return "worktimestat" + DateTime.Now.Year.ToString(CultureInfo.InvariantCulture) + ".json";
         }
     }
 }
