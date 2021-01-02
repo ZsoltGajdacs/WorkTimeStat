@@ -14,6 +14,12 @@ namespace WaterWork.Windows
             InitializeComponent();
             mainGrid.DataContext = this;
 
+            StatisticsDto dto = CreateStatDto(dailyWorkHours);
+            AssignDataToWindowControls(ref dto);
+        }
+
+        private static StatisticsDto CreateStatDto(double dailyWorkHours)
+        {
             StatisticsDto dto = new StatisticsDto
             {
                 dailyWorkHours = dailyWorkHours
@@ -25,6 +31,13 @@ namespace WaterWork.Windows
             dto.mFullHours = StatisticsService.CalcMonthlyTotalHours(thisMonth);
             dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
             dto.mLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth));
+
+            // Last month
+            int lastMonth = thisMonth == 1 ? 1 : thisMonth - 1;
+            dto.pmWorkedHours = StatisticsService.CalcMonthlyWorkedHours(lastMonth);
+            dto.pmFullHours = StatisticsService.CalcMonthlyTotalHours(lastMonth);
+            dto.pmCalcHours = StatisticsService.GetUsageForMonth(lastMonth);
+            dto.pmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth));
 
             // Daily
             WorkDay today = WorkDayService.GetCurrentDay();
@@ -40,10 +53,10 @@ namespace WaterWork.Windows
             dto.ywdCalcHours = StatisticsService.GetUsageForDay(yesterWorkday);
             dto.ywdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(yesterWorkday));
 
-            AssignLabels(ref dto);
+            return dto;
         }
 
-        private void AssignLabels(ref StatisticsDto dto)
+        private void AssignDataToWindowControls(ref StatisticsDto dto)
         {
             yesterworkdayWorkedHours.Content = NumberFormatter.FormatNum(dto.ywdWorkedHours);
             yesterworkdayFullHours.Content = NumberFormatter.FormatNum(dto.ywdFullHours);
@@ -59,6 +72,11 @@ namespace WaterWork.Windows
             monthlyFullHours.Content = NumberFormatter.FormatNum(dto.mFullHours);
             monthlyCalcHours.Content = NumberFormatter.FormatNum(dto.mCalcHours);
             monthlyLeftHours.Content = dto.mLeftHours;
+
+            prevMonthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.pmWorkedHours);
+            prevMonthlyFullHours.Content = NumberFormatter.FormatNum(dto.pmFullHours);
+            prevMonthlyCalcHours.Content = NumberFormatter.FormatNum(dto.pmCalcHours);
+            prevMonthlyLeftHours.Content = dto.pmLeftHours;
         }
 
         private static string AddPlusIfNeeded(double num)
@@ -74,6 +92,10 @@ namespace WaterWork.Windows
             // Monthly
             public double mWorkedHours, mFullHours, mCalcHours;
             public string mLeftHours;
+
+            // Previous Month
+            public double pmWorkedHours, pmFullHours, pmCalcHours;
+            public string pmLeftHours;
 
             // Daily
             public double dWorkedHours, dFullHours, dCalcHours;

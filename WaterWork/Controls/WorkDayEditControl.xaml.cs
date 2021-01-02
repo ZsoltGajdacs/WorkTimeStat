@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using WaterWork.Enums;
 using WaterWork.Events;
 using WaterWork.Models;
 using WaterWork.Services;
@@ -15,128 +17,108 @@ namespace WaterWork.Controls
         private WorkDay today;
         private readonly DateTime dateToday;
 
-        private DateTime startTime;
-        private int startTimeHour = 6;
-        private int startTimeMinute;
+        private DateTime _startTime;
+        private int _startTimeHour = 6;
+        private int _startTimeMinute;
 
-        private DateTime endTime;
-        private int endTimeHour = 12;
-        private int endTimeMinute;
+        private DateTime _endTime;
+        private int _endTimeHour = 12;
+        private int _endTimeMinute;
 
-        private int lunchBreakDuration;
-        private int otherBreakDuration;
-        private int overWorkDuration;
+        private int _lunchBreakDuration;
+        private int _otherBreakDuration;
+        private int _overWorkDuration;
 
-        private decimal consumptionCount;
-        private decimal bottleSize;
+        public IEnumerable<string> OverWorkTypes { get; private set; }
+        private OverWorkType chosenOverWorkType;
 
         #region Properties
         public DateTime StartTime
         {
-            get => startTime;
+            get => _startTime;
             set
             {
-                startTime = value;
+                _startTime = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int StartTimeHour
         {
-            get => startTimeHour;
+            get => _startTimeHour;
             set
             {
-                startTimeHour = value;
+                _startTimeHour = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int StartTimeMinute
         {
-            get => startTimeMinute;
+            get => _startTimeMinute;
             set
             {
-                startTimeMinute = value;
+                _startTimeMinute = value;
                 NotifyPropertyChanged();
             }
         }
 
         public DateTime EndTime
         {
-            get => endTime;
+            get => _endTime;
             set
             {
-                endTime = value;
+                _endTime = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int EndTimeHour
         {
-            get => endTimeHour;
+            get => _endTimeHour;
             set
             {
-                endTimeHour = value;
+                _endTimeHour = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int EndTimeMinute
         {
-            get => endTimeMinute;
+            get => _endTimeMinute;
             set
             {
-                endTimeMinute = value;
+                _endTimeMinute = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int LunchBreakDuration
         {
-            get => lunchBreakDuration;
+            get => _lunchBreakDuration;
             set
             {
-                lunchBreakDuration = value;
+                _lunchBreakDuration = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int OtherBreakDuration
         {
-            get => otherBreakDuration;
+            get => _otherBreakDuration;
             set
             {
-                otherBreakDuration = value;
+                _otherBreakDuration = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int OverWorkDuration
         {
-            get => overWorkDuration;
+            get => _overWorkDuration;
             set
             {
-                overWorkDuration = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public decimal ConsumptionCount
-        {
-            get => consumptionCount;
-            set
-            {
-                consumptionCount = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public decimal BottleSize
-        {
-            get => bottleSize;
-            set
-            {
-                bottleSize = value;
+                _overWorkDuration = value;
                 NotifyPropertyChanged();
             }
         }
@@ -154,10 +136,9 @@ namespace WaterWork.Controls
             this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault,
                                                 settings.AmountOfLitreInOneUnit, settings.DailyWorkHours);
             dateToday = DateTime.Now.Date;
-
+            
             InitValues();
-
-            editGrid.DataContext = this;
+            SetBindings();
         }
 
         /// <summary>
@@ -166,18 +147,27 @@ namespace WaterWork.Controls
         private void InitValues()
         {
             StartTime = dateToday + today.StartTime;
-            startTimeHour = today.StartTime.Hours;
-            startTimeMinute = today.StartTime.Minutes;
+            _startTimeHour = today.StartTime.Hours;
+            _startTimeMinute = today.StartTime.Minutes;
 
             EndTime = dateToday + today.EndTime;
-            endTimeHour = today.EndTime.Hours;
-            endTimeMinute = today.EndTime.Minutes;
+            _endTimeHour = today.EndTime.Hours;
+            _endTimeMinute = today.EndTime.Minutes;
 
             LunchBreakDuration = today.LunchBreakDuration;
             OtherBreakDuration = today.OtherBreakDuration;
             OverWorkDuration = today.OverWorkDuration;
-            ConsumptionCount = today.WaterConsumptionCount;
-            BottleSize = today.AmountOfLitreInOneUnit;
+
+            OverWorkTypes = FillOverWorkList();
+        }
+
+        private void SetBindings()
+        {
+            editGrid.DataContext = this;
+            overWorkType.ItemsSource = OverWorkTypes;
+
+            chosenOverWorkType = today.OverWorkType;
+            overWorkType.SelectedIndex = (int)chosenOverWorkType;
         }
 
         /// <summary>
@@ -190,24 +180,39 @@ namespace WaterWork.Controls
             today.LunchBreakDuration = LunchBreakDuration;
             today.OtherBreakDuration = OtherBreakDuration;
             today.OverWorkDuration = OverWorkDuration;
-            today.WaterConsumptionCount = ConsumptionCount;
-            today.AmountOfLitreInOneUnit = BottleSize;
+            today.OverWorkType = chosenOverWorkType;
 
             WorkDayService.SetCurrentDay(ref today);
             StatisticsService.FullReCountWorkedDays();
             SaveService.SaveData(SaveUsage.No);
         }
 
+        // TODO: This is probably not the best place for this. Find a better one!
+        private static List<string> FillOverWorkList()
+        {
+            IEnumerable<OverWorkType> enumList = EnumUtil.GetValues<OverWorkType>();
+
+            List<string> enumNevek = new List<string>();
+            IEnumerator<OverWorkType> overWorkEnumerator = enumList.GetEnumerator();
+            while (overWorkEnumerator.MoveNext())
+            {
+                OverWorkType workType = overWorkEnumerator.Current;
+                enumNevek.Add(workType.GetDescription());
+            }
+
+            return enumNevek;
+        }
+
         private TimeSpan CalcStartTime()
         {
             //return StartTime - dateToday;
-            return TimeSpan.FromHours(startTimeHour) + TimeSpan.FromMinutes(startTimeMinute);
+            return TimeSpan.FromHours(_startTimeHour) + TimeSpan.FromMinutes(_startTimeMinute);
         }
 
         private TimeSpan CalcEndTime()
         {
             //return EndTime - dateToday;
-            return TimeSpan.FromHours(EndTimeHour) + TimeSpan.FromMinutes(endTimeMinute);
+            return TimeSpan.FromHours(EndTimeHour) + TimeSpan.FromMinutes(_endTimeMinute);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -215,6 +220,7 @@ namespace WaterWork.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        #region Event Handlers
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             CloseBallon?.Invoke();
@@ -225,5 +231,17 @@ namespace WaterWork.Controls
             SaveValues();
             CloseBallon?.Invoke();
         }
+
+        private void OverWorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selection = overWorkType.SelectedValue.ToString();
+            EnumMatchResult<OverWorkType> result = EnumUtil.GetEnumForString<OverWorkType>(selection);
+
+            if (result != null)
+            {
+                chosenOverWorkType = result.FoundEnum;
+            }
+        }
+        #endregion
     }
 }

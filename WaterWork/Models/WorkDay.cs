@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WaterWork.Enums;
 using WaterWork.Helpers;
 
 namespace WaterWork.Models
@@ -14,9 +15,11 @@ namespace WaterWork.Models
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public TimeSpan UsageTime { get; set; }
+        public TimeSpan TotalDailyUsage { get; set; }
         public int LunchBreakDuration { get; set; }
         public int OtherBreakDuration { get; set; }
         public int OverWorkDuration { get; set; }
+        public OverWorkType OverWorkType { get; set; }
         public decimal WaterConsumptionCount { get; set; }
         public decimal AmountOfLitreInOneUnit { get; set; }
         public bool IsLunchTimeWorkTime { get; set; }

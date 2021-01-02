@@ -11,8 +11,11 @@ namespace WaterWork.Windows
 {
     public partial class CalendarWindow : Window
     {
-        private WorkKeeper keeper;
-        private DateTime currDate;
+        private const string EDIT_BTN_EDIT_LABEL = "Javítás";
+        private const string EDIT_BTN_SAVE_LABEL = "Mentés";
+
+        private readonly WorkKeeper keeper;
+        private readonly DateTime currDate;
         private int numOfLeavesLeft;
         private bool leaveAutochk;
         private bool sickAutochk;
@@ -77,26 +80,26 @@ namespace WaterWork.Windows
 
         private void SetLabels(ref WorkDay workDay)
         {
-            startTimeLabel.Content = workDay.StartTime;
-            endTimeLabel.Content = workDay.EndTime;
-            lunchBreakTimeLabel.Content = workDay.LunchBreakDuration + " perc";
-            otherBreakTimeLabel.Content = workDay.OtherBreakDuration + " perc";
-            overWorkTimeLabel.Content = workDay.OverWorkDuration + " perc";
-            workedTimeLabel.Content = StatisticsService.CalcDailyWorkedHours(workDay);
+            startTimeValue.Content = workDay.StartTime;
+            endTimeValue.Content = workDay.EndTime;
+            lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " perc";
+            otherBreakTimeValue.Content = workDay.OtherBreakDuration + " perc";
+            overWorkTimeValue.Content = workDay.OverWorkDuration + " perc";
+            workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
-            watchedTimeLabel.Content = NumberFormatter.FormatNum(daysUsage);
+            watchedTimeValue.Content = NumberFormatter.FormatNum(daysUsage);
         }
 
         private void SetEmptyLabels()
         {
-            startTimeLabel.Content = NumberFormatter.NO_DATA;
-            endTimeLabel.Content = NumberFormatter.NO_DATA;
-            lunchBreakTimeLabel.Content = NumberFormatter.NO_DATA;
-            otherBreakTimeLabel.Content = NumberFormatter.NO_DATA;
-            overWorkTimeLabel.Content = NumberFormatter.NO_DATA;
-            workedTimeLabel.Content = NumberFormatter.NO_DATA;
-            watchedTimeLabel.Content = NumberFormatter.NO_DATA;
+            startTimeValue.Content = NumberFormatter.NO_DATA;
+            endTimeValue.Content = NumberFormatter.NO_DATA;
+            lunchBreakTimeValue.Content = NumberFormatter.NO_DATA;
+            otherBreakTimeValue.Content = NumberFormatter.NO_DATA;
+            overWorkTimeValue.Content = NumberFormatter.NO_DATA;
+            workedTimeValue.Content = NumberFormatter.NO_DATA;
+            watchedTimeValue.Content = NumberFormatter.NO_DATA;
         }
 
         private void CalendarSetLeaveDay(DateTime selectedDate)
@@ -177,6 +180,27 @@ namespace WaterWork.Windows
             }
         }
 
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (EditPanel.Visibility == Visibility.Collapsed)
+            {
+                EditBtn.Visibility = Visibility.Collapsed;
+                EditPanel.Visibility = Visibility.Visible;
+            }
+
+
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Fixes
@@ -208,5 +232,6 @@ namespace WaterWork.Windows
         }
 
         #endregion
+
     }
 }

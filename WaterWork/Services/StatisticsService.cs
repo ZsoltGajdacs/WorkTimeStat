@@ -10,19 +10,19 @@ namespace WaterWork.Services
     {
         internal static void FullReCountWorkedDays()
         {
+            WorkKeeper keeper = WorkKeeper.Instance;
             for (int monthNum = 1; monthNum < 13; ++monthNum)
             {
-                CountOfficialWorkedDaysInMonth(monthNum);
+                int count = CountOfficialWorkedDaysInMonth(monthNum);
+                keeper.DaysWorkedInMonth[monthNum] = count;
             }
         }
 
         #region Month counters
-        internal static void CountOfficialWorkedDaysInMonth(int month)
+        internal static int CountOfficialWorkedDaysInMonth(int month)
         {
             IEnumerable<WorkDay> monthlyWorkdays = FilterOfficalWorkdaysInMonth(month);
-
-            WorkKeeper keeper = WorkKeeper.Instance;
-            keeper.DaysWorkedInMonth[month] = monthlyWorkdays.Count();
+            return monthlyWorkdays.Count();
         }
 
         internal static double CalcMonthlyWorkedHours(int month)

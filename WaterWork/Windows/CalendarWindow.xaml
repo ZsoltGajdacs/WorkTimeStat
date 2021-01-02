@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:WaterWork.Windows"
         mc:Ignorable="d"
         Title="Naptár nézet" ResizeMode="NoResize" Topmost="True" 
@@ -84,14 +85,63 @@
         <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="7"/>
         <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8"/>
         
-        <Label x:Name="startTimeLabel" Grid.Column="5" Grid.Row="9"/>
-        <Label x:Name="endTimeLabel" Grid.Column="5" Grid.Row="11"/>
-        <Label x:Name="lunchBreakTimeLabel" Grid.Column="5" Grid.Row="13"/>
-        <Label x:Name="otherBreakTimeLabel" Grid.Column="5" Grid.Row="15"/>
-        <Label x:Name="overWorkTimeLabel" Grid.Column="5" Grid.Row="17"/>
+        <!-- Read-only labels -->
+        <Label x:Name="startTimeValue" Grid.Column="5" Grid.Row="9"/>
+        <Label x:Name="endTimeValue" Grid.Column="5" Grid.Row="11"/>
+        <Label x:Name="lunchBreakTimeValue" Grid.Column="5" Grid.Row="13"/>
+        <Label x:Name="otherBreakTimeValue" Grid.Column="5" Grid.Row="15"/>
+        <Label x:Name="overWorkTimeValue" Grid.Column="5" Grid.Row="17"/>
+        
+        <!-- Edit controls -->
+        <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
+                               Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
+                               Background="#FF434343" Foreground="White"/>
+            <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
+                               Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
+                               Background="#FF434343" Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel x:Name="WorkEnd" Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
+            <xce:IntegerUpDown x:Name="WorkEndHour" Value="{Binding EndTimeHour, Mode=TwoWay}" 
+                               Minimum="10" Maximum="23" ClipValueToMinMax="True" Increment="1"
+                               Background="#FF434343" Foreground="White"/>
+            <xce:IntegerUpDown x:Name="WorkEndMinute" Value="{Binding EndTimeMinute, Mode=TwoWay}" 
+                               Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
+                               Background="#FF434343" Foreground="White"/>
+        </StackPanel>
+
+        <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
+                               Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
+                               Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
+
+        <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
+                               Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
+                               Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
+                               Background="#FF434343" Foreground="White"/>
+
+        <xce:IntegerUpDown x:Name="nonworkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
+                               Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
+                               Grid.Row="3" Grid.Column="11" 
+                               Background="#FF434343" Foreground="White"/>
+        <xce:IntegerUpDown />
+
         <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="18"/>
 
-        <Label x:Name="workedTimeLabel" Grid.Column="5" Grid.Row="19" FontWeight="Bold"/>
-        <Label x:Name="watchedTimeLabel" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
+        <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="19" FontWeight="Bold"/>
+        <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
+
+
+        <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="21" LastChildFill="False" Visibility="Collapsed">
+            <Button x:Name="SaveBtn" Content="Mentés"
+                    DockPanel.Dock="Right" Padding="20 0 20 0"
+                    Click="SaveBtn_Click"/>
+            <Button x:Name="CancelBtn" Content="Mégse"
+                    DockPanel.Dock="Left" Padding="20 0 20 0"
+                    Click="CancelBtn_Click"/>
+        </DockPanel>
+        
+        <Button x:Name="EditBtn" Content="Javítás" Grid.Column="1" Grid.Row="21"
+                    Click="EditBtn_Click"/>
     </Grid>
 </Window>

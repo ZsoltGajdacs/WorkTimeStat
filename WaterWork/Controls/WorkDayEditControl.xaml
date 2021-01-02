@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WaterWork.Controls"
              xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="130" d:DesignWidth="800" FontSize="14" 
+             d:DesignHeight="130" d:DesignWidth="720" FontSize="14" 
              Background="#FF434343" Foreground="White">
 
     <Border Margin="5"
@@ -40,9 +40,7 @@
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -53,7 +51,7 @@
                             Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>-->
             <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
-                               Minimum="6" Maximum="14" ClipValueToMinMax="True" Increment="1"
+                               Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
                 <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
                                Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
@@ -66,7 +64,7 @@
                             Grid.Row="3" Grid.Column="3" Background="#FF434343" Foreground="White"/>-->
             <StackPanel x:Name="WorkEnd" Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
                 <xce:IntegerUpDown x:Name="WorkEndHour" Value="{Binding EndTimeHour, Mode=TwoWay}" 
-                               Minimum="12" Maximum="23" ClipValueToMinMax="True" Increment="1"
+                               Minimum="10" Maximum="23" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
                 <xce:IntegerUpDown x:Name="WorkEndMinute" Value="{Binding EndTimeMinute, Mode=TwoWay}" 
                                Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
@@ -86,31 +84,21 @@
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="nonworkLabel" Content="Túlmunka:" 
+            <Label x:Name="overWorkLabel" Content="Túlmunka:" 
                    Grid.Row="1" Grid.Column="11" 
                    Foreground="White"/>
-            <xce:IntegerUpDown x:Name="nonworkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
+            <xce:IntegerUpDown x:Name="overWorkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="11" 
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="workWaterLabel" Content="Töltés szám:" 
+            <Label x:Name="overWorkTypeLabel" Content="Túlmunka típusa:" 
                    Grid.Row="1" Grid.Column="13" 
                    Foreground="White"/>
-            <xce:DecimalUpDown x:Name="workwaterCount" Value="{Binding ConsumptionCount, Mode=TwoWay}" 
-                               Minimum="0" Maximum="6" ClipValueToMinMax="True" FormatString="0.0"
-                               Increment="0.5"
+            <ComboBox x:Name="overWorkType"
                                Grid.Row="3" Grid.Column="13" 
-                               Background="#FF434343" Foreground="White"/>
-
-            <Label x:Name="workBottleLabel" Content="Flakon(liter):" 
-                   Grid.Row="1" Grid.Column="15" 
-                   Foreground="White"/>
-            <xce:DecimalUpDown x:Name="workBottleCount" Value="{Binding BottleSize, Mode=TwoWay}" 
-                               Minimum="0" Maximum="5" ClipValueToMinMax="True" FormatString="0.0"
-                               Increment="0.5"
-                               Grid.Row="3" Grid.Column="15" 
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="Black"
+                               SelectionChanged="OverWorkType_SelectionChanged"/>
 
             <Button x:Name="closeBtn" Content="Bezárás" FontSize="12"
                     Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7"
