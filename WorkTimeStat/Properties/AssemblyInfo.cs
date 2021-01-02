@@ -6,11 +6,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WaterWork")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WorkTimeStat")]
+[assembly: AssemblyDescription("A simple app to track your own hours of work")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZsGWorks")]
-[assembly: AssemblyProduct("WaterWork")]
+[assembly: AssemblyProduct("WorkTimeStat")]
 [assembly: AssemblyCopyright("Copyright © ZsGWorks 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
