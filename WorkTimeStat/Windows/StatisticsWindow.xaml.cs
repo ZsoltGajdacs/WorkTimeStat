@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
+using WorkTimeStat.Enums;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
@@ -20,24 +22,23 @@ namespace WorkTimeStat.Windows
 
         private static StatisticsDto CreateStatDto(double dailyWorkHours)
         {
-            StatisticsDto dto = new StatisticsDto
-            {
-                dailyWorkHours = dailyWorkHours
-            };
+            StatisticsDto dto = new StatisticsDto { dailyWorkHours = dailyWorkHours };
+
+            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.NORMAL };
 
             // Monthly
             int thisMonth = DateTime.Now.Month;
-            dto.mWorkedHours = StatisticsService.CalcMonthlyWorkedHours(thisMonth);
-            dto.mFullHours = StatisticsService.CalcMonthlyTotalHours(thisMonth);
-            dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth);
-            dto.mLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth));
+            dto.mWorkedHours = StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes);
+            dto.mFullHours = StatisticsService.ReturnMonthlyTotalHours(thisMonth);
+            dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth, dayTypes);
+            dto.mLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, dayTypes));
 
             // Last month
-            int lastMonth = thisMonth == 1 ? 1 : thisMonth - 1;
-            dto.pmWorkedHours = StatisticsService.CalcMonthlyWorkedHours(lastMonth);
-            dto.pmFullHours = StatisticsService.CalcMonthlyTotalHours(lastMonth);
-            dto.pmCalcHours = StatisticsService.GetUsageForMonth(lastMonth);
-            dto.pmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth));
+            int lastMonth = thisMonth - 1;
+            dto.pmWorkedHours = StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes);
+            dto.pmFullHours = StatisticsService.ReturnMonthlyTotalHours(lastMonth);
+            dto.pmCalcHours = StatisticsService.GetUsageForMonth(lastMonth, dayTypes);
+            dto.pmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, dayTypes));
 
             // Daily
             WorkDay today = WorkDayService.GetCurrentDay();
