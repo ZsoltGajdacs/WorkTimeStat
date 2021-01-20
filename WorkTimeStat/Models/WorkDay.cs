@@ -38,6 +38,92 @@ namespace WorkTimeStat.Models
         }
         #endregion
 
+        #region Setters
+        internal void SetStartTime(int startHour, int startMinute)
+        {
+            StartTime = Converter.ConvertHoursAndMinutesToTimeSpan(startHour, startMinute);
+        }
+
+        internal void SetStartTime(int? startHour, int? startMinute)
+        {
+            if (startHour != null && startMinute != null)
+            {
+                StartTime = Converter.ConvertHoursAndMinutesToTimeSpan((int)startHour, (int)startMinute);
+            }
+            else
+            {
+                if (startHour == null)
+                {
+                    throw new ArgumentNullException(nameof(startHour));
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(startMinute));
+                }
+            }
+        }
+
+        internal void SetEndTime(int endHour, int endMinute)
+        {
+            EndTime = Converter.ConvertHoursAndMinutesToTimeSpan(endHour, endMinute);
+        }
+
+        internal void SetEndTime(int? endHour, int? endMinute)
+        {
+            if (endHour != null && endMinute != null)
+            {
+                EndTime = Converter.ConvertHoursAndMinutesToTimeSpan((int)endHour, (int)endMinute);
+            }
+            else
+            {
+                if (endHour == null)
+                {
+                    throw new ArgumentNullException(nameof(endHour));
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(endMinute));
+                }
+            }
+        }
+
+        public void SetLunchBreakDuration(int? lunchBreakDuration)
+        {
+            if (lunchBreakDuration != null)
+            {
+                LunchBreakDuration = (int)lunchBreakDuration;
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(lunchBreakDuration));
+            }
+        }
+
+        public void SetOtherBreakDuration(int? otherBreakDuration)
+        {
+            if (otherBreakDuration != null)
+            {
+                OtherBreakDuration = (int)otherBreakDuration;
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(otherBreakDuration));
+            }
+        }
+
+        public void SetOverWorkDuration(int? overWorkDuration)
+        {
+            if (overWorkDuration != null)
+            {
+                OverWorkDuration = (int)overWorkDuration;
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(overWorkDuration));
+            }
+        }
+        #endregion
+
         internal void IncreaseWaterConsumption()
         {
             WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, AmountOfLitreInOneUnit);

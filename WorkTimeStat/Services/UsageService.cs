@@ -9,11 +9,10 @@ namespace WorkTimeStat.Services
         internal static void AddUsageForToday(TimeSpan usage)
         {
             WorkDay day = WorkDayService.GetCurrentDay();
-            if (day.UsageTime < usage)
+            if (day != null && day.UsageTime < usage)
             {
                 day.UsageTime = usage;
             }
-
         }
 
         internal static TimeSpan GetUsageForTimeframe(DateTime start, DateTime end)

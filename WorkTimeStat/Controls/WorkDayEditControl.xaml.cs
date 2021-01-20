@@ -175,8 +175,8 @@ namespace WorkTimeStat.Controls
         /// </summary>
         private void SaveValues()
         {
-            today.StartTime = CalcStartTime();
-            today.EndTime = CalcEndTime();
+            today.SetStartTime(StartTimeHour, StartTimeMinute);
+            today.SetEndTime(EndTimeHour, EndTimeMinute);
             today.LunchBreakDuration = LunchBreakDuration;
             today.OtherBreakDuration = OtherBreakDuration;
             today.OverWorkDuration = OverWorkDuration;
@@ -201,16 +201,6 @@ namespace WorkTimeStat.Controls
             }
 
             return enumNames;
-        }
-
-        private TimeSpan CalcStartTime()
-        {
-            return TimeSpan.FromHours(_startTimeHour) + TimeSpan.FromMinutes(_startTimeMinute);
-        }
-
-        private TimeSpan CalcEndTime()
-        {
-            return TimeSpan.FromHours(EndTimeHour) + TimeSpan.FromMinutes(_endTimeMinute);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

@@ -12,11 +12,10 @@ namespace WorkTimeStat.Windows
 {
     public partial class CalendarWindow : Window
     {
-        private const string EDIT_BTN_EDIT_LABEL = "Javítás";
-        private const string EDIT_BTN_SAVE_LABEL = "Mentés";
-
         private readonly WorkKeeper keeper;
         private readonly DateTime currDate;
+
+        private WorkDay chosenDay;
         private int numOfLeavesLeft;
         private bool leaveAutochk;
         private bool sickAutochk;
@@ -43,10 +42,10 @@ namespace WorkTimeStat.Windows
 
         private void SetToday()
         {
-            WorkDay workDay = WorkDayService.GetCurrentDay();
-            if (workDay != null)
+            chosenDay = WorkDayService.GetCurrentDay();
+            if (chosenDay != null)
             {
-                SetLabels(ref workDay);
+                SetLabels(ref chosenDay);
                 selectedDate = currDate.Date;
                 chosenDateLabel.Content = selectedDate.ToLongDateString();
             }
@@ -66,16 +65,21 @@ namespace WorkTimeStat.Windows
                 CalendarSetLeaveDay(selectedDate);
                 CalendarSetSickDay(selectedDate);
 
-                WorkDay workDay = WorkDayService.GetDayAtDate(selectedDate);
+                chosenDay = WorkDayService.GetDayAtDate(selectedDate);
 
-                if (workDay != null)
-                {
-                    SetLabels(ref workDay);
-                }
-                else
-                {
-                    SetEmptyLabels();
-                }
+                RefreshLabels(ref chosenDay);
+            }
+        }
+
+        private void RefreshLabels(ref WorkDay day)
+        {
+            if (day != null)
+            {
+                SetLabels(ref day);
+            }
+            else
+            {
+                SetEmptyLabels();
             }
         }
 
@@ -185,25 +189,100 @@ namespace WorkTimeStat.Windows
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (EditPanel.Visibility == Visibility.Collapsed)
-            {
-                EditBtn.Visibility = Visibility.Collapsed;
-                EditPanel.Visibility = Visibility.Visible;
-            }
-
-
+            FillEditDataForChosenDay();
+            HideLabels();
+            ShowEditControls();
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            SaveDataForChosenDay();
+            RefreshLabels(ref chosenDay);
+            HideEditControls();
+            ShowLabels();
 
+            SaveService.SaveData(SaveUsage.No);
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            HideEditControls();
         }
 
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        #endregion
+
+        #region Edit methods
+        private void FillEditDataForChosenDay()
+        {
+            WorkStartHour.Value = chosenDay.StartTime.Hours;
+            WorkStartMinute.Value = chosenDay.StartTime.Minutes;
+            WorkEndHour.Value = chosenDay.EndTime.Hours;
+            WorkEndMinute.Value = chosenDay.EndTime.Minutes;
+            EditWorkLaunchTime.Value = chosenDay.LunchBreakDuration;
+            EditWorkbreakTime.Value = chosenDay.OtherBreakDuration;
+            EditNonworkTime.Value = chosenDay.OverWorkDuration;
+        }
+
+        private void SaveDataForChosenDay()
+        {
+            try
+            {
+                chosenDay.SetStartTime(WorkStartHour.Value, WorkStartMinute.Value);
+                chosenDay.SetEndTime(WorkEndHour.Value, WorkEndMinute.Value);
+                chosenDay.SetLunchBreakDuration(EditWorkLaunchTime.Value);
+                chosenDay.SetOtherBreakDuration(EditWorkbreakTime.Value);
+                chosenDay.SetOverWorkDuration(EditNonworkTime.Value);
+            }
+            catch(ArgumentNullException)
+            {
+                MessageBox.Show("Valami nincs kitöltve megfelelően", "Hiányos kitöltés", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ShowLabels()
+        {
+            startTimeValue.Visibility = Visibility.Visible;
+            endTimeValue.Visibility = Visibility.Visible;
+            lunchBreakTimeValue.Visibility = Visibility.Visible;
+            otherBreakTimeValue.Visibility = Visibility.Visible;
+            overWorkTimeValue.Visibility = Visibility.Visible;
+        }
+
+        private void HideLabels()
+        {
+            startTimeValue.Visibility = Visibility.Collapsed;
+            endTimeValue.Visibility = Visibility.Collapsed;
+            lunchBreakTimeValue.Visibility = Visibility.Collapsed;
+            otherBreakTimeValue.Visibility = Visibility.Collapsed;
+            overWorkTimeValue.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowEditControls()
+        {
+            EditBtn.Visibility = Visibility.Collapsed;
+            EditPanel.Visibility = Visibility.Visible;
+            WorkStartPanel.Visibility = Visibility.Visible;
+            WorkEndPanel.Visibility = Visibility.Visible;
+            EditWorkLaunchTime.Visibility = Visibility.Visible;
+            EditWorkbreakTime.Visibility = Visibility.Visible;
+            EditNonworkTime.Visibility = Visibility.Visible;
+        }
+
+        private void HideEditControls()
+        {
+            EditBtn.Visibility = Visibility.Visible;
+            EditPanel.Visibility = Visibility.Collapsed;
+            WorkStartPanel.Visibility = Visibility.Collapsed;
+            WorkEndPanel.Visibility = Visibility.Collapsed;
+            EditWorkLaunchTime.Visibility = Visibility.Collapsed;
+            EditWorkbreakTime.Visibility = Visibility.Collapsed;
+            EditNonworkTime.Visibility = Visibility.Collapsed;
+        }
         #endregion
 
         #region Fixes

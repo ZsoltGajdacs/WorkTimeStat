@@ -130,6 +130,7 @@
     <Compile Include="Enums\EnumUtil.cs" />
     <Compile Include="Enums\WorkDayType.cs" />
     <Compile Include="Events\CloseTheBallonEvent.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Dpi.cs" />
     <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\NumberFormatter.cs" />

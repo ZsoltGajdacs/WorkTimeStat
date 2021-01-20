@@ -25,10 +25,18 @@ namespace WorkTimeStat.Services
         private static TimeSpan GetTodaysUsageForSave()
         {
             WorkDay today = WorkDayService.GetCurrentDay();
-            DateTime start = today.DayDate.Date + today.StartTime;
-            DateTime end = today.DayDate.Date + today.EndTime;
 
-            return UsageService.GetUsageForTimeframe(start, end);
+            TimeSpan usage = default;
+            if (today != null)
+            {
+                DateTime start = today.DayDate.Date + today.StartTime;
+                DateTime end = today.DayDate.Date + today.EndTime;
+
+                usage = UsageService.GetUsageForTimeframe(start, end);
+            }
+
+
+            return usage;
         }
     }
 
