@@ -21,6 +21,8 @@
                     <MenuItem Name="calendarItem" Header="Naptár" Click="CalendarItem_Click"/>
                     <MenuItem Name="statisticsItem" Header="Statisztikák" Click="StatisticsItem_Click"/>
                     <Separator />
+                    <MenuItem Name="usageItem" Header="Mai használati idő" Click="UsageItem_Click"/>
+                    <Separator />
                     <MenuItem Name="exitItem" Header="Kilépés" Click="ExitItem_Click"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
