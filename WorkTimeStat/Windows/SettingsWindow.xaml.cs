@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using UsageWatcher;
 using UsageWatcher.Enums;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Storage;

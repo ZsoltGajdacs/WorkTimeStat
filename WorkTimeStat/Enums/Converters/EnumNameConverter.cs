@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using UsageWatcher.Enums;
 using System.Windows.Data;
-using UsageWatcher.Enums.Utils;
+using UsageWatcher.Enums;
 
 namespace WorkTimeStat.Enums.Converters
 {
