@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UsageWatcher;
+using UsageWatcher.Enums;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 

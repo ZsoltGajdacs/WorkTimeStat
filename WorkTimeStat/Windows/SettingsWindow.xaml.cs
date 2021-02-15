@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using UsageWatcher;
+using UsageWatcher.Enums;
+using WorkTimeStat.Enums;
 using WorkTimeStat.Storage;
 
 namespace WorkTimeStat.Windows
@@ -16,6 +18,8 @@ namespace WorkTimeStat.Windows
             this.keeper = keeper;
 
             ResCombo.ItemsSource = Enum.GetValues(typeof(Resolution)).Cast<Resolution>();
+            WorkPlaceCombo.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
+
             mainGrid.DataContext = this.keeper.Settings;
         }
     }

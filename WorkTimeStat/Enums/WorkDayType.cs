@@ -1,22 +1,28 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WorkTimeStat.Enums
 {
     internal enum WorkDayType
     {
-        [Description("Normál")]
+        [Description("Normál hétköznapi munkanap")]
+        [Display(Name = "Normál")]
         NORMAL,
 
-        [Description("Rendkívüli")]
+        [Description("Rendkívüli munkavégzés")]
+        [Display(Name = "Rendkívüli")]
         RENDKIVULI,
         
-        [Description("Készenlét")]
+        [Description("Készenlétben töltött idő")]
+        [Display(Name = "Készenlét")]
         KESZENLET,
         
-        [Description("Hétvégi")]
+        [Description("Hétvégi munkavégzés")]
+        [Display(Name = "Hétvégi")]
         HETVEGI,
         
-        [Description("Ünnepnapi")]
+        [Description("Ünnepnapi munkavégzés")]
+        [Display(Name = "Ünnepnapi")]
         UNNEPNAPI
     }
 }

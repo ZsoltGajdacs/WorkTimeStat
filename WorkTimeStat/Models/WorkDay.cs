@@ -20,6 +20,7 @@ namespace WorkTimeStat.Models
         public int OtherBreakDuration { get; set; }
         public int OverWorkDuration { get; set; }
         public WorkDayType WorkDayType { get; set; }
+        public WorkPlaceType WorkPlaceType { get; set; }
         public decimal WaterConsumptionCount { get; set; }
         public decimal AmountOfLitreInOneUnit { get; set; }
         public bool IsLunchTimeWorkTime { get; set; }
@@ -27,13 +28,15 @@ namespace WorkTimeStat.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region CTORS
-        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit, double dailyWorkHours)
+        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit, 
+                                    double dailyWorkHours, WorkPlaceType workPlaceType)
         {
             AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
             StartTime = NumberFormatter.RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
+            WorkPlaceType = workPlaceType;
             WorkDayType = WorkDayType.NORMAL;
         }
         #endregion

@@ -79,6 +79,10 @@
       <HintPath>..\packages\NLog.4.7.6\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -126,9 +130,9 @@
     <Compile Include="Controls\WorkDayEditControl.xaml.cs">
       <DependentUpon>WorkDayEditControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Enums\EnumExtensions.cs" />
-    <Compile Include="Enums\EnumUtil.cs" />
+    <Compile Include="Enums\Converters\EnumNameConverter.cs" />
     <Compile Include="Enums\WorkDayType.cs" />
+    <Compile Include="Enums\WorkPlaceType.cs" />
     <Compile Include="Events\CloseTheBallonEvent.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Dpi.cs" />

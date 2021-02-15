@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using UsageWatcher;
+using UsageWatcher.Enums.Utils;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
 using WorkTimeStat.Models;
@@ -29,8 +32,8 @@ namespace WorkTimeStat.Controls
         private int _otherBreakDuration;
         private int _overWorkDuration;
 
-        public IEnumerable<string> WorkTypes { get; private set; }
         private WorkDayType chosenOverWorkType;
+        private WorkPlaceType chosenWorkPlace;
 
         #region Properties
         public DateTime StartTime
@@ -134,16 +137,13 @@ namespace WorkTimeStat.Controls
 
             WorkSettings settings = WorkKeeper.Instance.Settings;
             this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault,
-                                                settings.AmountOfLitreInOneUnit, settings.DailyWorkHours);
+                                                settings.AmountOfLitreInOneUnit, settings.DailyWorkHours, settings.WorkPlaceType);
             dateToday = DateTime.Now.Date;
             
             InitValues();
             SetBindings();
         }
 
-        /// <summary>
-        /// Initializes the window's vars
-        /// </summary>
         private void InitValues()
         {
             StartTime = dateToday + today.StartTime;
@@ -158,16 +158,19 @@ namespace WorkTimeStat.Controls
             OtherBreakDuration = today.OtherBreakDuration;
             OverWorkDuration = today.OverWorkDuration;
 
-            WorkTypes = FillWorkTypeList();
+            chosenOverWorkType = today.WorkDayType;
+            WorkType.SelectedIndex = (int)chosenOverWorkType;
+
+            chosenWorkPlace = today.WorkPlaceType;
+            WorkPlace.SelectedIndex = (int)chosenWorkPlace;
         }
 
         private void SetBindings()
         {
             editGrid.DataContext = this;
-            WorkType.ItemsSource = WorkTypes;
-
-            chosenOverWorkType = today.WorkDayType;
-            WorkType.SelectedIndex = (int)chosenOverWorkType;
+            
+            WorkType.ItemsSource = Enum.GetValues(typeof(WorkDayType)).Cast<WorkDayType>();
+            WorkPlace.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
         }
 
         /// <summary>
@@ -181,26 +184,11 @@ namespace WorkTimeStat.Controls
             today.OtherBreakDuration = OtherBreakDuration;
             today.OverWorkDuration = OverWorkDuration;
             today.WorkDayType = chosenOverWorkType;
+            today.WorkPlaceType = chosenWorkPlace;
 
             WorkDayService.SetCurrentDay(ref today);
             StatisticsService.FullReCountWorkedDays();
             SaveService.SaveData(SaveUsage.No);
-        }
-
-        // TODO: This is probably not the best place for this. Find a better one!
-        private static List<string> FillWorkTypeList()
-        {
-            IEnumerable<WorkDayType> enumList = EnumUtil.GetValues<WorkDayType>();
-
-            List<string> enumNames = new List<string>();
-            IEnumerator<WorkDayType> overWorkEnumerator = enumList.GetEnumerator();
-            while (overWorkEnumerator.MoveNext())
-            {
-                WorkDayType workType = overWorkEnumerator.Current;
-                enumNames.Add(workType.GetDescription());
-            }
-
-            return enumNames;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -228,6 +216,17 @@ namespace WorkTimeStat.Controls
             if (result != null)
             {
                 chosenOverWorkType = result.FoundEnum;
+            }
+        }
+
+        private void WorkPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selection = WorkPlace.SelectedValue.ToString();
+            EnumMatchResult<WorkPlaceType> result = EnumUtil.GetEnumForString<WorkPlaceType>(selection);
+
+            if (result != null)
+            {
+                chosenWorkPlace = result.FoundEnum;
             }
         }
         #endregion
