@@ -47,12 +47,13 @@ namespace WorkTimeStat.Windows
             {
                 SetLabels(ref chosenDay);
                 selectedDate = currDate.Date;
-                chosenDateLabel.Content = selectedDate.ToLongDateString();
             }
             else
             {
                 SetEmptyLabels();
             }
+
+            chosenDateLabel.Content = DateTime.Today.ToLongDateString();
         }
 
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
