@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="WorkTimeStat.Controls.StatisticsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkTimeStat.Controls"
+             d:DataContext="{d:DesignInstance Type=local:StatisticsControl}"
+             mc:Ignorable="d" 
+             d:DesignHeight="235" d:DesignWidth="580"
+             Background="#FF434343" Foreground="White" FontSize="14">
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Border Margin="5"
+            BorderThickness="1"
+            BorderBrush="Wheat"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+        <Grid x:Name="mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Előző nap: " Grid.Column="3" Grid.Row="1"/>
+            <Label Content="Ma: " Grid.Column="5" Grid.Row="1"/>
+            <Label Content="Hónapban: " Grid.Column="7" Grid.Row="1"/>
+            <Label Content="Előző hónap: " Grid.Column="9" Grid.Row="1"/>
+
+            <Label Content="Ledolgozott órák: " Grid.Column="1" Grid.Row="3"/>
+            <Label Content="Szükséges órák: " Grid.Column="1" Grid.Row="5"/>
+            <Label Content="Mért órák: " Grid.Column="1" Grid.Row="7"/>
+            <Label Content="Különbség: " Grid.Column="1" Grid.Row="9"/>
+
+            <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
+
+            <Label Name="yesterworkdayWorkedHours" Grid.Column="3" Grid.Row="3"/>
+            <Label Name="yesterworkdayFullHours" Grid.Column="3" Grid.Row="5"/>
+            <Label Name="yesterworkdayCalcHours" Grid.Column="3" Grid.Row="7"/>
+            <Label Name="yesterworkdayLeftHours" Grid.Column="3" Grid.Row="9" FontWeight="Bold"/>
+
+            <Label Name="todayWorkedHours" Grid.Column="5" Grid.Row="3"/>
+            <Label Name="todayFullHours" Grid.Column="5" Grid.Row="5"/>
+            <Label Name="todayCalcHours" Grid.Column="5" Grid.Row="7"/>
+            <Label Name="todayLeftHours" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
+
+            <Label Name="monthlyWorkedHours" Grid.Column="7" Grid.Row="3"/>
+            <Label Name="monthlyFullHours" Grid.Column="7" Grid.Row="5"/>
+            <Label Name="monthlyCalcHours" Grid.Column="7" Grid.Row="7"/>
+            <Label Name="monthlyLeftHours" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
+
+            <Label Name="prevMonthlyWorkedHours" Grid.Column="9" Grid.Row="3"/>
+            <Label Name="prevMonthlyFullHours" Grid.Column="9" Grid.Row="5"/>
+            <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
+            <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
+
+            <Button x:Name="SaveBtn" Content="Bezárás"
+                    Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
+                    Click="SaveBtn_Click" />
+        </Grid>
+    </Border>
+</UserControl>

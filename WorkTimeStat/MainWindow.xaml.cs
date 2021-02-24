@@ -50,7 +50,7 @@ namespace WorkTimeStat
 
         }
 
-        private void DayEdit_CloseBallon()
+        private void CloseTaskbarBalloon()
         {
             taskbarIcon.CloseBalloon();
         }
@@ -60,7 +60,7 @@ namespace WorkTimeStat
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
             WorkDayEditControl dayEdit = new WorkDayEditControl(WorkDayService.GetCurrentDay());
-            dayEdit.CloseBallon += DayEdit_CloseBallon;
+            dayEdit.CloseBallon += CloseTaskbarBalloon;
 
             taskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
@@ -69,21 +69,28 @@ namespace WorkTimeStat
         #region Menu Click Events
         private void CalendarItem_Click(object sender, RoutedEventArgs e)
         {
-            CalendarWindow calendarWindow = new CalendarWindow(ref workKeeper);
-            calendarWindow.Show();
+            /* CalendarWindow calendarWindow = new CalendarWindow(ref workKeeper);
+             calendarWindow.Show();*/
+            CalendarControl calendarControl = new CalendarControl();
+            calendarControl.CloseBallon += CloseTaskbarBalloon;
+
+            taskbarIcon.ShowCustomBalloon(calendarControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow(ref workKeeper);
-            settingsWindow.Show();
+            SettingsControl settingsControl = new SettingsControl();
+            settingsControl.CloseBallon += CloseTaskbarBalloon;
+
+            taskbarIcon.ShowCustomBalloon(settingsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWindow statisticsWindow =
-                new StatisticsWindow(workKeeper.Settings.DailyWorkHours);
-            statisticsWindow.Show();
+            StatisticsControl statisticsControl = new StatisticsControl(workKeeper.Settings.DailyWorkHours);
+            statisticsControl.CloseBallon += CloseTaskbarBalloon;
+
+            taskbarIcon.ShowCustomBalloon(statisticsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void UsageItem_Click(object sender, RoutedEventArgs e)

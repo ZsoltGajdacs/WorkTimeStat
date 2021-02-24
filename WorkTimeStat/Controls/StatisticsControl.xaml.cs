@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows;
+using System.Windows.Controls;
 using WorkTimeStat.Enums;
+using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
 
-namespace WorkTimeStat.Windows
+namespace WorkTimeStat.Controls
 {
-    public partial class StatisticsWindow : Window
+    public partial class StatisticsControl : UserControl
     {
-        internal StatisticsWindow(double dailyWorkHours)
+        internal event CloseTheBallonEventHandler CloseBallon;
+        public StatisticsControl(double dailyWorkHours)
         {
             InitializeComponent();
             mainGrid.DataContext = this;
@@ -84,6 +86,11 @@ namespace WorkTimeStat.Windows
         {
             num = Math.Round(num, 2, MidpointRounding.ToEven);
             return num > 0 ? "+" + num : num.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CloseBallon?.Invoke();
         }
 
         private class StatisticsDto

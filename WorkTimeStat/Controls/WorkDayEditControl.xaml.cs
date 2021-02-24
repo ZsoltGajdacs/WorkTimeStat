@@ -126,7 +126,6 @@ namespace WorkTimeStat.Controls
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         internal event CloseTheBallonEventHandler CloseBallon;
 
         internal WorkDayEditControl(WorkDay today)

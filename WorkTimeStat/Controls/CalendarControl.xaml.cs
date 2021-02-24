@@ -1,16 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using UsageWatcher.Enums;
+using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
 using WorkTimeStat.Storage;
 
-namespace WorkTimeStat.Windows
+namespace WorkTimeStat.Controls
 {
-    public partial class CalendarWindow : Window
+    public partial class CalendarControl : UserControl
     {
         private readonly WorkKeeper keeper;
         private readonly DateTime currDate;
@@ -21,12 +32,14 @@ namespace WorkTimeStat.Windows
         private bool sickAutochk;
         private DateTime selectedDate;
 
-        internal CalendarWindow(ref WorkKeeper keeper)
+        internal event CloseTheBallonEventHandler CloseBallon;
+
+        public CalendarControl()
         {
             InitializeComponent();
+            keeper = WorkKeeper.Instance;
 
             mainGrid.DataContext = this;
-            this.keeper = keeper;
 
             currDate = DateTime.Now.Date;
 
@@ -91,7 +104,7 @@ namespace WorkTimeStat.Windows
             lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " perc";
             otherBreakTimeValue.Content = workDay.OtherBreakDuration + " perc";
             overWorkTimeValue.Content = workDay.OverWorkDuration + " perc";
-            WorkTypeValue.Content = workDay.WorkDayType.GetDescription();
+            WorkTypeValue.Content = workDay.WorkDayType.GetDisplayName();
             workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
@@ -212,7 +225,7 @@ namespace WorkTimeStat.Windows
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            CloseBallon?.Invoke();
         }
         #endregion
 
@@ -238,9 +251,9 @@ namespace WorkTimeStat.Windows
                 chosenDay.SetOtherBreakDuration(EditWorkbreakTime.Value);
                 chosenDay.SetOverWorkDuration(EditNonworkTime.Value);
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
-                MessageBox.Show("Valami nincs kitöltve megfelelően", "Hiányos kitöltés", 
+                MessageBox.Show("Valami nincs kitöltve megfelelően", "Hiányos kitöltés",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
