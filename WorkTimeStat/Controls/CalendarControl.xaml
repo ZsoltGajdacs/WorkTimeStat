@@ -7,7 +7,7 @@
              xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DataContext="{d:DesignInstance Type=local:CalendarControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400"
+             d:DesignHeight="485" d:DesignWidth="470"
              Background="#FF434343" Foreground="White" FontSize="14">
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -48,15 +48,17 @@
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="140"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -78,8 +80,9 @@
             <Label Content="Egyéb szünet: " Grid.Column="3" Grid.Row="15"/>
             <Label Content="Túlóra: " Grid.Column="3" Grid.Row="17"/>
             <Label Content="Munkanap típusa: " Grid.Column="3" Grid.Row="19"/>
-            <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="21"/>
-            <Label Content="Mért órák: " Grid.Column="3" Grid.Row="23"/>
+            <Label Content="Munkavégzés helye: " Grid.Column="3" Grid.Row="21"/>
+            <Label Content="Ledolgozott órák: " Grid.Column="3" Grid.Row="23"/>
+            <Label Content="Mért órák: " Grid.Column="3" Grid.Row="25"/>
 
             <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -99,13 +102,14 @@
             <Label x:Name="otherBreakTimeValue" Grid.Column="5" Grid.Row="15"/>
             <Label x:Name="overWorkTimeValue" Grid.Column="5" Grid.Row="17"/>
             <Label x:Name="WorkTypeValue" Grid.Column="5" Grid.Row="19"/>
+            <Label x:Name="WorkPlaceValue" Grid.Column="5" Grid.Row="21"/>
 
             <!-- Edit controls -->
             <StackPanel x:Name="WorkStartPanel" Grid.Row="9" Grid.Column="5" Orientation="Horizontal" Visibility="Collapsed">
-                <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
+                <xce:IntegerUpDown x:Name="WorkStartHour"
                                Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
-                <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
+                <xce:IntegerUpDown x:Name="WorkStartMinute"
                                Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
@@ -139,13 +143,13 @@
             <xce:IntegerUpDown />
 
             <!-- Read-only labels -->
-            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="20"/>
+            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="22"/>
 
-            <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
-            <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="23" FontWeight="Bold"/>
+            <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="23" FontWeight="Bold"/>
+            <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="25" FontWeight="Bold"/>
 
             <!-- Edit controls -->
-            <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="21" LastChildFill="False" Visibility="Collapsed">
+            <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="23" LastChildFill="False" Visibility="Collapsed">
                 <Button x:Name="SaveBtn" Content="Mentés"
                     DockPanel.Dock="Left" Padding="20 0 20 0"
                     Click="SaveBtn_Click"/>
@@ -154,10 +158,10 @@
                     Click="CancelBtn_Click"/>
             </DockPanel>
 
-            <Button x:Name="EditBtn" Content="Javítás" Grid.Column="1" Grid.Row="21"
+            <Button x:Name="EditBtn" Content="Javítás" Grid.Column="1" Grid.Row="23"
                     Click="EditBtn_Click"/>
 
-            <Button x:Name="ExitBtn" Content="Bezárás" Grid.Column="1" Grid.Row="23"
+            <Button x:Name="ExitBtn" Content="Bezárás" Grid.Column="1" Grid.Row="25"
                     Click="ExitBtn_Click"/>
         </Grid>
     </Border>

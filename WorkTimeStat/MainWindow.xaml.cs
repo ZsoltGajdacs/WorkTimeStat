@@ -6,7 +6,6 @@ using WorkTimeStat.Controls;
 using WorkTimeStat.Services;
 using WorkTimeStat.Storage;
 using WorkTimeStat.Timers;
-using WorkTimeStat.Windows;
 
 namespace WorkTimeStat
 {

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UsageWatcher.Enums;
 using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
@@ -105,6 +95,7 @@ namespace WorkTimeStat.Controls
             otherBreakTimeValue.Content = workDay.OtherBreakDuration + " perc";
             overWorkTimeValue.Content = workDay.OverWorkDuration + " perc";
             WorkTypeValue.Content = workDay.WorkDayType.GetDisplayName();
+            WorkPlaceValue.Content = workDay.WorkPlaceType.GetDisplayName();
             workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
@@ -119,6 +110,7 @@ namespace WorkTimeStat.Controls
             otherBreakTimeValue.Content = NumberFormatter.NO_DATA;
             overWorkTimeValue.Content = NumberFormatter.NO_DATA;
             WorkTypeValue.Content = NumberFormatter.NO_DATA;
+            WorkPlaceValue.Content = NumberFormatter.NO_DATA;
             workedTimeValue.Content = NumberFormatter.NO_DATA;
             watchedTimeValue.Content = NumberFormatter.NO_DATA;
         }
@@ -221,6 +213,7 @@ namespace WorkTimeStat.Controls
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             HideEditControls();
+            ShowLabels();
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
