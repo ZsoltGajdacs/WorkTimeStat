@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using UsageWatcher.Enums;
 using UsageWatcher.Enums.Utils;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
@@ -207,8 +208,14 @@ namespace WorkTimeStat.Controls
 
         private void WorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selection = WorkType.SelectedValue.ToString();
-            EnumMatchResult<WorkDayType> result = EnumUtil.GetEnumForString<WorkDayType>(selection);
+            object selectedEnum = WorkType.SelectedValue;
+            string enumName = String.Empty;
+            if (selectedEnum is WorkDayType typeEnum)
+            {
+                enumName = typeEnum.GetDisplayName() ?? typeEnum.ToString();
+            }
+
+            EnumMatchResult<WorkDayType> result = EnumUtil.GetEnumForString<WorkDayType>(enumName);
 
             if (result != null)
             {
@@ -218,8 +225,14 @@ namespace WorkTimeStat.Controls
 
         private void WorkPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selection = WorkPlace.SelectedValue.ToString();
-            EnumMatchResult<WorkPlaceType> result = EnumUtil.GetEnumForString<WorkPlaceType>(selection);
+            object selectedEnum = WorkPlace.SelectedValue;
+            string enumName = String.Empty;
+            if (selectedEnum is WorkPlaceType placeEnum)
+            {
+                enumName = placeEnum.GetDisplayName() ?? placeEnum.ToString();
+            }
+
+            EnumMatchResult<WorkPlaceType> result = EnumUtil.GetEnumForString<WorkPlaceType>(enumName);
 
             if (result != null)
             {
