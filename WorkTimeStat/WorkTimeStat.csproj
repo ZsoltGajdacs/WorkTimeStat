@@ -100,8 +100,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UsageWatcher">
-      <HintPath>..\..\UsageWatcher\bin\Release\UsageWatcher.dll</HintPath>
+    <Reference Include="UsageWatcher, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZsGWorks.UsageWatcher.1.2.1\lib\net48\UsageWatcher.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
