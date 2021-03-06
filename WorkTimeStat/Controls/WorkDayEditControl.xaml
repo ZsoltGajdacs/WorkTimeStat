@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WorkTimeStat.Controls"
              xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit" 
              xmlns:Converter="clr-namespace:WorkTimeStat.Enums.Converters"
+             xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:WorkDayEditControl}"
              mc:Ignorable="d" 
              d:DesignHeight="130" d:DesignWidth="800" FontSize="14" 
@@ -53,7 +54,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- TimePicker not working for some reason, probably with the implementation of customballon-->
-            <Label x:Name="workStartLabel" Content="Kezdés:" Grid.Row="1" Grid.Column="1" Foreground="White"/>
+            <Label x:Name="workStartLabel" Content="{x:Static loc:Resources.u_work_start_time}" Grid.Row="1" Grid.Column="1" Foreground="White"/>
             <!--<xce:TimePicker x:Name="workStart" Value="{Binding StartTime, Mode=TwoWay}" ShowButtonSpinner="False"
                             StartTime="6:00" EndTime="12:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                             Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>-->
@@ -66,7 +67,8 @@
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
 
-            <Label x:Name="workEndLabel" Content="Befejezés:" Grid.Row="1" Grid.Column="3" Foreground="White"/>
+            <!-- TimePicker not working for some reason, probably with the implementation of customballon-->
+            <Label x:Name="workEndLabel" Content="{x:Static loc:Resources.u_work_end_time}" Grid.Row="1" Grid.Column="3" Foreground="White"/>
             <!--<xce:TimePicker x:Name="workEnd" Value="{Binding EndTime, Mode=TwoWay}" ShowButtonSpinner="False"
                             StartTime="12:00" EndTime="22:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                             Grid.Row="3" Grid.Column="3" Background="#FF434343" Foreground="White"/>-->
@@ -79,12 +81,12 @@
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
 
-            <Label x:Name="workLunchLabel" Content="Ebédszünet:" Grid.Row="1" Grid.Column="5" Foreground="White"/>
+            <Label x:Name="workLunchLabel" Content="{x:Static loc:Resources.u_lunch_break_length}" Grid.Row="1" Grid.Column="5" Foreground="White"/>
             <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="workbreakLabel" Content="Egyéb szünet:" 
+            <Label x:Name="workbreakLabel" Content="{x:Static loc:Resources.u_other_break_length}" 
                    Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="3"
                    Foreground="White"/>
             <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
@@ -92,7 +94,7 @@
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="overWorkLabel" Content="Túlóra:"
+            <Label x:Name="overWorkLabel" Content="{x:Static loc:Resources.u_overwork_length}"
                    Grid.Row="1" Grid.Column="11" 
                    Foreground="White"/>
             <xce:IntegerUpDown x:Name="overWorkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
@@ -100,7 +102,7 @@
                                Grid.Row="3" Grid.Column="11" 
                                Background="#FF434343" Foreground="White"/>
 
-            <Label x:Name="WorkTypeLabel" Content="Munkanap típusa:" 
+            <Label x:Name="WorkTypeLabel" Content="{x:Static loc:Resources.u_workday_type}" 
                    Grid.Row="1" Grid.Column="13" 
                    Foreground="White"/>
             <ComboBox x:Name="WorkType"
@@ -114,7 +116,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Label x:Name="WorkPlaceLabel" Content="Munkavégzés helye:" 
+            <Label x:Name="WorkPlaceLabel" Content="{x:Static loc:Resources.u_workplace}" 
                    Grid.Row="1" Grid.Column="15" 
                    Foreground="White"/>
             <ComboBox x:Name="WorkPlace"
@@ -128,11 +130,11 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Button x:Name="saveBtn" Content="Mentés" FontSize="12"
+            <Button x:Name="saveBtn" Content="{x:Static loc:Resources.u_btn_save}" FontSize="12"
                     Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="9"
                     Click="SaveBtn_Click"/>
-            
-            <Button x:Name="closeBtn" Content="Bezárás" FontSize="12"
+
+            <Button x:Name="closeBtn" Content="{x:Static loc:Resources.u_btn_cancel}" FontSize="12"
                     Grid.Row="5" Grid.Column="11" Grid.ColumnSpan="5"
                     Click="CloseBtn_Click"/>
         </Grid>

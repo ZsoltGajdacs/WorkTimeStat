@@ -5,20 +5,20 @@ namespace WorkTimeStat.Enums
 {
     internal enum WorkPlaceType
     {
-        [Description("Irodai munkanap")]
-        [Display(Name = "Iroda")]
+        [Description("enum_office_day_desc")]
+        [Display(Name = "enum_office_day_display")]
         OFFICE,
-        [Description("Home Office")]
-        [Display(Name = "Home Office")]
+        [Description("enum_home_office_desc")]
+        [Display(Name = "enum_home_office_display")]
         HOME,
-        [Description("Ügyfél telephelyén töltött munkanap")]
-        [Display(Name = "Ügyfél telephelyén")]
+        [Description("enum_customer_desc")]
+        [Display(Name = "enum_customer_display")]
         CUSTOMER,
-        [Description("Nap folyamán több különböző helyen történt munkavégzés")]
-        [Display(Name = "Kevert")]
+        [Description("enum_mixed_desc")]
+        [Display(Name = "enum_mixed_display")]
         Mixed,
-        [Description("Máshol történt munkavégzés")]
-        [Display(Name = "Máshol")]
+        [Description("enum_other_desc")]
+        [Display(Name = "enum_other_display")]
         OTHER
     }
 }

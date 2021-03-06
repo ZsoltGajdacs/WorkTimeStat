@@ -37,7 +37,7 @@ namespace WorkTimeStat.Models
             StartTime = NumberFormatter.RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
             WorkPlaceType = workPlaceType;
-            WorkDayType = WorkDayType.NORMAL;
+            WorkDayType = WorkDayType.WEEKDAY;
         }
         #endregion
 

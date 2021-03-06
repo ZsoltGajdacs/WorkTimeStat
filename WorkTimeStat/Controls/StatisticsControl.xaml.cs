@@ -26,7 +26,7 @@ namespace WorkTimeStat.Controls
         {
             StatisticsDto dto = new StatisticsDto { dailyWorkHours = dailyWorkHours };
 
-            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.NORMAL };
+            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.WEEKDAY };
 
             // Monthly
             int thisMonth = DateTime.Now.Month;

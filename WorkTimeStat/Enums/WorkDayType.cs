@@ -5,24 +5,24 @@ namespace WorkTimeStat.Enums
 {
     internal enum WorkDayType
     {
-        [Description("Normál hétköznapi munkanap")]
-        [Display(Name = "Normál")]
-        NORMAL,
+        [Description("enum_weekday_desc")]
+        [Display(Name = "enum_weekday_display")]
+        WEEKDAY,
 
-        [Description("Rendkívüli munkavégzés")]
-        [Display(Name = "Rendkívüli")]
-        RENDKIVULI,
+        [Description("enum_extraordinary_desc")]
+        [Display(Name = "enum_extraordinary_display")]
+        EXTRAORDINARY,
         
-        [Description("Készenlétben töltött idő")]
-        [Display(Name = "Készenlét")]
-        KESZENLET,
+        [Description("enum_standby_desc")]
+        [Display(Name = "enum_standby_display")]
+        STANDBY,
         
-        [Description("Hétvégi munkavégzés")]
-        [Display(Name = "Hétvégi")]
-        HETVEGI,
+        [Description("enum_weekend_desc")]
+        [Display(Name = "enum_weekend_display")]
+        WEEKEND,
         
-        [Description("Ünnepnapi munkavégzés")]
-        [Display(Name = "Ünnepnapi")]
-        UNNEPNAPI
+        [Description("enum_holiday_desc")]
+        [Display(Name = "enum_holiday_display")]
+        HOLIDAY
     }
 }

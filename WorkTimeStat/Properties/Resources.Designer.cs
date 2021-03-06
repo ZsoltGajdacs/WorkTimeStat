@@ -22,7 +22,7 @@ namespace WorkTimeStat.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace WorkTimeStat.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WaterWork.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WorkTimeStat.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,12 +51,534 @@ namespace WorkTimeStat.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string cal_btn_change {
+            get {
+                return ResourceManager.GetString("cal_btn_change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some values are not correctly filled.
+        /// </summary>
+        public static string cal_error_incomplete_state_at_save_content {
+            get {
+                return ResourceManager.GetString("cal_error_incomplete_state_at_save_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect data.
+        /// </summary>
+        public static string cal_error_incomplete_state_at_save_header {
+            get {
+                return ResourceManager.GetString("cal_error_incomplete_state_at_save_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On leave?.
+        /// </summary>
+        public static string cal_leave_day {
+            get {
+                return ResourceManager.GetString("cal_leave_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave days left:.
+        /// </summary>
+        public static string cal_leave_days_left {
+            get {
+                return ResourceManager.GetString("cal_leave_days_left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measured hours:.
+        /// </summary>
+        public static string cal_measured_hours {
+            get {
+                return ResourceManager.GetString("cal_measured_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to minute.
+        /// </summary>
+        public static string cal_minute {
+            get {
+                return ResourceManager.GetString("cal_minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On sick pay?.
+        /// </summary>
+        public static string cal_sick_pay {
+            get {
+                return ResourceManager.GetString("cal_sick_pay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Worked hours:.
+        /// </summary>
+        public static string cal_worked_hours {
+            get {
+                return ResourceManager.GetString("cal_worked_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day on customer premises.
+        /// </summary>
+        public static string enum_customer_desc {
+            get {
+                return ResourceManager.GetString("enum_customer_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        public static string enum_customer_display {
+            get {
+                return ResourceManager.GetString("enum_customer_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some out of order work during normal weekdays.
+        /// </summary>
+        public static string enum_extraordinary_desc {
+            get {
+                return ResourceManager.GetString("enum_extraordinary_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extraordinary.
+        /// </summary>
+        public static string enum_extraordinary_display {
+            get {
+                return ResourceManager.GetString("enum_extraordinary_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Holiday work.
+        /// </summary>
+        public static string enum_holiday_desc {
+            get {
+                return ResourceManager.GetString("enum_holiday_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Holiday.
+        /// </summary>
+        public static string enum_holiday_display {
+            get {
+                return ResourceManager.GetString("enum_holiday_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Office.
+        /// </summary>
+        public static string enum_home_office_desc {
+            get {
+                return ResourceManager.GetString("enum_home_office_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Office.
+        /// </summary>
+        public static string enum_home_office_display {
+            get {
+                return ResourceManager.GetString("enum_home_office_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Various places throughout the day.
+        /// </summary>
+        public static string enum_mixed_desc {
+            get {
+                return ResourceManager.GetString("enum_mixed_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Various.
+        /// </summary>
+        public static string enum_mixed_display {
+            get {
+                return ResourceManager.GetString("enum_mixed_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office day.
+        /// </summary>
+        public static string enum_office_day_desc {
+            get {
+                return ResourceManager.GetString("enum_office_day_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string enum_office_day_display {
+            get {
+                return ResourceManager.GetString("enum_office_day_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work at another location.
+        /// </summary>
+        public static string enum_other_desc {
+            get {
+                return ResourceManager.GetString("enum_other_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string enum_other_display {
+            get {
+                return ResourceManager.GetString("enum_other_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standby work.
+        /// </summary>
+        public static string enum_standby_desc {
+            get {
+                return ResourceManager.GetString("enum_standby_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standby.
+        /// </summary>
+        public static string enum_standby_display {
+            get {
+                return ResourceManager.GetString("enum_standby_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal weekday work.
+        /// </summary>
+        public static string enum_weekday_desc {
+            get {
+                return ResourceManager.GetString("enum_weekday_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekday.
+        /// </summary>
+        public static string enum_weekday_display {
+            get {
+                return ResourceManager.GetString("enum_weekday_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekend work.
+        /// </summary>
+        public static string enum_weekend_desc {
+            get {
+                return ResourceManager.GetString("enum_weekend_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekend.
+        /// </summary>
+        public static string enum_weekend_display {
+            get {
+                return ResourceManager.GetString("enum_weekend_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string lang_en {
+            get {
+                return ResourceManager.GetString("lang_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hungarian.
+        /// </summary>
+        public static string lang_hu_HU {
+            get {
+                return ResourceManager.GetString("lang_hu_HU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottle size: .
+        /// </summary>
+        public static string set_bottle_size {
+            get {
+                return ResourceManager.GetString("set_bottle_size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and Close.
+        /// </summary>
+        public static string set_btn_save_and_close {
+            get {
+                return ResourceManager.GetString("set_btn_save_and_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default place of work:.
+        /// </summary>
+        public static string set_default_workplace {
+            get {
+                return ResourceManager.GetString("set_default_workplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily work hours: .
+        /// </summary>
+        public static string set_default_worktime {
+            get {
+                return ResourceManager.GetString("set_default_worktime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is lunchtime worktime?.
+        /// </summary>
+        public static string set_is_lunchtime_worktime {
+            get {
+                return ResourceManager.GetString("set_is_lunchtime_worktime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display language:.
+        /// </summary>
+        public static string set_language {
+            get {
+                return ResourceManager.GetString("set_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave days in a year:.
+        /// </summary>
+        public static string set_leave_days_in_year {
+            get {
+                return ResourceManager.GetString("set_leave_days_in_year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity watcher resolution:.
+        /// </summary>
+        public static string set_usagewatcher_resolution {
+            get {
+                return ResourceManager.GetString("set_usagewatcher_resolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bezárás.
+        /// </summary>
+        public static string stat_btn_close {
+            get {
+                return ResourceManager.GetString("stat_btn_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Különbség:.
+        /// </summary>
+        public static string stat_diff_in_hours {
+            get {
+                return ResourceManager.GetString("stat_diff_in_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Előző nap:.
+        /// </summary>
+        public static string stat_last_day {
+            get {
+                return ResourceManager.GetString("stat_last_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Előző hónap:.
+        /// </summary>
+        public static string stat_last_month {
+            get {
+                return ResourceManager.GetString("stat_last_month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mért órák:.
+        /// </summary>
+        public static string stat_measured_hours {
+            get {
+                return ResourceManager.GetString("stat_measured_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szükséges órák:.
+        /// </summary>
+        public static string stat_needed_hours {
+            get {
+                return ResourceManager.GetString("stat_needed_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hónapban:.
+        /// </summary>
+        public static string stat_this_month {
+            get {
+                return ResourceManager.GetString("stat_this_month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ma:.
+        /// </summary>
+        public static string stat_today {
+            get {
+                return ResourceManager.GetString("stat_today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ledolgozott órák:.
+        /// </summary>
+        public static string stat_worked_hours {
+            get {
+                return ResourceManager.GetString("stat_worked_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string u_btn_cancel {
+            get {
+                return ResourceManager.GetString("u_btn_cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string u_btn_close {
+            get {
+                return ResourceManager.GetString("u_btn_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string u_btn_save {
+            get {
+                return ResourceManager.GetString("u_btn_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lunch break length:.
+        /// </summary>
+        public static string u_lunch_break_length {
+            get {
+                return ResourceManager.GetString("u_lunch_break_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other break lenght:.
+        /// </summary>
+        public static string u_other_break_length {
+            get {
+                return ResourceManager.GetString("u_other_break_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwork length:.
+        /// </summary>
+        public static string u_overwork_length {
+            get {
+                return ResourceManager.GetString("u_overwork_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End time:.
+        /// </summary>
+        public static string u_work_end_time {
+            get {
+                return ResourceManager.GetString("u_work_end_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time:.
+        /// </summary>
+        public static string u_work_start_time {
+            get {
+                return ResourceManager.GetString("u_work_start_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workday type:.
+        /// </summary>
+        public static string u_workday_type {
+            get {
+                return ResourceManager.GetString("u_workday_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place of work:.
+        /// </summary>
+        public static string u_workplace {
+            get {
+                return ResourceManager.GetString("u_workplace", resourceCulture);
             }
         }
     }

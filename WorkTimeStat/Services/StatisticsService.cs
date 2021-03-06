@@ -32,7 +32,7 @@ namespace WorkTimeStat.Services
                 return 0;
             }
 
-            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.NORMAL };
+            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.WEEKDAY };
 
             IEnumerable<WorkDay> monthlyWorkdays = FilterOfficalWorkdaysInMonth(month, dayTypes);
             return monthlyWorkdays.Count();

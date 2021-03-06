@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkTimeStat.Controls"
+             xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:StatisticsControl}"
              mc:Ignorable="d" 
              d:DesignHeight="235" d:DesignWidth="580"
@@ -51,15 +52,15 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Előző nap: " Grid.Column="3" Grid.Row="1"/>
-            <Label Content="Ma: " Grid.Column="5" Grid.Row="1"/>
-            <Label Content="Hónapban: " Grid.Column="7" Grid.Row="1"/>
-            <Label Content="Előző hónap: " Grid.Column="9" Grid.Row="1"/>
+            <Label Content="{x:Static loc:Resources.stat_last_day}" Grid.Column="3" Grid.Row="1"/>
+            <Label Content="{x:Static loc:Resources.stat_today}" Grid.Column="5" Grid.Row="1"/>
+            <Label Content="{x:Static loc:Resources.stat_this_month}" Grid.Column="7" Grid.Row="1"/>
+            <Label Content="{x:Static loc:Resources.stat_last_month}" Grid.Column="9" Grid.Row="1"/>
 
-            <Label Content="Ledolgozott órák: " Grid.Column="1" Grid.Row="3"/>
-            <Label Content="Szükséges órák: " Grid.Column="1" Grid.Row="5"/>
-            <Label Content="Mért órák: " Grid.Column="1" Grid.Row="7"/>
-            <Label Content="Különbség: " Grid.Column="1" Grid.Row="9"/>
+            <Label Content="{x:Static loc:Resources.stat_worked_hours}" Grid.Column="1" Grid.Row="3"/>
+            <Label Content="{x:Static loc:Resources.stat_needed_hours}" Grid.Column="1" Grid.Row="5"/>
+            <Label Content="{x:Static loc:Resources.stat_measured_hours}" Grid.Column="1" Grid.Row="7"/>
+            <Label Content="{x:Static loc:Resources.stat_diff_in_hours}" Grid.Column="1" Grid.Row="9"/>
 
             <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
 
@@ -83,7 +84,7 @@
             <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
             <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
 
-            <Button x:Name="SaveBtn" Content="Bezárás"
+            <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.stat_btn_close}"
                     Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
                     Click="SaveBtn_Click" />
         </Grid>

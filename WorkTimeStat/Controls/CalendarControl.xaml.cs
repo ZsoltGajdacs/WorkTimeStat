@@ -15,6 +15,7 @@ namespace WorkTimeStat.Controls
     {
         private readonly WorkKeeper keeper;
         private readonly DateTime currDate;
+        private readonly LocalizationHelper langHelper;
 
         private WorkDay chosenDay;
         private int numOfLeavesLeft;
@@ -28,6 +29,7 @@ namespace WorkTimeStat.Controls
         {
             InitializeComponent();
             keeper = WorkKeeper.Instance;
+            langHelper = LocalizationHelper.Instance;
 
             mainGrid.DataContext = this;
 
@@ -89,11 +91,13 @@ namespace WorkTimeStat.Controls
 
         private void SetLabels(ref WorkDay workDay)
         {
+            string minute = langHelper.GetStringForKey("cal_minute");
+
             startTimeValue.Content = workDay.StartTime;
             endTimeValue.Content = workDay.EndTime;
-            lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " perc";
-            otherBreakTimeValue.Content = workDay.OtherBreakDuration + " perc";
-            overWorkTimeValue.Content = workDay.OverWorkDuration + " perc";
+            lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " " + minute;
+            otherBreakTimeValue.Content = workDay.OtherBreakDuration + " " + minute;
+            overWorkTimeValue.Content = workDay.OverWorkDuration + " " + minute;
             WorkTypeValue.Content = workDay.WorkDayType.GetDisplayName();
             WorkPlaceValue.Content = workDay.WorkPlaceType.GetDisplayName();
             workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
@@ -246,7 +250,8 @@ namespace WorkTimeStat.Controls
             }
             catch (ArgumentNullException)
             {
-                MessageBox.Show("Valami nincs kitöltve megfelelően", "Hiányos kitöltés",
+                MessageBox.Show(langHelper.GetStringForKey("cal_error_incomplete_state_at_save_content"), 
+                    langHelper.GetStringForKey("cal_error_incomplete_state_at_save_header"),
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

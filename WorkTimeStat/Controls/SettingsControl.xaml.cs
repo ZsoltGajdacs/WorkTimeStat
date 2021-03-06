@@ -21,6 +21,7 @@ namespace WorkTimeStat.Controls
 
             ResCombo.ItemsSource = Enum.GetValues(typeof(Resolution)).Cast<Resolution>();
             WorkPlaceCombo.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
+            LangCombo.ItemsSource = Enum.GetValues(typeof(AvailableLanguages)).Cast<AvailableLanguages>();
 
             mainGrid.DataContext = keeper.Settings;
         }

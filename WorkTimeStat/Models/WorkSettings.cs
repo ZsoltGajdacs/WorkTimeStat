@@ -18,6 +18,7 @@ namespace WorkTimeStat.Models
         public DataPrecision WatcherDataPrecision { get; set; }
         public SavePreference WatcherSavePreference { get; set; }
         public WorkPlaceType WorkPlaceType { get; set; }
+        public AvailableLanguages ChosenLanguage { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
