@@ -34,7 +34,7 @@ namespace WorkTimeStat.Models
             AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
-            StartTime = NumberFormatter.RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
+            StartTime = RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
             WorkPlaceType = workPlaceType;
             WorkDayType = WorkDayType.WEEKDAY;
@@ -130,6 +130,11 @@ namespace WorkTimeStat.Models
         internal void IncreaseWaterConsumption()
         {
             WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, AmountOfLitreInOneUnit);
+        }
+
+        private static DateTime RoundUpTime(DateTime date, TimeSpan roundTime)
+        {
+            return new DateTime((date.Ticks + roundTime.Ticks - 1) / roundTime.Ticks * roundTime.Ticks, date.Kind);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
