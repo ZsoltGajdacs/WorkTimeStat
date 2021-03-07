@@ -2,7 +2,11 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using UsageWatcher.Enums;
 using WorkTimeStat.Controls;
+using WorkTimeStat.Enums;
+using WorkTimeStat.Helpers;
+using WorkTimeStat.Models;
 using WorkTimeStat.Services;
 using WorkTimeStat.Storage;
 using WorkTimeStat.Timers;
@@ -18,8 +22,10 @@ namespace WorkTimeStat
         #region Startup
         public MainWindow()
         {
-            InitializeComponent();
             InitializeWorkKeeper();
+            SetLanguage();
+            CheckSettingsSetup();
+            InitializeComponent();
         }
 
         private void InitializeWorkKeeper()
@@ -30,6 +36,26 @@ namespace WorkTimeStat
             saveTimer = new SaveTimer(TimeSpan.FromMinutes(30));
 
             StatisticsService.FullReCountWorkedDays();
+        }
+
+        private void SetLanguage()
+        {
+            AvailableLanguages chosenLang = workKeeper.Settings.ChosenLanguage;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(chosenLang.GetDescription());
+        }
+
+        private void CheckSettingsSetup()
+        {
+            WorkSettings settings = WorkKeeper.Instance.Settings;
+            if (settings.DailyWorkHours == default || settings.YearlyLeaveNumber == default)
+            {
+                LocalizationHelper locHelp = LocalizationHelper.Instance;
+                MessageBox.Show(locHelp.GetStringForKey("main_error_no_settings_content"),
+                       locHelp.GetStringForKey("main_error_no_settings_header"),
+                       MessageBoxButton.OK, MessageBoxImage.Error);
+
+                SettingsItem_Click(null, null);
+            }
         }
         #endregion
 

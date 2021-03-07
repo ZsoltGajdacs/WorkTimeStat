@@ -209,7 +209,7 @@ namespace WorkTimeStat.Controls
         private void WorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             object selectedEnum = WorkType.SelectedValue;
-            string enumName = String.Empty;
+            string enumName = string.Empty;
             if (selectedEnum is WorkDayType typeEnum)
             {
                 enumName = typeEnum.GetDisplayName() ?? typeEnum.ToString();
@@ -226,7 +226,7 @@ namespace WorkTimeStat.Controls
         private void WorkPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             object selectedEnum = WorkPlace.SelectedValue;
-            string enumName = String.Empty;
+            string enumName = string.Empty;
             if (selectedEnum is WorkPlaceType placeEnum)
             {
                 enumName = placeEnum.GetDisplayName() ?? placeEnum.ToString();

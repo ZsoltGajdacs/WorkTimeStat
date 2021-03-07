@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using UsageWatcher.Enums;
+using WorkTimeStat.Helpers;
 
 namespace WorkTimeStat.Enums.Converters
 {
@@ -10,7 +11,9 @@ namespace WorkTimeStat.Enums.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Enum enumToString = (Enum)value;
-            return enumToString.GetDisplayName();
+            string dispName = enumToString.GetDisplayName();
+            string localizedName = LocalizationHelper.Instance.GetStringForKey(dispName);
+            return localizedName ?? dispName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -88,6 +88,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data for this day!.
+        /// </summary>
+        public static string cal_error_no_data_for_day_content {
+            get {
+                return ResourceManager.GetString("cal_error_no_data_for_day_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data.
+        /// </summary>
+        public static string cal_error_no_data_for_day_header {
+            get {
+                return ResourceManager.GetString("cal_error_no_data_for_day_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On leave?.
         /// </summary>
         public static string cal_leave_day {
@@ -115,7 +133,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to minute.
+        ///   Looks up a localized string similar to min.
         /// </summary>
         public static string cal_minute {
             get {
@@ -340,6 +358,69 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calendar.
+        /// </summary>
+        public static string main_calendar {
+            get {
+                return ResourceManager.GetString("main_calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today&apos;s computer usage.
+        /// </summary>
+        public static string main_daily_usage {
+            get {
+                return ResourceManager.GetString("main_daily_usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please set your number of leaves and daily work hours in settings!.
+        /// </summary>
+        public static string main_error_no_settings_content {
+            get {
+                return ResourceManager.GetString("main_error_no_settings_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No setup.
+        /// </summary>
+        public static string main_error_no_settings_header {
+            get {
+                return ResourceManager.GetString("main_error_no_settings_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string main_exit {
+            get {
+                return ResourceManager.GetString("main_exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string main_settings {
+            get {
+                return ResourceManager.GetString("main_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string main_statistics {
+            get {
+                return ResourceManager.GetString("main_statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bottle size: .
         /// </summary>
         public static string set_bottle_size {
@@ -372,6 +453,24 @@ namespace WorkTimeStat.Properties {
         public static string set_default_worktime {
             get {
                 return ResourceManager.GetString("set_default_worktime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please set your number of leaves and daily work hours!.
+        /// </summary>
+        public static string set_error_incomplete_setup_content {
+            get {
+                return ResourceManager.GetString("set_error_incomplete_setup_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete setup.
+        /// </summary>
+        public static string set_error_incomplete_setup_header {
+            get {
+                return ResourceManager.GetString("set_error_incomplete_setup_header", resourceCulture);
             }
         }
         
@@ -412,16 +511,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bezárás.
-        /// </summary>
-        public static string stat_btn_close {
-            get {
-                return ResourceManager.GetString("stat_btn_close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Különbség:.
+        ///   Looks up a localized string similar to Difference:.
         /// </summary>
         public static string stat_diff_in_hours {
             get {
@@ -430,7 +520,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Előző nap:.
+        ///   Looks up a localized string similar to Last day:.
         /// </summary>
         public static string stat_last_day {
             get {
@@ -439,7 +529,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Előző hónap:.
+        ///   Looks up a localized string similar to Last month:.
         /// </summary>
         public static string stat_last_month {
             get {
@@ -448,7 +538,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mért órák:.
+        ///   Looks up a localized string similar to Measured hours:.
         /// </summary>
         public static string stat_measured_hours {
             get {
@@ -457,7 +547,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Szükséges órák:.
+        ///   Looks up a localized string similar to Needed hours:.
         /// </summary>
         public static string stat_needed_hours {
             get {
@@ -466,7 +556,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hónapban:.
+        ///   Looks up a localized string similar to This month:.
         /// </summary>
         public static string stat_this_month {
             get {
@@ -475,7 +565,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ma:.
+        ///   Looks up a localized string similar to Today:.
         /// </summary>
         public static string stat_today {
             get {
@@ -484,7 +574,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ledolgozott órák:.
+        ///   Looks up a localized string similar to Worked hours:.
         /// </summary>
         public static string stat_worked_hours {
             get {
@@ -520,7 +610,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lunch break length:.
+        ///   Looks up a localized string similar to Lunch break:.
         /// </summary>
         public static string u_lunch_break_length {
             get {
@@ -529,7 +619,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other break lenght:.
+        ///   Looks up a localized string similar to Other break:.
         /// </summary>
         public static string u_other_break_length {
             get {
@@ -538,7 +628,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overwork length:.
+        ///   Looks up a localized string similar to Overwork:.
         /// </summary>
         public static string u_overwork_length {
             get {

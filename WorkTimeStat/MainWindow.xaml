@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
         xmlns:local="clr-namespace:WorkTimeStat"
         mc:Ignorable="d"
         Title="TaskBarIcon" ResizeMode="NoResize" ShowInTaskbar="False" 
-        WindowStartupLocation="CenterScreen" WindowState="Minimized" 
+        WindowStartupLocation="CenterScreen" WindowState="Minimized" FontSize="14"
         Visibility="Hidden" Closing="Window_Closing">
     <Grid>
         <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons\water_white.ico" 
@@ -16,14 +17,20 @@
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="settingsItem" Header="Beállítások" Click="SettingsItem_Click"/>
+                    <MenuItem Name="settingsItem" Header="{x:Static loc:Resources.main_settings}" 
+                              Click="SettingsItem_Click" FontSize="14"/>
                     <Separator />
-                    <MenuItem Name="calendarItem" Header="Naptár" Click="CalendarItem_Click"/>
-                    <MenuItem Name="statisticsItem" Header="Statisztikák" Click="StatisticsItem_Click"/>
+                    <MenuItem Name="calendarItem" Header="{x:Static loc:Resources.main_calendar}" 
+                              Click="CalendarItem_Click" FontSize="14"/>
+                    
+                    <MenuItem Name="statisticsItem" Header="{x:Static loc:Resources.main_statistics}" 
+                              Click="StatisticsItem_Click" FontSize="14"/>
                     <Separator />
-                    <MenuItem Name="usageItem" Header="Mai használati idő" Click="UsageItem_Click"/>
+                    <MenuItem Name="usageItem" Header="{x:Static loc:Resources.main_daily_usage}" 
+                              Click="UsageItem_Click" FontSize="14"/>
                     <Separator />
-                    <MenuItem Name="exitItem" Header="Kilépés" Click="ExitItem_Click"/>
+                    <MenuItem Name="exitItem" Header="{x:Static loc:Resources.main_exit}" 
+                              Click="ExitItem_Click" FontSize="14"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
 

@@ -50,17 +50,18 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MinWidth="100"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
             <Label Content="{x:Static loc:Resources.set_is_lunchtime_worktime}" Grid.Column="1" Grid.Row="1"/>
             <CheckBox IsChecked="{Binding IsLunchTimeWorkTimeDefault, Mode=TwoWay}" 
                       Grid.Column="3" Grid.Row="1" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                      HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Label Content="{x:Static loc:Resources.set_language}" Grid.Column="1" Grid.Row="3"/>
-            <ComboBox x:Name="LangCombo" SelectedItem="{Binding ChosenLanguage, Mode=TwoWay}" 
+            <ComboBox x:Name="LangCombo" SelectedItem="{Binding ChosenLanguage, Mode=TwoWay}"
+                      SelectionChanged="LangCombo_SelectionChanged"
                       Grid.Column="3" Grid.Row="3">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

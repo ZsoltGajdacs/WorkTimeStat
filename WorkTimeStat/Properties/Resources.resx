@@ -122,11 +122,15 @@
   </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Some values are not correctly filled</value>
-    <comment>used from code in mbox</comment>
   </data>
   <data name="cal_error_incomplete_state_at_save_header" xml:space="preserve">
     <value>Incorrect data</value>
-    <comment>used from code in mbox</comment>
+  </data>
+  <data name="cal_error_no_data_for_day_content" xml:space="preserve">
+    <value>No data for this day!</value>
+  </data>
+  <data name="cal_error_no_data_for_day_header" xml:space="preserve">
+    <value>No data</value>
   </data>
   <data name="cal_leave_day" xml:space="preserve">
     <value>On leave?</value>
@@ -138,8 +142,7 @@
     <value>Measured hours:</value>
   </data>
   <data name="cal_minute" xml:space="preserve">
-    <value>minute</value>
-    <comment>used from code</comment>
+    <value>min</value>
   </data>
   <data name="cal_sick_pay" xml:space="preserve">
     <value>On sick pay?</value>
@@ -213,6 +216,27 @@
   <data name="lang_hu_HU" xml:space="preserve">
     <value>Hungarian</value>
   </data>
+  <data name="main_calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="main_daily_usage" xml:space="preserve">
+    <value>Today's computer usage</value>
+  </data>
+  <data name="main_error_no_settings_content" xml:space="preserve">
+    <value>Please set your number of leaves and daily work hours in settings!</value>
+  </data>
+  <data name="main_error_no_settings_header" xml:space="preserve">
+    <value>No setup</value>
+  </data>
+  <data name="main_exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="main_settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="main_statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
   <data name="set_bottle_size" xml:space="preserve">
     <value>Bottle size: </value>
   </data>
@@ -224,6 +248,12 @@
   </data>
   <data name="set_default_worktime" xml:space="preserve">
     <value>Daily work hours: </value>
+  </data>
+  <data name="set_error_incomplete_setup_content" xml:space="preserve">
+    <value>Please set your number of leaves and daily work hours!</value>
+  </data>
+  <data name="set_error_incomplete_setup_header" xml:space="preserve">
+    <value>Incomplete setup</value>
   </data>
   <data name="set_is_lunchtime_worktime" xml:space="preserve">
     <value>Is lunchtime worktime?</value>
@@ -237,32 +267,29 @@
   <data name="set_usagewatcher_resolution" xml:space="preserve">
     <value>Activity watcher resolution:</value>
   </data>
-  <data name="stat_btn_close" xml:space="preserve">
-    <value>Bezárás</value>
-  </data>
   <data name="stat_diff_in_hours" xml:space="preserve">
-    <value>Különbség:</value>
+    <value>Difference:</value>
   </data>
   <data name="stat_last_day" xml:space="preserve">
-    <value>Előző nap:</value>
+    <value>Last day:</value>
   </data>
   <data name="stat_last_month" xml:space="preserve">
-    <value>Előző hónap:</value>
+    <value>Last month:</value>
   </data>
   <data name="stat_measured_hours" xml:space="preserve">
-    <value>Mért órák:</value>
+    <value>Measured hours:</value>
   </data>
   <data name="stat_needed_hours" xml:space="preserve">
-    <value>Szükséges órák:</value>
+    <value>Needed hours:</value>
   </data>
   <data name="stat_this_month" xml:space="preserve">
-    <value>Hónapban:</value>
+    <value>This month:</value>
   </data>
   <data name="stat_today" xml:space="preserve">
-    <value>Ma:</value>
+    <value>Today:</value>
   </data>
   <data name="stat_worked_hours" xml:space="preserve">
-    <value>Ledolgozott órák:</value>
+    <value>Worked hours:</value>
   </data>
   <data name="u_btn_cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -274,13 +301,13 @@
     <value>Save</value>
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
-    <value>Lunch break length:</value>
+    <value>Lunch break:</value>
   </data>
   <data name="u_other_break_length" xml:space="preserve">
-    <value>Other break lenght:</value>
+    <value>Other break:</value>
   </data>
   <data name="u_overwork_length" xml:space="preserve">
-    <value>Overwork length:</value>
+    <value>Overwork:</value>
   </data>
   <data name="u_workday_type" xml:space="preserve">
     <value>Workday type:</value>

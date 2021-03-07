@@ -86,11 +86,11 @@
             <Label Content="{x:Static loc:Resources.cal_measured_hours}" Grid.Column="3" Grid.Row="25"/>
 
             <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
-                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  VerticalAlignment="Center" HorizontalAlignment="Left"
                   PreviewMouseDown="SickDayChkbox_MouseDown" Click="SickDayChkbox_Click"/>
 
             <CheckBox x:Name="leaveDayChkbox" Grid.Column="5" Grid.Row="5" 
-                  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" HorizontalAlignment="Left" 
                   PreviewMouseDown="LeaveDayChkbox_MouseDown" Click="LeaveDayChkbox_Click"/>
 
             <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="7"/>

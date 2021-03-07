@@ -84,7 +84,7 @@
             <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
             <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
 
-            <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.stat_btn_close}"
+            <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.u_btn_close}"
                     Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
                     Click="SaveBtn_Click" />
         </Grid>

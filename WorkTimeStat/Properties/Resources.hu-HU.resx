@@ -122,11 +122,15 @@
   </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Valami nincs kitöltve megfelelően</value>
-    <comment>used from code in mbox</comment>
   </data>
   <data name="cal_error_incomplete_state_at_save_header" xml:space="preserve">
     <value>Hiányos kitöltés</value>
-    <comment>used from code in mbox</comment>
+  </data>
+  <data name="cal_error_no_data_for_day_content" xml:space="preserve">
+    <value>Nincs adat erre a napra!</value>
+  </data>
+  <data name="cal_error_no_data_for_day_header" xml:space="preserve">
+    <value>Nincs adat</value>
   </data>
   <data name="cal_leave_day" xml:space="preserve">
     <value>Szabadnap?</value>
@@ -139,7 +143,6 @@
   </data>
   <data name="cal_minute" xml:space="preserve">
     <value>perc</value>
-    <comment>used from code</comment>
   </data>
   <data name="cal_sick_pay" xml:space="preserve">
     <value>Táppénzen?</value>
@@ -213,6 +216,27 @@
   <data name="lang_hu_HU" xml:space="preserve">
     <value>Magyar</value>
   </data>
+  <data name="main_calendar" xml:space="preserve">
+    <value>Naptár</value>
+  </data>
+  <data name="main_daily_usage" xml:space="preserve">
+    <value>Mai használati idő</value>
+  </data>
+  <data name="main_error_no_settings_content" xml:space="preserve">
+    <value>Kérlek állítsd be a napi munkaóráidat és éves szabadságkeretedet!</value>
+  </data>
+  <data name="main_error_no_settings_header" xml:space="preserve">
+    <value>Hiányos beállítások</value>
+  </data>
+  <data name="main_exit" xml:space="preserve">
+    <value>Kilépés</value>
+  </data>
+  <data name="main_settings" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="main_statistics" xml:space="preserve">
+    <value>Statisztikák</value>
+  </data>
   <data name="set_bottle_size" xml:space="preserve">
     <value>Hány literes amiből iszol?</value>
   </data>
@@ -224,6 +248,12 @@
   </data>
   <data name="set_default_worktime" xml:space="preserve">
     <value>Napi munkaórák száma?</value>
+  </data>
+  <data name="set_error_incomplete_setup_content" xml:space="preserve">
+    <value>Kérlek állítsd be a napi munkaóráidat és éves szabadságkeretedet!</value>
+  </data>
+  <data name="set_error_incomplete_setup_header" xml:space="preserve">
+    <value>Hiányos beállítások</value>
   </data>
   <data name="set_is_lunchtime_worktime" xml:space="preserve">
     <value>Az ebédszünet munkaidő?</value>

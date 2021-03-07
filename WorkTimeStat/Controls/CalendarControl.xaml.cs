@@ -92,14 +92,14 @@ namespace WorkTimeStat.Controls
         private void SetLabels(ref WorkDay workDay)
         {
             string minute = langHelper.GetStringForKey("cal_minute");
-
+            
             startTimeValue.Content = workDay.StartTime;
             endTimeValue.Content = workDay.EndTime;
             lunchBreakTimeValue.Content = workDay.LunchBreakDuration + " " + minute;
             otherBreakTimeValue.Content = workDay.OtherBreakDuration + " " + minute;
             overWorkTimeValue.Content = workDay.OverWorkDuration + " " + minute;
-            WorkTypeValue.Content = workDay.WorkDayType.GetDisplayName();
-            WorkPlaceValue.Content = workDay.WorkPlaceType.GetDisplayName();
+            WorkTypeValue.Content = langHelper.GetStringForKey(workDay.WorkDayType.GetDisplayName());
+            WorkPlaceValue.Content = langHelper.GetStringForKey(workDay.WorkPlaceType.GetDisplayName());
             workedTimeValue.Content = StatisticsService.CalcDailyWorkedHours(workDay);
 
             double daysUsage = StatisticsService.GetUsageForDay(workDay);
@@ -199,19 +199,37 @@ namespace WorkTimeStat.Controls
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            FillEditDataForChosenDay();
-            HideLabels();
-            ShowEditControls();
+            if (chosenDay != null)
+            {
+                FillEditDataForChosenDay();
+                HideLabels();
+                ShowEditControls();
+            }
+            else
+            {
+                MessageBox.Show(langHelper.GetStringForKey("cal_error_no_data_for_day_content"),
+                       langHelper.GetStringForKey("cal_error_no_data_for_day_header"),
+                       MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            SaveDataForChosenDay();
-            RefreshLabels(ref chosenDay);
-            HideEditControls();
-            ShowLabels();
+            try
+            {
+                SaveDataForChosenDay();
+                RefreshLabels(ref chosenDay);
+                HideEditControls();
+                ShowLabels();
 
-            SaveService.SaveData(SaveUsage.No);
+                SaveService.SaveData(SaveUsage.No);
+            }
+            catch (ArgumentNullException)
+            {
+                MessageBox.Show(langHelper.GetStringForKey("cal_error_incomplete_state_at_save_content"),
+                    langHelper.GetStringForKey("cal_error_incomplete_state_at_save_header"),
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -235,25 +253,16 @@ namespace WorkTimeStat.Controls
             WorkEndMinute.Value = chosenDay.EndTime.Minutes;
             EditWorkLaunchTime.Value = chosenDay.LunchBreakDuration;
             EditWorkbreakTime.Value = chosenDay.OtherBreakDuration;
-            EditNonworkTime.Value = chosenDay.OverWorkDuration;
+            EditNonworkTime.Value = chosenDay.OverWorkDuration; 
         }
 
         private void SaveDataForChosenDay()
         {
-            try
-            {
-                chosenDay.SetStartTime(WorkStartHour.Value, WorkStartMinute.Value);
-                chosenDay.SetEndTime(WorkEndHour.Value, WorkEndMinute.Value);
-                chosenDay.SetLunchBreakDuration(EditWorkLaunchTime.Value);
-                chosenDay.SetOtherBreakDuration(EditWorkbreakTime.Value);
-                chosenDay.SetOverWorkDuration(EditNonworkTime.Value);
-            }
-            catch (ArgumentNullException)
-            {
-                MessageBox.Show(langHelper.GetStringForKey("cal_error_incomplete_state_at_save_content"), 
-                    langHelper.GetStringForKey("cal_error_incomplete_state_at_save_header"),
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            chosenDay.SetStartTime(WorkStartHour.Value, WorkStartMinute.Value);
+            chosenDay.SetEndTime(WorkEndHour.Value, WorkEndMinute.Value);
+            chosenDay.SetLunchBreakDuration(EditWorkLaunchTime.Value);
+            chosenDay.SetOtherBreakDuration(EditWorkbreakTime.Value);
+            chosenDay.SetOverWorkDuration(EditNonworkTime.Value);
         }
 
         private void ShowLabels()
