@@ -91,7 +91,7 @@ namespace WorkTimeStat.Controls
 
         private void SetLabels(ref WorkDay workDay)
         {
-            string minute = langHelper.GetStringForKey("cal_minute");
+            string minute = langHelper.GetStringForKey("u_minute");
             
             startTimeValue.Content = workDay.StartTime;
             endTimeValue.Content = workDay.EndTime;

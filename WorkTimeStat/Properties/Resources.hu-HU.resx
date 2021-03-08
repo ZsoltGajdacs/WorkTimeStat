@@ -141,9 +141,6 @@
   <data name="cal_measured_hours" xml:space="preserve">
     <value>Mért órák:</value>
   </data>
-  <data name="cal_minute" xml:space="preserve">
-    <value>perc</value>
-  </data>
   <data name="cal_sick_pay" xml:space="preserve">
     <value>Táppénzen?</value>
   </data>
@@ -305,6 +302,9 @@
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Ebédszünet:</value>
+  </data>
+  <data name="u_minute" xml:space="preserve">
+    <value>perc</value>
   </data>
   <data name="u_other_break_length" xml:space="preserve">
     <value>Egyéb szünet:</value>

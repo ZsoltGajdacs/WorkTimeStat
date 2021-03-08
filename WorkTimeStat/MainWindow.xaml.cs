@@ -24,8 +24,8 @@ namespace WorkTimeStat
         {
             InitializeWorkKeeper();
             SetLanguage();
-            CheckSettingsSetup();
             InitializeComponent();
+            CheckSettingsSetup();
         }
 
         private void InitializeWorkKeeper()
@@ -94,8 +94,6 @@ namespace WorkTimeStat
         #region Menu Click Events
         private void CalendarItem_Click(object sender, RoutedEventArgs e)
         {
-            /* CalendarWindow calendarWindow = new CalendarWindow(ref workKeeper);
-             calendarWindow.Show();*/
             CalendarControl calendarControl = new CalendarControl();
             calendarControl.CloseBallon += CloseTaskbarBalloon;
 

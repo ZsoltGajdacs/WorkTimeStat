@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UsageWatcher.Model;
 using WorkTimeStat.Models;
 using WorkTimeStat.Storage;
 
@@ -25,6 +27,12 @@ namespace WorkTimeStat.Services
         {
             WorkDay day = WorkDayService.GetDayAtDate(date);
             return day.UsageTime;
+        }
+
+        internal static List<UsageBlock> GetUsageListForTimeFrame(DateTime start, DateTime end)
+        {
+            UsageWatcher.IWatcher watcher = WorkKeeper.Instance.GetWatcher();
+            return watcher.UsageListForGivenTimeFrame(start, end);
         }
     }
 }

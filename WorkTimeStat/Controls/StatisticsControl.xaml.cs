@@ -47,6 +47,8 @@ namespace WorkTimeStat.Controls
             dto.dWorkedHours = StatisticsService.CalcDailyWorkedHours(today);
             dto.dFullHours = StatisticsService.CalcFullHoursForDay(today);
             dto.dCalcHours = StatisticsService.GetUsageForToday();
+            dto.dMeasuredFlowToolTip = new ToolTip();
+            dto.dMeasuredFlowToolTip.Content = StatisticsService.GetUsageFlowForToday();
             dto.dLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(today));
 
             // Yesterday
@@ -69,6 +71,7 @@ namespace WorkTimeStat.Controls
             todayWorkedHours.Content = NumberFormatter.FormatNum(dto.dWorkedHours);
             todayFullHours.Content = NumberFormatter.FormatNum(dto.dFullHours);
             todayCalcHours.Content = NumberFormatter.FormatNum(dto.dCalcHours);
+            todayCalcHours.ToolTip = dto.dMeasuredFlowToolTip;
             todayLeftHours.Content = dto.dLeftHours;
 
             monthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.mWorkedHours);
@@ -85,7 +88,7 @@ namespace WorkTimeStat.Controls
         private static string AddPlusIfNeeded(double num)
         {
             num = Math.Round(num, 2, MidpointRounding.ToEven);
-            return num > 0 ? "+" + num : num.ToString(CultureInfo.InvariantCulture);
+            return num > 0 ? "+" + num : num.ToString(CultureInfo.CurrentCulture);
         }
 
         private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -108,6 +111,7 @@ namespace WorkTimeStat.Controls
             // Daily
             public double dWorkedHours, dFullHours, dCalcHours;
             public string dLeftHours;
+            public ToolTip dMeasuredFlowToolTip;
 
             // Yesterday
             public double ywdWorkedHours, ywdFullHours, ywdCalcHours;

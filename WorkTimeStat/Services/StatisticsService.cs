@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using UsageWatcher.Model;
 using WorkTimeStat.Enums;
+using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Storage;
 
@@ -227,6 +231,34 @@ namespace WorkTimeStat.Services
 
             TimeSpan usageInTimeframe = UsageService.GetUsageForTimeframe(startDate, endDate);
             return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+        }
+
+        internal static string GetUsageFlowForToday()
+        {
+            LocalizationHelper locHelper = LocalizationHelper.Instance;
+            WorkDay day = WorkDayService.GetCurrentDay();
+            if (day == null)
+            {
+                return string.Empty;
+            }
+
+            DateTime startDate = day.DayDate.Date + day.StartTime;
+            DateTime endDate = day.DayDate.Date + day.EndTime;
+
+            List<UsageBlock> usageFlow = UsageService.GetUsageListForTimeFrame(startDate, endDate);
+            StringBuilder sb = new StringBuilder();
+            foreach (UsageBlock block in usageFlow)
+            {
+                sb.Append(block.StartTime.ToShortTimeString());
+                sb.Append(" - ");
+                sb.Append(block.EndTime.ToShortTimeString());
+                sb.Append(": ");
+                sb.Append((block.EndTime - block.StartTime).TotalMinutes.ToString(CultureInfo.CurrentCulture));
+                sb.Append(' ');
+                sb.AppendLine(locHelper.GetStringForKey("u_minute"));
+            }
+
+            return sb.ToString();
         }
 
         internal static double GetUsageForMonth(int month, List<WorkDayType> types)
