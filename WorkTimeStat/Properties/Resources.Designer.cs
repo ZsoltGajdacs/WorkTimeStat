@@ -133,15 +133,6 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to min.
-        /// </summary>
-        public static string cal_minute {
-            get {
-                return ResourceManager.GetString("cal_minute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to On sick pay?.
         /// </summary>
         public static string cal_sick_pay {
@@ -615,6 +606,15 @@ namespace WorkTimeStat.Properties {
         public static string u_lunch_break_length {
             get {
                 return ResourceManager.GetString("u_lunch_break_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to min.
+        /// </summary>
+        public static string u_minute {
+            get {
+                return ResourceManager.GetString("u_minute", resourceCulture);
             }
         }
         

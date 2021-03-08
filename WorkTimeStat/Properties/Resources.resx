@@ -141,9 +141,6 @@
   <data name="cal_measured_hours" xml:space="preserve">
     <value>Measured hours:</value>
   </data>
-  <data name="cal_minute" xml:space="preserve">
-    <value>min</value>
-  </data>
   <data name="cal_sick_pay" xml:space="preserve">
     <value>On sick pay?</value>
   </data>
@@ -302,6 +299,9 @@
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Lunch break:</value>
+  </data>
+  <data name="u_minute" xml:space="preserve">
+    <value>min</value>
   </data>
   <data name="u_other_break_length" xml:space="preserve">
     <value>Other break:</value>
