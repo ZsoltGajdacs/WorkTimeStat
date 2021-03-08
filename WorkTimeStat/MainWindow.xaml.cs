@@ -119,7 +119,7 @@ namespace WorkTimeStat
         private void UsageItem_Click(object sender, RoutedEventArgs e)
         {
             TimeSpan usageSoFar = workKeeper.GetWatcher().UsageForGivenTimeframe(DateTime.Today, DateTime.Now);
-            taskbarIcon.ShowBalloonTip("Eddigi használat", string.Format(CultureInfo.InvariantCulture, 
+            taskbarIcon.ShowBalloonTip("Eddigi használat", string.Format(CultureInfo.CurrentCulture, 
                 "{0} óra : {1} perc", usageSoFar.Hours, usageSoFar.Minutes), BalloonIcon.Info);
         }
 

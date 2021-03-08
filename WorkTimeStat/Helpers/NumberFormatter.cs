@@ -9,7 +9,7 @@ namespace WorkTimeStat.Helpers
 
         internal static string FormatNum(double num)
         {
-            return num == 0 ? NO_DATA : num.ToString(CultureInfo.InvariantCulture);
+            return num == 0 ? NO_DATA : num.ToString(CultureInfo.CurrentCulture);
         }
     }
 }

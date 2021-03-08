@@ -25,7 +25,7 @@ namespace WorkTimeStat.Helpers
         /// <returns></returns>
         internal static string GetSaveFileName()
         {
-            return "worktimestat" + DateTime.Now.Year.ToString(CultureInfo.InvariantCulture) + ".json";
+            return "worktimestat" + DateTime.Now.Year.ToString(CultureInfo.CurrentCulture) + ".json";
         }
     }
 }
