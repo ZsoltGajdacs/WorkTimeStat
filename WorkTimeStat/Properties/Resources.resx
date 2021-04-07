@@ -264,6 +264,12 @@
   <data name="set_usagewatcher_resolution" xml:space="preserve">
     <value>Activity watcher resolution:</value>
   </data>
+  <data name="stat_data_breaks" xml:space="preserve">
+    <value>Breaks:</value>
+  </data>
+  <data name="stat_data_flow" xml:space="preserve">
+    <value>Usageflow:</value>
+  </data>
   <data name="stat_diff_in_hours" xml:space="preserve">
     <value>Difference:</value>
   </data>
@@ -279,11 +285,17 @@
   <data name="stat_needed_hours" xml:space="preserve">
     <value>Needed hours:</value>
   </data>
+  <data name="stat_overview_tab_name" xml:space="preserve">
+    <value>Overview</value>
+  </data>
   <data name="stat_this_month" xml:space="preserve">
     <value>This month:</value>
   </data>
   <data name="stat_today" xml:space="preserve">
     <value>Today:</value>
+  </data>
+  <data name="stat_usage_tab_name" xml:space="preserve">
+    <value>Usage data</value>
   </data>
   <data name="stat_worked_hours" xml:space="preserve">
     <value>Worked hours:</value>

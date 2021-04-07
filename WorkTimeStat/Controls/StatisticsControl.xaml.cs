@@ -16,15 +16,23 @@ namespace WorkTimeStat.Controls
         public StatisticsControl(double dailyWorkHours)
         {
             InitializeComponent();
-            mainGrid.DataContext = this;
 
-            StatisticsDto dto = CreateStatDto(dailyWorkHours);
+            OverviewTabData dto = CreateOverviewData(dailyWorkHours);
             AssignDataToWindowControls(ref dto);
+            OverviewGrid.DataContext = this;
+
+            UsageTabData usageTabData = CreateUsageTabData();
+            UsageGrid.DataContext = usageTabData;
         }
 
-        private static StatisticsDto CreateStatDto(double dailyWorkHours)
+        private static UsageTabData CreateUsageTabData()
         {
-            StatisticsDto dto = new StatisticsDto { dailyWorkHours = dailyWorkHours };
+            return new UsageTabData();
+        }
+
+        private static OverviewTabData CreateOverviewData(double dailyWorkHours)
+        {
+            OverviewTabData dto = new OverviewTabData { dailyWorkHours = dailyWorkHours };
 
             List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.WEEKDAY };
 
@@ -47,21 +55,20 @@ namespace WorkTimeStat.Controls
             dto.dWorkedHours = StatisticsService.CalcDailyWorkedHours(today);
             dto.dFullHours = StatisticsService.CalcFullHoursForDay(today);
             dto.dCalcHours = StatisticsService.GetUsageForToday();
-            dto.dMeasuredFlowToolTip = new ToolTip();
-            dto.dMeasuredFlowToolTip.Content = StatisticsService.GetUsageFlowForToday();
             dto.dLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(today));
 
             // Yesterday
-            WorkDay yesterWorkday = WorkDayService.GetYesterWorkDay();
-            dto.ywdWorkedHours = StatisticsService.CalcDailyWorkedHours(yesterWorkday);
-            dto.ywdFullHours = StatisticsService.CalcFullHoursForDay(yesterWorkday);
-            dto.ywdCalcHours = StatisticsService.GetUsageForDay(yesterWorkday);
-            dto.ywdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(yesterWorkday));
+            WorkDay lastWorkday = WorkDayService.GetLastWorkDay();
+            dto.ywdWorkedHours = StatisticsService.CalcDailyWorkedHours(lastWorkday);
+            dto.ywdFullHours = StatisticsService.CalcFullHoursForDay(lastWorkday);
+            dto.ywdCalcHours = StatisticsService.GetUsageForDay(lastWorkday);
+            dto.ywdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(lastWorkday));
 
             return dto;
         }
 
-        private void AssignDataToWindowControls(ref StatisticsDto dto)
+        // TODO: rework this to happen in the dto and assign that as datasource
+        private void AssignDataToWindowControls(ref OverviewTabData dto)
         {
             yesterworkdayWorkedHours.Content = NumberFormatter.FormatNum(dto.ywdWorkedHours);
             yesterworkdayFullHours.Content = NumberFormatter.FormatNum(dto.ywdFullHours);
@@ -71,7 +78,6 @@ namespace WorkTimeStat.Controls
             todayWorkedHours.Content = NumberFormatter.FormatNum(dto.dWorkedHours);
             todayFullHours.Content = NumberFormatter.FormatNum(dto.dFullHours);
             todayCalcHours.Content = NumberFormatter.FormatNum(dto.dCalcHours);
-            todayCalcHours.ToolTip = dto.dMeasuredFlowToolTip;
             todayLeftHours.Content = dto.dLeftHours;
 
             monthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.mWorkedHours);
@@ -96,7 +102,7 @@ namespace WorkTimeStat.Controls
             CloseBallon?.Invoke();
         }
 
-        private class StatisticsDto
+        private class OverviewTabData
         {
             public double dailyWorkHours;
 
@@ -111,11 +117,30 @@ namespace WorkTimeStat.Controls
             // Daily
             public double dWorkedHours, dFullHours, dCalcHours;
             public string dLeftHours;
-            public ToolTip dMeasuredFlowToolTip;
 
             // Yesterday
             public double ywdWorkedHours, ywdFullHours, ywdCalcHours;
             public string ywdLeftHours;
+        }
+    
+        private class UsageTabData
+        {
+            public string UsageFlowData { get; private set; }
+            public string UsageBreakData { get; private set; }
+            public List<DateTime> DatesWithUsageData { get; private set; }
+
+            public UsageTabData()
+            {
+                UsageFlowData = StatisticsService.GetUsageFlowForToday(TimeSpan.FromMinutes(0));
+                UsageBreakData = StatisticsService.GetUsageBreaksForToday(TimeSpan.FromMinutes(10));
+                DatesWithUsageData = GetDatesWithUsageData();
+            }
+
+            private List<DateTime> GetDatesWithUsageData()
+            {
+                //TODO: Build list so the user can choose to view each day's usage data
+                return new List<DateTime>();
+            }
         }
     }
 }

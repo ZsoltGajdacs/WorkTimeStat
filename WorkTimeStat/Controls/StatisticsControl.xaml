@@ -7,12 +7,48 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:StatisticsControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="235" d:DesignWidth="580"
+             d:DesignHeight="280" d:DesignWidth="580"
              Background="#FF434343" Foreground="White" FontSize="14">
     <UserControl.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="#FF434343" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border Name="Border" Margin="0,0,-4,0" 
+                                Background="#FF434343" BorderBrush="#FF434343"
+                                BorderThickness="1,1,1,1" CornerRadius="12,12,0,0" >
+                                <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    ContentSource="Header" Margin="12,2,12,2" 
+                                    RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter TargetName="Border" Property="Background" Value="#898989" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#FF434343" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF434343" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="Background" Value="#FF434343" />
         </Style>
     </UserControl.Resources>
     
@@ -21,72 +57,140 @@
             BorderBrush="Wheat"
             HorizontalAlignment="Center"
             VerticalAlignment="Top">
-        <Grid x:Name="mainGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="5"/>
-            </Grid.RowDefinitions>
+        <Grid>
+            <TabControl Grid.Column="0" Grid.Row="0" 
+                        Background="#FF434343" 
+                        BorderThickness="0 1 0 0" BorderBrush="Wheat">
+                <!--#region Overview tab-->
+                <TabItem Header="{x:Static loc:Resources.stat_overview_tab_name}">
+                    <Grid x:Name="OverviewGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="5"/>
-            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
 
-            <Label Content="{x:Static loc:Resources.stat_last_day}" Grid.Column="3" Grid.Row="1"/>
-            <Label Content="{x:Static loc:Resources.stat_today}" Grid.Column="5" Grid.Row="1"/>
-            <Label Content="{x:Static loc:Resources.stat_this_month}" Grid.Column="7" Grid.Row="1"/>
-            <Label Content="{x:Static loc:Resources.stat_last_month}" Grid.Column="9" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_last_day}" Grid.Column="3" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_today}" Grid.Column="5" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_this_month}" Grid.Column="7" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_last_month}" Grid.Column="9" Grid.Row="1"/>
 
-            <Label Content="{x:Static loc:Resources.stat_worked_hours}" Grid.Column="1" Grid.Row="3"/>
-            <Label Content="{x:Static loc:Resources.stat_needed_hours}" Grid.Column="1" Grid.Row="5"/>
-            <Label Content="{x:Static loc:Resources.stat_measured_hours}" Grid.Column="1" Grid.Row="7"/>
-            <Label Content="{x:Static loc:Resources.stat_diff_in_hours}" Grid.Column="1" Grid.Row="9"/>
+                        <Label Content="{x:Static loc:Resources.stat_worked_hours}" Grid.Column="1" Grid.Row="3"/>
+                        <Label Content="{x:Static loc:Resources.stat_needed_hours}" Grid.Column="1" Grid.Row="5"/>
+                        <Label Content="{x:Static loc:Resources.stat_measured_hours}" Grid.Column="1" Grid.Row="7"/>
+                        <Label Content="{x:Static loc:Resources.stat_diff_in_hours}" Grid.Column="1" Grid.Row="9"/>
 
-            <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
+                        <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
 
-            <Label Name="yesterworkdayWorkedHours" Grid.Column="3" Grid.Row="3"/>
-            <Label Name="yesterworkdayFullHours" Grid.Column="3" Grid.Row="5"/>
-            <Label Name="yesterworkdayCalcHours" Grid.Column="3" Grid.Row="7"/>
-            <Label Name="yesterworkdayLeftHours" Grid.Column="3" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="yesterworkdayWorkedHours" Grid.Column="3" Grid.Row="3"/>
+                        <Label Name="yesterworkdayFullHours" Grid.Column="3" Grid.Row="5"/>
+                        <Label Name="yesterworkdayCalcHours" Grid.Column="3" Grid.Row="7"/>
+                        <Label Name="yesterworkdayLeftHours" Grid.Column="3" Grid.Row="9" FontWeight="Bold"/>
 
-            <Label Name="todayWorkedHours" Grid.Column="5" Grid.Row="3"/>
-            <Label Name="todayFullHours" Grid.Column="5" Grid.Row="5"/>
-            <Label Name="todayCalcHours" Grid.Column="5" Grid.Row="7"/>
-            <Label Name="todayLeftHours" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="todayWorkedHours" Grid.Column="5" Grid.Row="3"/>
+                        <Label Name="todayFullHours" Grid.Column="5" Grid.Row="5"/>
+                        <Label Name="todayCalcHours" Grid.Column="5" Grid.Row="7"/>
+                        <Label Name="todayLeftHours" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
 
-            <Label Name="monthlyWorkedHours" Grid.Column="7" Grid.Row="3"/>
-            <Label Name="monthlyFullHours" Grid.Column="7" Grid.Row="5"/>
-            <Label Name="monthlyCalcHours" Grid.Column="7" Grid.Row="7"/>
-            <Label Name="monthlyLeftHours" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="monthlyWorkedHours" Grid.Column="7" Grid.Row="3"/>
+                        <Label Name="monthlyFullHours" Grid.Column="7" Grid.Row="5"/>
+                        <Label Name="monthlyCalcHours" Grid.Column="7" Grid.Row="7"/>
+                        <Label Name="monthlyLeftHours" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
 
-            <Label Name="prevMonthlyWorkedHours" Grid.Column="9" Grid.Row="3"/>
-            <Label Name="prevMonthlyFullHours" Grid.Column="9" Grid.Row="5"/>
-            <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
-            <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="prevMonthlyWorkedHours" Grid.Column="9" Grid.Row="3"/>
+                        <Label Name="prevMonthlyFullHours" Grid.Column="9" Grid.Row="5"/>
+                        <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
+                        <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
 
-            <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.u_btn_close}"
-                    Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
-                    Click="SaveBtn_Click" />
+                        <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.u_btn_close}"
+                                        Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
+                                        Click="SaveBtn_Click" />
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+                <!--#region Usage tab-->
+                <TabItem Header="{x:Static loc:Resources.stat_usage_tab_name}">
+                    <Grid x:Name="UsageGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox x:Name="UsageDateCombo" Grid.Column="1" Grid.Row="1" 
+                                  ItemsSource="{Binding DatesWithUsageData, Mode=OneWay}"/>
+                        
+                        <Label Content="{x:Static loc:Resources.stat_data_flow}" 
+                               Grid.Column="3" Grid.Row="1"
+                               HorizontalAlignment="Center"/>
+                        <Label Content="{x:Static loc:Resources.stat_data_breaks}" 
+                               Grid.Column="5" Grid.Row="1"
+                               HorizontalAlignment="Center"/>
+
+                        <ScrollViewer x:Name="UsageFlowDataContainer" 
+                                      Grid.Column="3" Grid.Row="3" 
+                                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" 
+                                      CanContentScroll="True" PanningMode="VerticalOnly" >
+                            <Label Name="UsageFlowData" Content="{Binding UsageFlowData, Mode=OneWay}" 
+                                            FontSize="12" HorizontalAlignment="Center"/>
+                        </ScrollViewer>
+
+                        <ScrollViewer x:Name="UsageBreakDataContainer" 
+                                      Grid.Column="5" Grid.Row="3" 
+                                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" 
+                                      CanContentScroll="True" PanningMode="VerticalOnly" >
+                            <Label Name="UsageBreakData" Content="{Binding UsageBreakData, Mode=OneWay}" 
+                                            FontSize="12" HorizontalAlignment="Center"/>
+                        </ScrollViewer>
+
+                        <Button x:Name="UsageExitBtn" Content="{x:Static loc:Resources.u_btn_close}"
+                                        Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="5"
+                                        Click="SaveBtn_Click" />
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+            </TabControl>
         </Grid>
     </Border>
 </UserControl>

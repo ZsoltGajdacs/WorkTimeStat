@@ -502,6 +502,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Breaks:.
+        /// </summary>
+        public static string stat_data_breaks {
+            get {
+                return ResourceManager.GetString("stat_data_breaks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usageflow:.
+        /// </summary>
+        public static string stat_data_flow {
+            get {
+                return ResourceManager.GetString("stat_data_flow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difference:.
         /// </summary>
         public static string stat_diff_in_hours {
@@ -547,6 +565,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string stat_overview_tab_name {
+            get {
+                return ResourceManager.GetString("stat_overview_tab_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This month:.
         /// </summary>
         public static string stat_this_month {
@@ -561,6 +588,15 @@ namespace WorkTimeStat.Properties {
         public static string stat_today {
             get {
                 return ResourceManager.GetString("stat_today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usage data.
+        /// </summary>
+        public static string stat_usage_tab_name {
+            get {
+                return ResourceManager.GetString("stat_usage_tab_name", resourceCulture);
             }
         }
         
