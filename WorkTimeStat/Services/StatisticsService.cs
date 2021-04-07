@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
@@ -233,9 +233,8 @@ namespace WorkTimeStat.Services
             return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
         }
 
-        internal static string GetUsageFlowForToday()
+        internal static string GetUsageFlowForToday(TimeSpan minBlockLength)
         {
-            LocalizationHelper locHelper = LocalizationHelper.Instance;
             WorkDay day = WorkDayService.GetCurrentDay();
             if (day == null)
             {
@@ -246,16 +245,43 @@ namespace WorkTimeStat.Services
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
             List<UsageBlock> usageFlow = UsageService.GetUsageListForTimeFrame(startDate, endDate);
-            StringBuilder sb = new StringBuilder();
-            foreach (UsageBlock block in usageFlow)
+
+            return UsageBlocksToString(usageFlow, minBlockLength);
+        }
+
+        internal static string GetUsageBreaksForToday(TimeSpan minBlockLength)
+        {
+            WorkDay day = WorkDayService.GetCurrentDay();
+            if (day == null)
             {
-                sb.Append(block.StartTime.ToShortTimeString());
-                sb.Append(" - ");
-                sb.Append(block.EndTime.ToShortTimeString());
-                sb.Append(": ");
-                sb.Append((block.EndTime - block.StartTime).TotalMinutes.ToString(CultureInfo.CurrentCulture));
-                sb.Append(' ');
-                sb.AppendLine(locHelper.GetStringForKey("u_minute"));
+                return string.Empty;
+            }
+
+            DateTime startDate = day.DayDate.Date + day.StartTime;
+            DateTime endDate = day.DayDate.Date + day.EndTime;
+
+            List<UsageBlock> usageBreaks = UsageService.GetBreaksInUsageListForTimeFrame(startDate, endDate);
+
+            return UsageBlocksToString(usageBreaks, minBlockLength);
+        }
+
+        private static string UsageBlocksToString(List<UsageBlock> blocks, TimeSpan minBlockLength)
+        {
+            LocalizationHelper locHelper = LocalizationHelper.Instance;
+            StringBuilder sb = new StringBuilder();
+            foreach (UsageBlock block in blocks)
+            {
+                if ((block.EndTime - block.StartTime) > minBlockLength)
+                {
+                    sb.Append(block.StartTime.ToShortTimeString());
+                    sb.Append(" - ");
+                    sb.Append(block.EndTime.ToShortTimeString());
+                    sb.Append(": ");
+                    sb.Append(Math.Round((block.EndTime - block.StartTime).TotalMinutes, MidpointRounding.ToEven)
+                                                    .ToString(CultureInfo.CurrentCulture));
+                    sb.Append(' ');
+                    sb.AppendLine(locHelper.GetStringForKey("u_minute"));
+                }
             }
 
             return sb.ToString();

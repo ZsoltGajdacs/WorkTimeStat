@@ -28,7 +28,7 @@ namespace WorkTimeStat.Storage
 
         internal void InitWatcher()
         {
-            watcher = new Watcher("WaterWork", Settings.WatcherResolution,
+            watcher = new Watcher("WorktimeStat", Settings.WatcherResolution,
                 Settings.WatcherSavePreference, Settings.WatcherDataPrecision);
         }
 
@@ -45,8 +45,8 @@ namespace WorkTimeStat.Storage
             Settings = new WorkSettings
             {
                 WatcherResolution = Resolution.TwoMinutes,
-                WatcherSavePreference = SavePreference.KeepDataForToday,
-                WatcherDataPrecision = DataPrecision.HighPrecision
+                WatcherSavePreference = SavePreference.KeepDataForAYear,
+                WatcherDataPrecision = DataPrecision.High
             };
         }
 
