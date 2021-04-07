@@ -90,7 +90,7 @@ namespace WorkTimeStat.Services
 
             double mTotal = ReturnMonthlyTotalHours(month);
 
-            return mWorked > mTotal ? mTotal - mWorked : mWorked - mTotal;
+            return mWorked > mTotal ? mWorked - mTotal : mTotal - mWorked;
         }
 
         private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int month, List<WorkDayType> dayTypes)
