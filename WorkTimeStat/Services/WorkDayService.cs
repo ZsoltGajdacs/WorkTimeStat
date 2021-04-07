@@ -21,11 +21,13 @@ namespace WorkTimeStat.Services
             return GetDayAtDate(today);
         }
 
-        internal static WorkDay GetYesterWorkDay()
+        internal static WorkDay GetLastWorkDay()
         {
             WorkKeeper keeper = WorkKeeper.Instance;
             DateTime now = DateTime.Now.Date;
-            return keeper.WorkDays.Where(d => d.Key.Date != now.Date)
+
+            return keeper.WorkDays
+                                    .Where(d => d.Key.Date != now.Date && !StatisticsService.IsDayOverworkOnlyDay(d.Value))
                                     .OrderByDescending(d => d.Key.Date)
                                     .Select(d => d.Value)
                                     .FirstOrDefault();

@@ -101,6 +101,7 @@ namespace WorkTimeStat.Services
                 .Where(w => w.Key.Date.Month == month)
                 .Where(d => !keeper.SickDays.Contains(d.Key))
                 .Where(l => !keeper.LeaveDays.Contains(l.Key))
+                .Where(o => !IsDayOverworkOnlyDay(o.Value))
                 .Where(wdt => dayTypes.Contains(wdt.Value.WorkDayType))
                 .Select(d => d.Value);
         }
@@ -159,7 +160,9 @@ namespace WorkTimeStat.Services
             }
 
             bool isSickday = IsDaySickDay(day);
-            return isSickday ? 0 : WorkKeeper.Instance.Settings.DailyWorkHours;
+            bool isLeaveDay = IsDayLeaveDay(day);
+            bool isOverworkDay = IsDayOverworkOnlyDay(day);
+            return isSickday || isLeaveDay || isOverworkDay ? 0 : WorkKeeper.Instance.Settings.DailyWorkHours;
         }
 
         /// <summary>
@@ -188,10 +191,21 @@ namespace WorkTimeStat.Services
             return diff;
         }
 
+        internal static bool IsDayOverworkOnlyDay(WorkDay day)
+        {
+            return CalcDailyWorkedHours(day) == 0 && day.OverWorkDuration > 0;
+        }
+
         private static bool IsDaySickDay(WorkDay day)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
             return keeper.SickDays.Exists(s => s.Date == day.DayDate);
+        }
+
+        private static bool IsDayLeaveDay(WorkDay day)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+            return keeper.LeaveDays.Exists(s => s.Date == day.DayDate);
         }
         #endregion
 
