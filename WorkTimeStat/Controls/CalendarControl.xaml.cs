@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using UsageWatcher.Enums;
+using UsageWatcher.Enums.Utils;
+using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
@@ -23,6 +26,9 @@ namespace WorkTimeStat.Controls
         private bool sickAutochk;
         private DateTime selectedDate;
 
+        private WorkDayType editedWorkDayType;
+        private WorkPlaceType editedWorkPlaceType;
+
         internal event CloseTheBallonEventHandler CloseBallon;
 
         public CalendarControl()
@@ -31,12 +37,19 @@ namespace WorkTimeStat.Controls
             keeper = WorkKeeper.Instance;
             langHelper = LocalizationHelper.Instance;
 
-            mainGrid.DataContext = this;
+            SetBindings();
 
             currDate = DateTime.Now.Date;
 
             SetToday();
             UpdateLeaveDays();
+        }
+
+        private void SetBindings()
+        {
+            mainGrid.DataContext = this;
+            EditWorkType.ItemsSource = Enum.GetValues(typeof(WorkDayType)).Cast<WorkDayType>();
+            EditWorkPlace.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
         }
 
         private void UpdateLeaveDays()
@@ -244,6 +257,42 @@ namespace WorkTimeStat.Controls
         }
         #endregion
 
+        #region Selection events
+        private void WorkType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            object selectedEnum = EditWorkType.SelectedValue;
+            string enumName = string.Empty;
+            if (selectedEnum is WorkDayType typeEnum)
+            {
+                enumName = typeEnum.GetDisplayName() ?? typeEnum.ToString();
+            }
+
+            EnumMatchResult<WorkDayType> result = EnumUtil.GetEnumForString<WorkDayType>(enumName);
+
+            if (result != null)
+            {
+                editedWorkDayType = result.FoundEnum;
+            }
+        }
+
+        private void WorkPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            object selectedEnum = EditWorkPlace.SelectedValue;
+            string enumName = string.Empty;
+            if (selectedEnum is WorkPlaceType placeEnum)
+            {
+                enumName = placeEnum.GetDisplayName() ?? placeEnum.ToString();
+            }
+
+            EnumMatchResult<WorkPlaceType> result = EnumUtil.GetEnumForString<WorkPlaceType>(enumName);
+
+            if (result != null)
+            {
+                editedWorkPlaceType = result.FoundEnum;
+            }
+        }
+        #endregion
+
         #region Edit methods
         private void FillEditDataForChosenDay()
         {
@@ -253,7 +302,9 @@ namespace WorkTimeStat.Controls
             WorkEndMinute.Value = chosenDay.EndTime.Minutes;
             EditWorkLaunchTime.Value = chosenDay.LunchBreakDuration;
             EditWorkbreakTime.Value = chosenDay.OtherBreakDuration;
-            EditNonworkTime.Value = chosenDay.OverWorkDuration; 
+            EditNonworkTime.Value = chosenDay.OverWorkDuration;
+            EditWorkType.SelectedValue = chosenDay.WorkDayType;
+            EditWorkPlace.SelectedValue = chosenDay.WorkPlaceType;
         }
 
         private void SaveDataForChosenDay()
@@ -263,6 +314,8 @@ namespace WorkTimeStat.Controls
             chosenDay.SetLunchBreakDuration(EditWorkLaunchTime.Value);
             chosenDay.SetOtherBreakDuration(EditWorkbreakTime.Value);
             chosenDay.SetOverWorkDuration(EditNonworkTime.Value);
+            chosenDay.WorkDayType = editedWorkDayType;
+            chosenDay.WorkPlaceType = editedWorkPlaceType;
         }
 
         private void ShowLabels()
@@ -272,6 +325,8 @@ namespace WorkTimeStat.Controls
             lunchBreakTimeValue.Visibility = Visibility.Visible;
             otherBreakTimeValue.Visibility = Visibility.Visible;
             overWorkTimeValue.Visibility = Visibility.Visible;
+            WorkTypeValue.Visibility = Visibility.Visible;
+            WorkPlaceValue.Visibility = Visibility.Visible;
         }
 
         private void HideLabels()
@@ -281,6 +336,8 @@ namespace WorkTimeStat.Controls
             lunchBreakTimeValue.Visibility = Visibility.Collapsed;
             otherBreakTimeValue.Visibility = Visibility.Collapsed;
             overWorkTimeValue.Visibility = Visibility.Collapsed;
+            WorkTypeValue.Visibility = Visibility.Collapsed;
+            WorkPlaceValue.Visibility = Visibility.Collapsed;
         }
 
         private void ShowEditControls()
@@ -292,6 +349,8 @@ namespace WorkTimeStat.Controls
             EditWorkLaunchTime.Visibility = Visibility.Visible;
             EditWorkbreakTime.Visibility = Visibility.Visible;
             EditNonworkTime.Visibility = Visibility.Visible;
+            EditWorkType.Visibility = Visibility.Visible;
+            EditWorkPlace.Visibility = Visibility.Visible;
         }
 
         private void HideEditControls()
@@ -303,6 +362,8 @@ namespace WorkTimeStat.Controls
             EditWorkLaunchTime.Visibility = Visibility.Collapsed;
             EditWorkbreakTime.Visibility = Visibility.Collapsed;
             EditNonworkTime.Visibility = Visibility.Collapsed;
+            EditWorkType.Visibility = Visibility.Collapsed;
+            EditWorkPlace.Visibility = Visibility.Collapsed;
         }
         #endregion
 

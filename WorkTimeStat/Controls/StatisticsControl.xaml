@@ -132,6 +132,7 @@
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
+                
                 <!--#region Usage tab-->
                 <TabItem Header="{x:Static loc:Resources.stat_usage_tab_name}">
                     <Grid x:Name="UsageGrid">
@@ -160,6 +161,8 @@
 
                         <ComboBox x:Name="UsageDateCombo" Grid.Column="1" Grid.Row="1" 
                                   ItemsSource="{Binding DatesWithUsageData, Mode=OneWay}"/>
+                        
+                        
                         
                         <Label Content="{x:Static loc:Resources.stat_data_flow}" 
                                Grid.Column="3" Grid.Row="1"

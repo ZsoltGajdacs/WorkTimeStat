@@ -61,7 +61,7 @@
                             Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>-->
             <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
-                               Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
+                               Minimum="0" Maximum="23" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
                 
                 <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
@@ -88,14 +88,14 @@
             <Label x:Name="workLunchLabel" Content="{x:Static loc:Resources.u_lunch_break_length}" 
                    Grid.Row="1" Grid.Column="5" Foreground="White"/>
             <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
-                               Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
+                               Minimum="0" Maximum="120" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
 
             <Label x:Name="workbreakLabel" Content="{x:Static loc:Resources.u_other_break_length}" 
                    Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="3"
                    Foreground="White"/>
             <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
-                               Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
+                               Minimum="0" Maximum="1000" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
                                Background="#FF434343" Foreground="White"/>
 
@@ -103,7 +103,7 @@
                    Grid.Row="1" Grid.Column="11" 
                    Foreground="White"/>
             <xce:IntegerUpDown x:Name="overWorkTime" Value="{Binding OverWorkDuration, Mode=TwoWay}" 
-                               Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
+                               Minimum="0" Maximum="1000" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="11" 
                                Background="#FF434343" Foreground="White"/>
 

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkTimeStat.Controls"
              xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:Converter="clr-namespace:WorkTimeStat.Enums.Converters"
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:CalendarControl}"
              mc:Ignorable="d" 
@@ -15,6 +16,7 @@
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <Converter:EnumNameConverter x:Key="enumNameConverter" />
     </UserControl.Resources>
     
     <Border Margin="5"
@@ -55,11 +57,11 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MinWidth="180"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="140"/>
+                <ColumnDefinition MinWidth="100"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition MinWidth="80"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -141,6 +143,30 @@
                                Grid.Row="17" Grid.Column="5" 
                                Background="#FF434343" Foreground="White"
                                Visibility="Collapsed"/>
+
+            <ComboBox x:Name="EditWorkType"
+                               Grid.Row="19" Grid.Column="5" 
+                               Background="#FF434343" Foreground="Black"
+                               SelectionChanged="WorkType_SelectionChanged"
+                               Visibility="Collapsed">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource enumNameConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <ComboBox x:Name="EditWorkPlace"
+                               Grid.Row="21" Grid.Column="5" 
+                               Background="#FF434343" Foreground="Black"
+                               SelectionChanged="WorkPlace_SelectionChanged"
+                               Visibility="Collapsed">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource enumNameConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
             <!-- Read-only labels -->
             <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="22"/>
