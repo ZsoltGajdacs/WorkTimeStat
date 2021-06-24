@@ -187,6 +187,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Half day Holiday.
+        /// </summary>
+        public static string enum_halfday_desc {
+            get {
+                return ResourceManager.GetString("enum_halfday_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Half day.
+        /// </summary>
+        public static string enum_halfday_display {
+            get {
+                return ResourceManager.GetString("enum_halfday_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Holiday work.
         /// </summary>
         public static string enum_holiday_desc {

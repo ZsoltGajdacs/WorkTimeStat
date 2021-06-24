@@ -159,6 +159,12 @@
   <data name="enum_extraordinary_display" xml:space="preserve">
     <value>Rendkívüli</value>
   </data>
+  <data name="enum_halfday_desc" xml:space="preserve">
+    <value>Fél napos szünnap</value>
+  </data>
+  <data name="enum_halfday_display" xml:space="preserve">
+    <value>Fél nap</value>
+  </data>
   <data name="enum_holiday_desc" xml:space="preserve">
     <value>Ünnepnapi munkavégzés</value>
   </data>

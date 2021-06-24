@@ -77,7 +77,7 @@ namespace WorkTimeStat
 
         private void CloseTaskbarBalloon()
         {
-            taskbarIcon.CloseBalloon();
+            TaskbarIcon.CloseBalloon();
         }
         #endregion
 
@@ -87,7 +87,12 @@ namespace WorkTimeStat
             WorkDayEditControl dayEdit = new WorkDayEditControl(WorkDayService.GetCurrentDay());
             dayEdit.CloseBallon += CloseTaskbarBalloon;
 
-            taskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+        }
+
+        private void TaskbarIcon_TrayMiddleMouseUp(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
 
@@ -97,7 +102,7 @@ namespace WorkTimeStat
             CalendarControl calendarControl = new CalendarControl();
             calendarControl.CloseBallon += CloseTaskbarBalloon;
 
-            taskbarIcon.ShowCustomBalloon(calendarControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(calendarControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
@@ -105,7 +110,7 @@ namespace WorkTimeStat
             SettingsControl settingsControl = new SettingsControl();
             settingsControl.CloseBallon += CloseTaskbarBalloon;
 
-            taskbarIcon.ShowCustomBalloon(settingsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(settingsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
@@ -113,13 +118,13 @@ namespace WorkTimeStat
             StatisticsControl statisticsControl = new StatisticsControl(workKeeper.Settings.DailyWorkHours);
             statisticsControl.CloseBallon += CloseTaskbarBalloon;
 
-            taskbarIcon.ShowCustomBalloon(statisticsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(statisticsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
         }
 
         private void UsageItem_Click(object sender, RoutedEventArgs e)
         {
             TimeSpan usageSoFar = workKeeper.GetWatcher().UsageTimeForGivenTimeframe(DateTime.Today, DateTime.Now);
-            taskbarIcon.ShowBalloonTip("Eddigi használat", string.Format(CultureInfo.CurrentCulture, 
+            TaskbarIcon.ShowBalloonTip("Eddigi használat", string.Format(CultureInfo.CurrentCulture, 
                 "{0} óra : {1} perc", usageSoFar.Hours, usageSoFar.Minutes), BalloonIcon.Info);
         }
 
@@ -158,6 +163,5 @@ namespace WorkTimeStat
             GC.SuppressFinalize(this);
         }
         #endregion
-
     }
 }

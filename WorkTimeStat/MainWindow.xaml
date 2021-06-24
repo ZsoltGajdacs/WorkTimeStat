@@ -11,9 +11,10 @@
         WindowStartupLocation="CenterScreen" WindowState="Minimized" FontSize="14"
         Visibility="Hidden" Closing="Window_Closing">
     <Grid>
-        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons\water_white.ico" 
+        <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="Icons\water_white.ico" 
                         ToolTip="Bal gomb munkaidő, Jobb gomb menü" 
-                        MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
+                        MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp" 
+                        TrayMiddleMouseUp="TaskbarIcon_TrayMiddleMouseUp">
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>

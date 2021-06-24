@@ -159,6 +159,12 @@
   <data name="enum_extraordinary_display" xml:space="preserve">
     <value>Extraordinary</value>
   </data>
+  <data name="enum_halfday_desc" xml:space="preserve">
+    <value>Half day Holiday</value>
+  </data>
+  <data name="enum_halfday_display" xml:space="preserve">
+    <value>Half day</value>
+  </data>
   <data name="enum_holiday_desc" xml:space="preserve">
     <value>Holiday work</value>
   </data>

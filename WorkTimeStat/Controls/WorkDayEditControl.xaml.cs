@@ -166,9 +166,9 @@ namespace WorkTimeStat.Controls
         private void SetBindings()
         {
             editGrid.DataContext = this;
-            
-            WorkType.ItemsSource = Enum.GetValues(typeof(WorkDayType)).Cast<WorkDayType>();
-            WorkPlace.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
+
+            WorkType.ItemsSource = EnumUtil.GetValues<WorkDayType>();
+            WorkPlace.ItemsSource = EnumUtil.GetValues<WorkPlaceType>();
         }
 
         /// <summary>
