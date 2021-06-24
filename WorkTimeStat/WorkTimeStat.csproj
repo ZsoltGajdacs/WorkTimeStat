@@ -136,11 +136,15 @@
     <Compile Include="Controls\StatisticsControl.xaml.cs">
       <DependentUpon>StatisticsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TicketTimeControl.xaml.cs">
+      <DependentUpon>TicketTimeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WorkDayEditControl.xaml.cs">
       <DependentUpon>WorkDayEditControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\AvailableLanguages.cs" />
     <Compile Include="Enums\Converters\EnumNameConverter.cs" />
+    <Compile Include="Enums\DayType.cs" />
     <Compile Include="Enums\WorkDayType.cs" />
     <Compile Include="Enums\WorkPlaceType.cs" />
     <Compile Include="Events\CloseTheBallonEvent.cs" />
@@ -170,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StatisticsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TicketTimeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

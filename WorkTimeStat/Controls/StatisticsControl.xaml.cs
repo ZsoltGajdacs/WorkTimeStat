@@ -34,33 +34,33 @@ namespace WorkTimeStat.Controls
         {
             OverviewTabData dto = new OverviewTabData { dailyWorkHours = dailyWorkHours };
 
-            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.WEEKDAY };
+            List<WorkDayType> dayTypes = StatisticsService.GetOfficalWorkdayTypes();
 
             // Monthly
             int thisMonth = DateTime.Now.Month;
             dto.mWorkedHours = StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes);
-            dto.mFullHours = StatisticsService.ReturnMonthlyTotalHours(thisMonth);
+            dto.mFullHours = StatisticsService.CalcMonthlyTotalHours(thisMonth);
             dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth, dayTypes);
             dto.mLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, dayTypes));
 
             // Last month
             int lastMonth = thisMonth - 1;
             dto.pmWorkedHours = StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes);
-            dto.pmFullHours = StatisticsService.ReturnMonthlyTotalHours(lastMonth);
+            dto.pmFullHours = StatisticsService.CalcMonthlyTotalHours(lastMonth);
             dto.pmCalcHours = StatisticsService.GetUsageForMonth(lastMonth, dayTypes);
             dto.pmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, dayTypes));
 
             // Daily
             WorkDay today = WorkDayService.GetCurrentDay();
             dto.dWorkedHours = StatisticsService.CalcDailyWorkedHours(today);
-            dto.dFullHours = StatisticsService.CalcFullHoursForDay(today);
+            dto.dFullHours = StatisticsService.CalcDailyTotalHours(today);
             dto.dCalcHours = StatisticsService.GetUsageForToday();
             dto.dLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(today));
 
             // Yesterday
             WorkDay lastWorkday = WorkDayService.GetLastWorkDay();
             dto.ywdWorkedHours = StatisticsService.CalcDailyWorkedHours(lastWorkday);
-            dto.ywdFullHours = StatisticsService.CalcFullHoursForDay(lastWorkday);
+            dto.ywdFullHours = StatisticsService.CalcDailyTotalHours(lastWorkday);
             dto.ywdCalcHours = StatisticsService.GetUsageForDay(lastWorkday);
             dto.ywdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(lastWorkday));
 

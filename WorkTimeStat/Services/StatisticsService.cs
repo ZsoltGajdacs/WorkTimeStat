@@ -36,10 +36,7 @@ namespace WorkTimeStat.Services
                 return 0;
             }
 
-            List<WorkDayType> dayTypes = new List<WorkDayType> { WorkDayType.WEEKDAY };
-
-            IEnumerable<WorkDay> monthlyWorkdays = FilterOfficalWorkdaysInMonth(month, dayTypes);
-            return monthlyWorkdays.Count();
+            return GetOfficialWorkdaysInMonth(month).Count();
         }
 
         internal static double CalcMonthlyWorkedHours(int month, List<WorkDayType> types)
@@ -57,19 +54,22 @@ namespace WorkTimeStat.Services
         }
 
         /// <summary>
-        /// Gives back the previously calculated amount of hours based on the number of official workdays. 
-        /// This excludes the sick and leave days on which worked hours were logged. 
-        /// Only Normal days are counted.
+        /// Calculates the amount of worked hours per passed month, only official workdays are counted
         /// </summary>
-        internal static double ReturnMonthlyTotalHours(int month)
+        internal static double CalcMonthlyTotalHours(int month)
         {
             if (month == 0)
             {
                 return 0;
             }
+            
+            double workedHours = 0;
+            foreach (WorkDay day in GetOfficialWorkdaysInMonth(month))
+            {
+                workedHours += CalcDailyTotalHours(day);
+            }
 
-            WorkKeeper keeper = WorkKeeper.Instance;
-            return keeper.DaysWorkedInMonth[month] * keeper.Settings.DailyWorkHours;
+            return workedHours;
         }
 
         /// <summary>
@@ -88,9 +88,15 @@ namespace WorkTimeStat.Services
 
             double mWorked = CalcWorkedHoursOnGivenDays(normalWorkdays);
 
-            double mTotal = ReturnMonthlyTotalHours(month);
+            double mTotal = CalcMonthlyTotalHours(month);
 
             return mWorked - mTotal;
+        }
+
+        private static IEnumerable<WorkDay> GetOfficialWorkdaysInMonth(int month)
+        {
+            List<WorkDayType> dayTypes = GetOfficalWorkdayTypes();
+            return FilterOfficalWorkdaysInMonth(month, dayTypes);
         }
 
         private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int month, List<WorkDayType> dayTypes)
@@ -150,19 +156,17 @@ namespace WorkTimeStat.Services
         }
 
         /// <summary>
-        /// Calculates the daily needed work amount based on whether the day was a sickday or not.
+        /// Calculates the daily needed work amount based on the DayType.
         /// </summary>
-        internal static double CalcFullHoursForDay(WorkDay day)
+        internal static double CalcDailyTotalHours(WorkDay day)
         {
             if (day == null)
             {
                 return 0;
             }
 
-            bool isSickday = IsDaySickDay(day);
-            bool isLeaveDay = IsDayLeaveDay(day);
-            bool isOverworkDay = IsDayOverworkOnlyDay(day);
-            return isSickday || isLeaveDay || isOverworkDay ? 0 : WorkKeeper.Instance.Settings.DailyWorkHours;
+            Dictionary<DayType, double> workHoursPerDayType = GetWorkHoursPerDayType();
+            return workHoursPerDayType[DecideDayType(day)];
         }
 
         /// <summary>
@@ -184,11 +188,38 @@ namespace WorkTimeStat.Services
             }
             else
             {
-                double requiredHours = CalcFullHoursForDay(day);
+                double requiredHours = CalcDailyTotalHours(day);
                 diff = workedHours - requiredHours;
             }
 
             return diff;
+        }
+
+        private static DayType DecideDayType(WorkDay day)
+        {
+            DayType dayType;
+            if (IsDayOverworkOnlyDay(day))
+            {
+                dayType = DayType.OVERWORKDAY;
+            }
+            else if (IsDaySickDay(day))
+            {
+                dayType = DayType.SICKDAY;
+            }
+            else if (IsDayLeaveDay(day))
+            {
+                dayType = DayType.LEAVEDAY;
+            }
+            else if (IsDayHalfDay(day))
+            {
+                dayType = DayType.HALFDAY;
+            }
+            else
+            {
+                dayType = DayType.WORKDAY;
+            }
+
+            return dayType;
         }
 
         internal static bool IsDayOverworkOnlyDay(WorkDay day)
@@ -206,6 +237,11 @@ namespace WorkTimeStat.Services
         {
             WorkKeeper keeper = WorkKeeper.Instance;
             return keeper.LeaveDays.Exists(s => s.Date == day.DayDate);
+        }
+
+        private static bool IsDayHalfDay(WorkDay day)
+        {
+            return day.WorkDayType == WorkDayType.HALF_DAY;
         }
         #endregion
 
@@ -320,12 +356,29 @@ namespace WorkTimeStat.Services
         #endregion
 
         #region Helpers
+        public static List<WorkDayType> GetOfficalWorkdayTypes()
+        {
+            return new List<WorkDayType> { WorkDayType.WEEKDAY, WorkDayType.HALF_DAY };
+        }
+
         /// <summary>
         /// Gives back the midpoint rounded number with two digits after zero for the given double
         /// </summary>
         private static double RoundToMidWithTwoPrecision(double num)
         {
             return Math.Round(num, 2, MidpointRounding.ToEven);
+        }
+
+        private static Dictionary<DayType, double> GetWorkHoursPerDayType()
+        {
+            return new Dictionary<DayType, double>
+            {
+                { DayType.WORKDAY, WorkKeeper.Instance.Settings.DailyWorkHours },
+                { DayType.SICKDAY, 0 },
+                { DayType.LEAVEDAY, 0 },
+                { DayType.OVERWORKDAY, 0 },
+                { DayType.HALFDAY, WorkKeeper.Instance.Settings.DailyWorkHours / 2d }
+            };
         }
         #endregion
 

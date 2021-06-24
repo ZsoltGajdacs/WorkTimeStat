@@ -23,6 +23,10 @@ namespace WorkTimeStat.Enums
         
         [Description("enum_holiday_desc")]
         [Display(Name = "enum_holiday_display")]
-        HOLIDAY
+        HOLIDAY,
+
+        [Description("enum_halfday_desc")]
+        [Display(Name = "enum_halfday_display")]
+        HALF_DAY
     }
 }
