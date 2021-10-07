@@ -139,17 +139,10 @@ namespace WorkTimeStat.Controls
             if (keeper.LeaveDays.Contains(selectedDate))
             {
                 leaveDayChkbox.IsChecked = true;
-                leaveDayChkbox.IsEnabled = selectedDate >= currDate;
-            }
-            else if (selectedDate < currDate)
-            {
-                leaveDayChkbox.IsChecked = false;
-                leaveDayChkbox.IsEnabled = false;
             }
             else
             {
                 leaveDayChkbox.IsChecked = false;
-                leaveDayChkbox.IsEnabled = true;
             }
         }
 
@@ -160,17 +153,10 @@ namespace WorkTimeStat.Controls
             if (keeper.SickDays.Contains(selectedDate))
             {
                 sickDayChkbox.IsChecked = true;
-                sickDayChkbox.IsEnabled = selectedDate >= currDate;
-            }
-            else if (selectedDate < currDate)
-            {
-                sickDayChkbox.IsChecked = false;
-                sickDayChkbox.IsEnabled = false;
             }
             else
             {
                 sickDayChkbox.IsChecked = false;
-                sickDayChkbox.IsEnabled = true;
             }
         }
 
