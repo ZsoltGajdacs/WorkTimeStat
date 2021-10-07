@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using System.Windows.Controls;
+using UsageWatcher.Models;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
@@ -127,12 +129,24 @@ namespace WorkTimeStat.Controls
         {
             public string UsageFlowData { get; private set; }
             public string UsageBreakData { get; private set; }
+            public string UsageFlowTotal { get; private set; }
+            public string UsageBreakTotal { get; private set; }
             public List<DateTime> DatesWithUsageData { get; private set; }
 
             public UsageTabData()
             {
-                UsageFlowData = StatisticsService.GetUsageFlowForToday(TimeSpan.FromMinutes(0));
-                UsageBreakData = StatisticsService.GetUsageBreaksForToday(TimeSpan.FromMinutes(10));
+                List<UsageBlock> usageflows = StatisticsService.GetUsageFlowForDate(DateTime.Today);
+                List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(DateTime.Today);
+
+                LocalizationHelper locHelper = LocalizationHelper.Instance;
+                UsageFlowTotal = Math.Round(CalcUsageBlockTotals(usageflows, TimeSpan.FromMinutes(5)), MidpointRounding.ToEven)
+                    .ToString(CultureInfo.CurrentCulture) + " " + locHelper.GetStringForKey("u_minute");
+                UsageBreakTotal = Math.Round(CalcUsageBlockTotals(usageBreaks, TimeSpan.FromMinutes(10)), MidpointRounding.ToEven)
+                    .ToString(CultureInfo.CurrentCulture) + " " + locHelper.GetStringForKey("u_minute");
+
+                UsageFlowData = UsageBlocksToString(usageflows, TimeSpan.FromMinutes(5));
+                UsageBreakData = UsageBlocksToString(usageBreaks, TimeSpan.FromMinutes(10));
+
                 DatesWithUsageData = GetDatesWithUsageData();
             }
 
@@ -141,6 +155,44 @@ namespace WorkTimeStat.Controls
                 //TODO: Build list so the user can choose to view each day's usage data
                 return new List<DateTime>();
             }
+
+            private static double CalcUsageBlockTotals(List<UsageBlock> usages, TimeSpan minBlockLength)
+            {
+                TimeSpan total = TimeSpan.Zero;
+
+                usages.ForEach((usage) => 
+                {
+                    if (usage.EndTime - usage.StartTime > minBlockLength)
+                    {
+                        total += usage.EndTime - usage.StartTime;
+                    }
+                });
+
+                return total.TotalMinutes;
+            }
+
+            private static string UsageBlocksToString(List<UsageBlock> blocks, TimeSpan minBlockLength)
+            {
+                LocalizationHelper locHelper = LocalizationHelper.Instance;
+                StringBuilder sb = new StringBuilder();
+                foreach (UsageBlock block in blocks)
+                {
+                    if ((block.EndTime - block.StartTime) > minBlockLength)
+                    {
+                        sb.Append(block.StartTime.ToShortTimeString());
+                        sb.Append(" - ");
+                        sb.Append(block.EndTime.ToShortTimeString());
+                        sb.Append(": ");
+                        sb.Append(Math.Round((block.EndTime - block.StartTime).TotalMinutes, MidpointRounding.ToEven)
+                                                        .ToString(CultureInfo.CurrentCulture));
+                        sb.Append(' ');
+                        sb.AppendLine(locHelper.GetStringForKey("u_minute"));
+                    }
+                }
+
+                return sb.ToString();
+            }
+
         }
     }
 }

@@ -7,7 +7,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:StatisticsControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="280" d:DesignWidth="580"
+             d:DesignHeight="310" d:DesignWidth="580"
              Background="#FF434343" Foreground="White" FontSize="14">
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -68,13 +68,13 @@
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="10"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="33.75"/>
                             <RowDefinition Height="10"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="33.75"/>
                             <RowDefinition Height="5"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="33.75"/>
                             <RowDefinition Height="10"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="33.75"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="25"/>
                             <RowDefinition Height="5"/>
@@ -138,8 +138,10 @@
                     <Grid x:Name="UsageGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="0"/>
                             <RowDefinition Height="150"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="25"/>
@@ -161,18 +163,24 @@
 
                         <ComboBox x:Name="UsageDateCombo" Grid.Column="1" Grid.Row="1" 
                                   ItemsSource="{Binding DatesWithUsageData, Mode=OneWay}"/>
-                        
-                        
-                        
+
                         <Label Content="{x:Static loc:Resources.stat_data_flow}" 
-                               Grid.Column="3" Grid.Row="1"
-                               HorizontalAlignment="Center"/>
+                               Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"
+                               HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <Label Content="{x:Static loc:Resources.stat_data_breaks}" 
-                               Grid.Column="5" Grid.Row="1"
-                               HorizontalAlignment="Center"/>
+                               Grid.Column="5" Grid.Row="0" Grid.RowSpan="2"
+                               HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Label Name="UsageFlowTotalLabel" Content="{Binding UsageFlowTotal, Mode=OneWay}" 
+                               Grid.Column="3" Grid.Row="3" 
+                               FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Label Name="UsageBreakTotalLabel" Content="{Binding UsageBreakTotal, Mode=OneWay}" 
+                               Grid.Column="5" Grid.Row="3" 
+                               FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <ScrollViewer x:Name="UsageFlowDataContainer" 
-                                      Grid.Column="3" Grid.Row="3" 
+                                      Grid.Column="3" Grid.Row="5" 
                                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" 
                                       CanContentScroll="True" PanningMode="VerticalOnly" >
                             <Label Name="UsageFlowData" Content="{Binding UsageFlowData, Mode=OneWay}" 
@@ -180,7 +188,7 @@
                         </ScrollViewer>
 
                         <ScrollViewer x:Name="UsageBreakDataContainer" 
-                                      Grid.Column="5" Grid.Row="3" 
+                                      Grid.Column="5" Grid.Row="5" 
                                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" 
                                       CanContentScroll="True" PanningMode="VerticalOnly" >
                             <Label Name="UsageBreakData" Content="{Binding UsageBreakData, Mode=OneWay}" 
@@ -188,7 +196,7 @@
                         </ScrollViewer>
 
                         <Button x:Name="UsageExitBtn" Content="{x:Static loc:Resources.u_btn_close}"
-                                        Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="5"
+                                        Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="7"
                                         Click="SaveBtn_Click" />
                     </Grid>
                 </TabItem>

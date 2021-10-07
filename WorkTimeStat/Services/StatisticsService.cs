@@ -283,58 +283,32 @@ namespace WorkTimeStat.Services
             return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
         }
 
-        internal static string GetUsageFlowForToday(TimeSpan minBlockLength)
+        internal static List<UsageBlock> GetUsageFlowForDate(DateTime date)
         {
-            WorkDay day = WorkDayService.GetCurrentDay();
+            WorkDay day = WorkDayService.GetDayAtDate(date);
             if (day == null)
             {
-                return string.Empty;
+                return new List<UsageBlock>();
             }
 
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
-            List<UsageBlock> usageFlow = UsageService.GetUsageListForTimeFrame(startDate, endDate);
-
-            return UsageBlocksToString(usageFlow, minBlockLength);
+            return UsageService.GetUsageListForTimeFrame(startDate, endDate);
         }
 
-        internal static string GetUsageBreaksForToday(TimeSpan minBlockLength)
+        internal static List<UsageBlock> GetUsageBreaksForDate(DateTime date)
         {
-            WorkDay day = WorkDayService.GetCurrentDay();
+            WorkDay day = WorkDayService.GetDayAtDate(date);
             if (day == null)
             {
-                return string.Empty;
+                return new List<UsageBlock>();
             }
 
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
-            List<UsageBlock> usageBreaks = UsageService.GetBreaksInUsageListForTimeFrame(startDate, endDate);
-
-            return UsageBlocksToString(usageBreaks, minBlockLength);
-        }
-
-        private static string UsageBlocksToString(List<UsageBlock> blocks, TimeSpan minBlockLength)
-        {
-            LocalizationHelper locHelper = LocalizationHelper.Instance;
-            StringBuilder sb = new StringBuilder();
-            foreach (UsageBlock block in blocks)
-            {
-                if ((block.EndTime - block.StartTime) > minBlockLength)
-                {
-                    sb.Append(block.StartTime.ToShortTimeString());
-                    sb.Append(" - ");
-                    sb.Append(block.EndTime.ToShortTimeString());
-                    sb.Append(": ");
-                    sb.Append(Math.Round((block.EndTime - block.StartTime).TotalMinutes, MidpointRounding.ToEven)
-                                                    .ToString(CultureInfo.CurrentCulture));
-                    sb.Append(' ');
-                    sb.AppendLine(locHelper.GetStringForKey("u_minute"));
-                }
-            }
-
-            return sb.ToString();
+            return UsageService.GetBreaksInUsageListForTimeFrame(startDate, endDate);
         }
 
         internal static double GetUsageForMonth(int month, List<WorkDayType> types)
