@@ -46,7 +46,8 @@ namespace WorkTimeStat.Storage
             {
                 WatcherResolution = Resolution.TwoMinutes,
                 WatcherSavePreference = SavePreference.KeepDataForAYear,
-                WatcherDataPrecision = DataPrecision.High
+                WatcherDataPrecision = DataPrecision.High,
+                HolidayYearStart = DateTime.Today
             };
         }
 

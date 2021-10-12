@@ -10,9 +10,9 @@ namespace WorkTimeStat.Services
         internal static WorkDay GetDayAtDate(DateTime date)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
-            bool isPresent = keeper.WorkDays.TryGetValue(date.Date, out WorkDay ma);
+            bool isPresent = keeper.WorkDays.TryGetValue(date.Date, out WorkDay day);
 
-            return isPresent ? ma : null;
+            return isPresent ? day : null;
         }
 
         internal static WorkDay GetCurrentDay()

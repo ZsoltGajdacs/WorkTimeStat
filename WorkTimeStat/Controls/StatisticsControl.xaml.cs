@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
+using System.Linq;
 using UsageWatcher.Models;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
+using ZsGUtils.UIHelpers;
 
 namespace WorkTimeStat.Controls
 {
     public partial class StatisticsControl : UserControl
     {
         internal event CloseTheBallonEventHandler CloseBallon;
-        public StatisticsControl(double dailyWorkHours)
+
+        private readonly UsageTabData usageTabDataVM;
+        private readonly OverviewTabData overviewTabDataVM;
+
+        public StatisticsControl()
         {
             InitializeComponent();
 
-            OverviewTabData dto = CreateOverviewData(dailyWorkHours);
-            AssignDataToWindowControls(ref dto);
-            OverviewGrid.DataContext = this;
+            overviewTabDataVM = CreateOverviewTabData();
+            OverviewGrid.DataContext = overviewTabDataVM;
 
-            UsageTabData usageTabData = CreateUsageTabData();
-            UsageGrid.DataContext = usageTabData;
+            usageTabDataVM = CreateUsageTabData();
+            UsageGrid.DataContext = usageTabDataVM;
         }
 
         private static UsageTabData CreateUsageTabData()
@@ -32,71 +37,9 @@ namespace WorkTimeStat.Controls
             return new UsageTabData();
         }
 
-        private static OverviewTabData CreateOverviewData(double dailyWorkHours)
+        private static OverviewTabData CreateOverviewTabData()
         {
-            OverviewTabData dto = new OverviewTabData { dailyWorkHours = dailyWorkHours };
-
-            List<WorkDayType> dayTypes = StatisticsService.GetOfficalWorkdayTypes();
-
-            // Monthly
-            int thisMonth = DateTime.Now.Month;
-            dto.mWorkedHours = StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes);
-            dto.mFullHours = StatisticsService.CalcMonthlyTotalHours(thisMonth);
-            dto.mCalcHours = StatisticsService.GetUsageForMonth(thisMonth, dayTypes);
-            dto.mLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, dayTypes));
-
-            // Last month
-            int lastMonth = thisMonth - 1;
-            dto.pmWorkedHours = StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes);
-            dto.pmFullHours = StatisticsService.CalcMonthlyTotalHours(lastMonth);
-            dto.pmCalcHours = StatisticsService.GetUsageForMonth(lastMonth, dayTypes);
-            dto.pmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, dayTypes));
-
-            // Daily
-            WorkDay today = WorkDayService.GetCurrentDay();
-            dto.dWorkedHours = StatisticsService.CalcDailyWorkedHours(today);
-            dto.dFullHours = StatisticsService.CalcDailyTotalHours(today);
-            dto.dCalcHours = StatisticsService.GetUsageForToday();
-            dto.dLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(today));
-
-            // Yesterday
-            WorkDay lastWorkday = WorkDayService.GetLastWorkDay();
-            dto.ywdWorkedHours = StatisticsService.CalcDailyWorkedHours(lastWorkday);
-            dto.ywdFullHours = StatisticsService.CalcDailyTotalHours(lastWorkday);
-            dto.ywdCalcHours = StatisticsService.GetUsageForDay(lastWorkday);
-            dto.ywdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(lastWorkday));
-
-            return dto;
-        }
-
-        // TODO: rework this to happen in the dto and assign that as datasource
-        private void AssignDataToWindowControls(ref OverviewTabData dto)
-        {
-            yesterworkdayWorkedHours.Content = NumberFormatter.FormatNum(dto.ywdWorkedHours);
-            yesterworkdayFullHours.Content = NumberFormatter.FormatNum(dto.ywdFullHours);
-            yesterworkdayCalcHours.Content = NumberFormatter.FormatNum(dto.ywdCalcHours);
-            yesterworkdayLeftHours.Content = dto.ywdLeftHours;
-
-            todayWorkedHours.Content = NumberFormatter.FormatNum(dto.dWorkedHours);
-            todayFullHours.Content = NumberFormatter.FormatNum(dto.dFullHours);
-            todayCalcHours.Content = NumberFormatter.FormatNum(dto.dCalcHours);
-            todayLeftHours.Content = dto.dLeftHours;
-
-            monthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.mWorkedHours);
-            monthlyFullHours.Content = NumberFormatter.FormatNum(dto.mFullHours);
-            monthlyCalcHours.Content = NumberFormatter.FormatNum(dto.mCalcHours);
-            monthlyLeftHours.Content = dto.mLeftHours;
-
-            prevMonthlyWorkedHours.Content = NumberFormatter.FormatNum(dto.pmWorkedHours);
-            prevMonthlyFullHours.Content = NumberFormatter.FormatNum(dto.pmFullHours);
-            prevMonthlyCalcHours.Content = NumberFormatter.FormatNum(dto.pmCalcHours);
-            prevMonthlyLeftHours.Content = dto.pmLeftHours;
-        }
-
-        private static string AddPlusIfNeeded(double num)
-        {
-            num = Math.Round(num, 2, MidpointRounding.ToEven);
-            return num > 0 ? "+" + num : num.ToString(CultureInfo.CurrentCulture);
+            return new OverviewTabData();
         }
 
         private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -104,39 +47,118 @@ namespace WorkTimeStat.Controls
             CloseBallon?.Invoke();
         }
 
+        private void UsageDateCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime selectedDate = (DateTime) e.AddedItems[0];
+            usageTabDataVM.LoadDataForDay(selectedDate);
+        }
+
+        #region Overview Tab
         private class OverviewTabData
         {
-            public double dailyWorkHours;
+            // Current month
+            public string MWorkedHours { get; set; }
+            public string MFullHours { get; set; }
+            public string MCalcHours { get; set; }
+            public string MLeftHours { get; set; }
 
-            // Monthly
-            public double mWorkedHours, mFullHours, mCalcHours;
-            public string mLeftHours;
+            // Previous month
+            public string PmWorkedHours { get; set; }
+            public string PmFullHours { get; set; }
+            public string PmCalcHours { get; set; }
+            public string PmLeftHours { get; set; }
 
-            // Previous Month
-            public double pmWorkedHours, pmFullHours, pmCalcHours;
-            public string pmLeftHours;
-
-            // Daily
-            public double dWorkedHours, dFullHours, dCalcHours;
-            public string dLeftHours;
+            // Today
+            public string DWorkedHours { get; set; }
+            public string DFullHours { get; set; }
+            public string DCalcHours { get; set; }
+            public string DLeftHours { get; set; }
 
             // Yesterday
-            public double ywdWorkedHours, ywdFullHours, ywdCalcHours;
-            public string ywdLeftHours;
+            public string YwdWorkedHours { get; set; }
+            public string YwdFullHours { get; set; }
+            public string YwdCalcHours { get; set; }
+            public string YwdLeftHours { get; set; }
+
+            public OverviewTabData()
+            {
+                LoadStatisticsData();
+            }
+
+            private void LoadStatisticsData()
+            {
+                List<WorkDayType> dayTypes = StatisticsService.GetOfficalWorkdayTypes();
+
+                // Monthly
+                int thisMonth = DateTime.Now.Month;
+                MWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes));
+                MFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(thisMonth));
+                MCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(thisMonth, dayTypes));
+                MLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, dayTypes));
+
+                // Last month
+                int lastMonth = thisMonth - 1;
+                PmWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes));
+                PmFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(lastMonth));
+                PmCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(lastMonth, dayTypes));
+                PmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, dayTypes));
+
+                // Daily
+                WorkDay today = WorkDayService.GetCurrentDay();
+                DWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcDailyWorkedHours(today));
+                DFullHours = NumberFormatter.FormatNum(StatisticsService.CalcDailyTotalHours(today));
+                DCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForToday());
+                DLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(today));
+
+                // Yesterday
+                WorkDay lastWorkday = WorkDayService.GetLastWorkDay();
+                YwdWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcDailyWorkedHours(lastWorkday));
+                YwdFullHours = NumberFormatter.FormatNum(StatisticsService.CalcDailyTotalHours(lastWorkday));
+                YwdCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForDay(lastWorkday));
+                YwdLeftHours = AddPlusIfNeeded(StatisticsService.CalcDailyHoursDifference(lastWorkday));
+            }
+
+            private static string AddPlusIfNeeded(double num)
+            {
+                num = Math.Round(num, 2, MidpointRounding.ToEven);
+                return num > 0 ? "+" + num : num.ToString(CultureInfo.CurrentCulture);
+            }
         }
-    
-        private class UsageTabData
+        #endregion
+
+        #region Usage Tab
+        private class UsageTabData : BindableClass
         {
-            public string UsageFlowData { get; private set; }
-            public string UsageBreakData { get; private set; }
-            public string UsageFlowTotal { get; private set; }
-            public string UsageBreakTotal { get; private set; }
-            public List<DateTime> DatesWithUsageData { get; private set; }
+            private string usageFlowData;
+            private string usageBreakData;
+            private string usageFlowTotal;
+            private string usageBreakTotal;
+
+            public string UsageFlowData { get => usageFlowData; set => SetAndNotifyPropertyChanged(ref usageFlowData, value); }
+            public string UsageBreakData { get => usageBreakData; set => SetAndNotifyPropertyChanged(ref usageBreakData, value); }
+            public string UsageFlowTotal { get => usageFlowTotal; set => SetAndNotifyPropertyChanged(ref usageFlowTotal, value); }
+            public string UsageBreakTotal { get => usageBreakTotal; set => SetAndNotifyPropertyChanged(ref usageBreakTotal, value); }
+            public List<DateTime> DatesWithUsageData { get; set; }
 
             public UsageTabData()
             {
-                List<UsageBlock> usageflows = StatisticsService.GetUsageFlowForDate(DateTime.Today);
-                List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(DateTime.Today);
+                Init();
+                LoadDataForDay(DateTime.Today);
+                DatesWithUsageData = GetDatesWithUsageData();
+            }
+
+            private void Init()
+            {
+                usageFlowData = "";
+                usageBreakData = string.Empty;
+                usageFlowTotal = string.Empty;
+                usageBreakTotal = string.Empty;
+            }
+
+            public void LoadDataForDay(DateTime day)
+            {
+                List<UsageBlock> usageflows = StatisticsService.GetUsageFlowForDate(day);
+                List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(day);
 
                 LocalizationHelper locHelper = LocalizationHelper.Instance;
                 UsageFlowTotal = Math.Round(CalcUsageBlockTotals(usageflows, TimeSpan.FromMinutes(5)), MidpointRounding.ToEven)
@@ -146,21 +168,18 @@ namespace WorkTimeStat.Controls
 
                 UsageFlowData = UsageBlocksToString(usageflows, TimeSpan.FromMinutes(5));
                 UsageBreakData = UsageBlocksToString(usageBreaks, TimeSpan.FromMinutes(10));
-
-                DatesWithUsageData = GetDatesWithUsageData();
             }
 
-            private List<DateTime> GetDatesWithUsageData()
+            private static List<DateTime> GetDatesWithUsageData()
             {
-                //TODO: Build list so the user can choose to view each day's usage data
-                return new List<DateTime>();
+                return StatisticsService.GetDatesWithUsageData().OrderByDescending(u => u.Date).ToList();
             }
 
             private static double CalcUsageBlockTotals(List<UsageBlock> usages, TimeSpan minBlockLength)
             {
                 TimeSpan total = TimeSpan.Zero;
 
-                usages.ForEach((usage) => 
+                usages.ForEach((usage) =>
                 {
                     if (usage.EndTime - usage.StartTime > minBlockLength)
                     {
@@ -194,5 +213,6 @@ namespace WorkTimeStat.Controls
             }
 
         }
+        #endregion
     }
 }

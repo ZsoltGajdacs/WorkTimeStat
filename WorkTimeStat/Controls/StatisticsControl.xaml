@@ -106,25 +106,25 @@
 
                         <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
 
-                        <Label Name="yesterworkdayWorkedHours" Grid.Column="3" Grid.Row="3"/>
-                        <Label Name="yesterworkdayFullHours" Grid.Column="3" Grid.Row="5"/>
-                        <Label Name="yesterworkdayCalcHours" Grid.Column="3" Grid.Row="7"/>
-                        <Label Name="yesterworkdayLeftHours" Grid.Column="3" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="yesterworkdayWorkedHours" Content="{Binding YwdWorkedHours, Mode=OneWay}" Grid.Column="3" Grid.Row="3"/>
+                        <Label Name="yesterworkdayFullHours" Content="{Binding YwdFullHours, Mode=OneWay}" Grid.Column="3" Grid.Row="5"/>
+                        <Label Name="yesterworkdayCalcHours" Content="{Binding YwdCalcHours, Mode=OneWay}" Grid.Column="3" Grid.Row="7"/>
+                        <Label Name="yesterworkdayLeftHours" Content="{Binding YwdLeftHours, Mode=OneWay}" Grid.Column="3" Grid.Row="9" FontWeight="Bold"/>
 
-                        <Label Name="todayWorkedHours" Grid.Column="5" Grid.Row="3"/>
-                        <Label Name="todayFullHours" Grid.Column="5" Grid.Row="5"/>
-                        <Label Name="todayCalcHours" Grid.Column="5" Grid.Row="7"/>
-                        <Label Name="todayLeftHours" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="todayWorkedHours" Content="{Binding DWorkedHours, Mode=OneWay}" Grid.Column="5" Grid.Row="3"/>
+                        <Label Name="todayFullHours" Content="{Binding DFullHours, Mode=OneWay}" Grid.Column="5" Grid.Row="5"/>
+                        <Label Name="todayCalcHours" Content="{Binding DCalcHours, Mode=OneWay}" Grid.Column="5" Grid.Row="7"/>
+                        <Label Name="todayLeftHours" Content="{Binding DLeftHours, Mode=OneWay}" Grid.Column="5" Grid.Row="9" FontWeight="Bold"/>
 
-                        <Label Name="monthlyWorkedHours" Grid.Column="7" Grid.Row="3"/>
-                        <Label Name="monthlyFullHours" Grid.Column="7" Grid.Row="5"/>
-                        <Label Name="monthlyCalcHours" Grid.Column="7" Grid.Row="7"/>
-                        <Label Name="monthlyLeftHours" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="monthlyWorkedHours" Content="{Binding MWorkedHours, Mode=OneWay}" Grid.Column="7" Grid.Row="3"/>
+                        <Label Name="monthlyFullHours" Content="{Binding MFullHours, Mode=OneWay}" Grid.Column="7" Grid.Row="5"/>
+                        <Label Name="monthlyCalcHours" Content="{Binding MCalcHours, Mode=OneWay}" Grid.Column="7" Grid.Row="7"/>
+                        <Label Name="monthlyLeftHours" Content="{Binding MLeftHours, Mode=OneWay}" Grid.Column="7" Grid.Row="9" FontWeight="Bold"/>
 
-                        <Label Name="prevMonthlyWorkedHours" Grid.Column="9" Grid.Row="3"/>
-                        <Label Name="prevMonthlyFullHours" Grid.Column="9" Grid.Row="5"/>
-                        <Label Name="prevMonthlyCalcHours" Grid.Column="9" Grid.Row="7"/>
-                        <Label Name="prevMonthlyLeftHours" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
+                        <Label Name="prevMonthlyWorkedHours" Content="{Binding PmWorkedHours, Mode=OneWay}" Grid.Column="9" Grid.Row="3"/>
+                        <Label Name="prevMonthlyFullHours" Content="{Binding PmFullHours, Mode=OneWay}" Grid.Column="9" Grid.Row="5"/>
+                        <Label Name="prevMonthlyCalcHours" Content="{Binding PmCalcHours, Mode=OneWay}" Grid.Column="9" Grid.Row="7"/>
+                        <Label Name="prevMonthlyLeftHours" Content="{Binding PmLeftHours, Mode=OneWay}" Grid.Column="9" Grid.Row="9" FontWeight="Bold"/>
 
                         <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.u_btn_close}"
                                         Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="11"
@@ -162,7 +162,9 @@
                         </Grid.ColumnDefinitions>
 
                         <ComboBox x:Name="UsageDateCombo" Grid.Column="1" Grid.Row="1" 
-                                  ItemsSource="{Binding DatesWithUsageData, Mode=OneWay}"/>
+                                  ItemsSource="{Binding DatesWithUsageData, Mode=OneWay}"
+                                  SelectedIndex="0"
+                                  SelectionChanged="UsageDateCombo_SelectionChanged"/>
 
                         <Label Content="{x:Static loc:Resources.stat_data_flow}" 
                                Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"

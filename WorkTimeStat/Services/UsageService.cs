@@ -41,5 +41,11 @@ namespace WorkTimeStat.Services
             IWatcher watcher = WorkKeeper.Instance.GetWatcher();
             return watcher.BreaksInContinousUsageForTimeFrame(start, end);
         }
+
+        internal static List<DateTime> GetListOfUsages()
+        {
+            IWatcher watcher = WorkKeeper.Instance.GetWatcher();
+            return watcher.ListOfDaysWithUsageData();
+        }
     }
 }

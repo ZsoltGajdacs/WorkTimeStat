@@ -240,6 +240,9 @@
   <data name="main_statistics" xml:space="preserve">
     <value>Statisztikák</value>
   </data>
+  <data name="main_tooltip" xml:space="preserve">
+    <value>Bal gomb munkaidő, Jobb gomb menü</value>
+  </data>
   <data name="set_bottle_size" xml:space="preserve">
     <value>Hány literes amiből iszol?</value>
   </data>
@@ -249,8 +252,14 @@
   <data name="set_default_workplace" xml:space="preserve">
     <value>Alapértelmezett munka helye?</value>
   </data>
+  <data name="set_default_workplace_tooltip" xml:space="preserve">
+    <value>A hely ahonnan legtöbbet dolgozol</value>
+  </data>
   <data name="set_default_worktime" xml:space="preserve">
     <value>Napi munkaórák száma?</value>
+  </data>
+  <data name="set_default_worktime_tooltip" xml:space="preserve">
+    <value>Munkaórák száma egy nap</value>
   </data>
   <data name="set_error_incomplete_setup_content" xml:space="preserve">
     <value>Kérlek állítsd be a napi munkaóráidat és éves szabadságkeretedet!</value>
@@ -261,14 +270,32 @@
   <data name="set_is_lunchtime_worktime" xml:space="preserve">
     <value>Az ebédszünet munkaidő?</value>
   </data>
+  <data name="set_is_lunchtime_worktime_tooltip" xml:space="preserve">
+    <value>Az ebédidő része a munkaidőnek?</value>
+  </data>
   <data name="set_language" xml:space="preserve">
     <value>Felület nyelve:</value>
+  </data>
+  <data name="set_language_tooltip" xml:space="preserve">
+    <value>A felület nyelve. ÚJRAINDÍTÁS szükséges, hogy teljes körűen életbe lépjen</value>
   </data>
   <data name="set_leave_days_in_year" xml:space="preserve">
     <value>Szabadnapok száma egy évben?</value>
   </data>
+  <data name="set_leave_days_in_year_tooltip" xml:space="preserve">
+    <value>Szabadnapok száma</value>
+  </data>
   <data name="set_usagewatcher_resolution" xml:space="preserve">
     <value>Aktivitás mérő 'felbontása'?</value>
+  </data>
+  <data name="set_usagewatcher_resolution_tooltip" xml:space="preserve">
+    <value>Percek száma mely aktivitásnak számat billentyű vagy egér használat után</value>
+  </data>
+  <data name="set_year_start" xml:space="preserve">
+    <value>Szabadság szerinti évkezdet:</value>
+  </data>
+  <data name="set_year_start_tooltip" xml:space="preserve">
+    <value>A munkaév kezdete, amikortól 'feltöltődnek' a szabinapok</value>
   </data>
   <data name="stat_btn_close" xml:space="preserve">
     <value>Bezárás</value>

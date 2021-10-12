@@ -327,6 +327,12 @@ namespace WorkTimeStat.Services
 
             return RoundToMidWithTwoPrecision(result);
         }
+
+        internal static List<DateTime> GetDatesWithUsageData()
+        {
+            List<DateTime> workdays = WorkKeeper.Instance.WorkDays.Keys.ToList();
+            return UsageService.GetListOfUsages().FindAll(u => workdays.Contains(u));
+        }
         #endregion
 
         #region Helpers

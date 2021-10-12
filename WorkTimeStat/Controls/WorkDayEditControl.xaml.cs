@@ -134,8 +134,7 @@ namespace WorkTimeStat.Controls
             InitializeComponent();
 
             WorkSettings settings = WorkKeeper.Instance.Settings;
-            this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault,
-                                                settings.AmountOfLitreInOneUnit, settings.DailyWorkHours, settings.WorkPlaceType);
+            this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault, settings.DailyWorkHours, settings.WorkPlaceType);
             dateToday = DateTime.Now.Date;
             
             InitValues();

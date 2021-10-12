@@ -1,37 +1,42 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Helpers;
+using ZsGUtils.UIHelpers;
 
 namespace WorkTimeStat.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    internal class WorkDay : INotifyPropertyChanged
+    internal class WorkDay : BindableClass
     {
-        public DateTime DayDate { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
-        public TimeSpan UsageTime { get; set; }
-        public TimeSpan TotalDailyUsage { get; set; }
-        public int LunchBreakDuration { get; set; }
-        public int OtherBreakDuration { get; set; }
-        public int OverWorkDuration { get; set; }
-        public WorkDayType WorkDayType { get; set; }
-        public WorkPlaceType WorkPlaceType { get; set; }
-        public decimal WaterConsumptionCount { get; set; }
-        public decimal AmountOfLitreInOneUnit { get; set; }
-        public bool IsLunchTimeWorkTime { get; set; }
+        private DateTime dayDate;
+        private TimeSpan startTime;
+        private TimeSpan endTime;
+        private TimeSpan usageTime;
+        private TimeSpan totalDailyUsage;
+        private int lunchBreakDuration;
+        private int otherBreakDuration;
+        private int overWorkDuration;
+        private WorkDayType workDayType;
+        private WorkPlaceType workPlaceType;
+        private bool isLunchTimeWorkTime;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public DateTime DayDate { get => dayDate; set => SetAndNotifyPropertyChanged(ref dayDate, value); }
+        public TimeSpan StartTime { get => startTime; set => SetAndNotifyPropertyChanged(ref startTime, value); }
+        public TimeSpan EndTime { get => endTime; set => SetAndNotifyPropertyChanged(ref endTime, value); }
+        public TimeSpan UsageTime { get => usageTime; set => SetAndNotifyPropertyChanged(ref usageTime, value); }
+        public TimeSpan TotalDailyUsage { get => totalDailyUsage; set => SetAndNotifyPropertyChanged(ref totalDailyUsage, value); }
+        public int LunchBreakDuration { get => lunchBreakDuration; set => SetAndNotifyPropertyChanged(ref lunchBreakDuration, value); }
+        public int OtherBreakDuration { get => otherBreakDuration; set => SetAndNotifyPropertyChanged(ref otherBreakDuration, value); }
+        public int OverWorkDuration { get => overWorkDuration; set => SetAndNotifyPropertyChanged(ref overWorkDuration, value); }
+        public WorkDayType WorkDayType { get => workDayType; set => SetAndNotifyPropertyChanged(ref workDayType, value); }
+        public WorkPlaceType WorkPlaceType { get => workPlaceType; set => SetAndNotifyPropertyChanged(ref workPlaceType, value); }
+        public bool IsLunchTimeWorkTime { get => isLunchTimeWorkTime; set => SetAndNotifyPropertyChanged(ref isLunchTimeWorkTime, value); }
 
         #region CTORS
-        public WorkDay(bool isLunchTimeWorkTime, decimal amountOfLiterInOneUnit, 
-                                    double dailyWorkHours, WorkPlaceType workPlaceType)
+        public WorkDay(bool isLunchTimeWorkTime, double dailyWorkHours, WorkPlaceType workPlaceType)
         {
-            AmountOfLitreInOneUnit = amountOfLiterInOneUnit;
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
             StartTime = RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
@@ -127,19 +132,9 @@ namespace WorkTimeStat.Models
         }
         #endregion
 
-        internal void IncreaseWaterConsumption()
-        {
-            WaterConsumptionCount = Decimal.Add(WaterConsumptionCount, AmountOfLitreInOneUnit);
-        }
-
         private static DateTime RoundUpTime(DateTime date, TimeSpan roundTime)
         {
             return new DateTime((date.Ticks + roundTime.Ticks - 1) / roundTime.Ticks * roundTime.Ticks, date.Kind);
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

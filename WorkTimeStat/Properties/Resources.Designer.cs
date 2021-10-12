@@ -430,6 +430,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Left button work time, Right button menu.
+        /// </summary>
+        public static string main_tooltip {
+            get {
+                return ResourceManager.GetString("main_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bottle size: .
         /// </summary>
         public static string set_bottle_size {
@@ -457,11 +466,29 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The place where you work most.
+        /// </summary>
+        public static string set_default_workplace_tooltip {
+            get {
+                return ResourceManager.GetString("set_default_workplace_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Daily work hours: .
         /// </summary>
         public static string set_default_worktime {
             get {
                 return ResourceManager.GetString("set_default_worktime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of hours you are required to work each workday.
+        /// </summary>
+        public static string set_default_worktime_tooltip {
+            get {
+                return ResourceManager.GetString("set_default_worktime_tooltip", resourceCulture);
             }
         }
         
@@ -493,11 +520,29 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether your lunchtime is counted as part of your worktime.
+        /// </summary>
+        public static string set_is_lunchtime_worktime_tooltip {
+            get {
+                return ResourceManager.GetString("set_is_lunchtime_worktime_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display language:.
         /// </summary>
         public static string set_language {
             get {
                 return ResourceManager.GetString("set_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The language of the UI. You MUST restart the app for it to take full effect!.
+        /// </summary>
+        public static string set_language_tooltip {
+            get {
+                return ResourceManager.GetString("set_language_tooltip", resourceCulture);
             }
         }
         
@@ -511,11 +556,47 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The amount of days you have to go on vacation.
+        /// </summary>
+        public static string set_leave_days_in_year_tooltip {
+            get {
+                return ResourceManager.GetString("set_leave_days_in_year_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity watcher resolution:.
         /// </summary>
         public static string set_usagewatcher_resolution {
             get {
                 return ResourceManager.GetString("set_usagewatcher_resolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of minutes counted as usage after using the keyboard or mouse.
+        /// </summary>
+        public static string set_usagewatcher_resolution_tooltip {
+            get {
+                return ResourceManager.GetString("set_usagewatcher_resolution_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start of year for holidays:.
+        /// </summary>
+        public static string set_year_start {
+            get {
+                return ResourceManager.GetString("set_year_start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The date on which your vacation days are reset.
+        /// </summary>
+        public static string set_year_start_tooltip {
+            get {
+                return ResourceManager.GetString("set_year_start_tooltip", resourceCulture);
             }
         }
         

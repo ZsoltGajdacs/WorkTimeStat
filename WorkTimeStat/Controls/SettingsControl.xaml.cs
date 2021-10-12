@@ -31,7 +31,7 @@ namespace WorkTimeStat.Controls
             mainGrid.DataContext = keeper.Settings;
         }
 
-        private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             if (keeper.Settings.DailyWorkHours == default || keeper.Settings.YearlyLeaveNumber == default)
             {

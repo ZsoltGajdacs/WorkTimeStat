@@ -41,7 +41,7 @@ namespace WorkTimeStat
         private void SetLanguage()
         {
             AvailableLanguages chosenLang = workKeeper.Settings.ChosenLanguage;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(chosenLang.GetDescription());
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(chosenLang.GetDescription());
         }
 
         private void CheckSettingsSetup()
@@ -115,7 +115,7 @@ namespace WorkTimeStat
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsControl statisticsControl = new StatisticsControl(workKeeper.Settings.DailyWorkHours);
+            StatisticsControl statisticsControl = new StatisticsControl();
             statisticsControl.CloseBallon += CloseTaskbarBalloon;
 
             TaskbarIcon.ShowCustomBalloon(statisticsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);

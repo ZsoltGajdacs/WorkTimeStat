@@ -6,7 +6,7 @@ namespace WorkTimeStat
     {
         private App()
         {
-            
+
         }
     }
 }
