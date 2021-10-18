@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using UsageWatcher.Models;
 using WorkTimeStat.Enums;
-using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Storage;
 
@@ -62,7 +59,7 @@ namespace WorkTimeStat.Services
             {
                 return 0;
             }
-            
+
             double workedHours = 0;
             foreach (WorkDay day in GetOfficialWorkdaysInMonth(month))
             {
@@ -180,7 +177,7 @@ namespace WorkTimeStat.Services
             }
 
             double workedHours = CalcDailyWorkedHours(day);
-            
+
             double diff;
             if (IsDaySickDay(day))
             {

@@ -60,7 +60,7 @@ namespace WorkTimeStat.Controls
             }
             catch (CultureNotFoundException)
             {
-                // What can I do?
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
             
         }

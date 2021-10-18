@@ -159,10 +159,10 @@
     <Compile Include="Events\CloseTheBallonEvent.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Dpi.cs" />
-    <Compile Include="Helpers\FilesLocation.cs" />
     <Compile Include="Helpers\NumberFormatter.cs" />
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Models\KeeperDto.cs" />
     <Compile Include="Models\WorkSettings.cs" />
     <Compile Include="Properties\Resources.en.Designer.cs">
       <DependentUpon>Resources.en.resx</DependentUpon>

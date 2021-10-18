@@ -31,7 +31,7 @@ namespace WorkTimeStat
         private void InitializeWorkKeeper()
         {
             workKeeper = WorkKeeper.Instance;
-            workKeeper.InitWatcher();
+            workKeeper.Init();
 
             saveTimer = new SaveTimer(TimeSpan.FromMinutes(30));
 

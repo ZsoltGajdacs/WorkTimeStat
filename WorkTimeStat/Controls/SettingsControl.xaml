@@ -109,10 +109,10 @@
             <Label Content="{x:Static loc:Resources.set_year_start}" 
                    ToolTip="{x:Static loc:Resources.set_year_start_tooltip}"
                    Grid.Column="1" Grid.Row="11"/>
-            <xce:DateTimePicker Value="{Binding HolidayYearStart, Mode=TwoWay}"
+            <xce:DateTimePicker x:Name="HolidayYearStart" Value="{Binding HolidayYearStart, Mode=TwoWay}"
                                 Format="ShortDate" AllowSpin="False" AutoCloseCalendar="True"
                                 ShowButtonSpinner="False" TimePickerVisibility="Collapsed"
-                                Grid.Column="3" Grid.Row="11"/>
+                                Grid.Column="3" Grid.Row="11" />
             
             <Label Content="{x:Static loc:Resources.set_leave_days_in_year}" 
                    ToolTip="{x:Static loc:Resources.set_leave_days_in_year_tooltip}"

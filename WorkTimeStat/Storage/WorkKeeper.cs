@@ -5,6 +5,7 @@ using UsageWatcher;
 using UsageWatcher.Enums;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
+using WorkTimeStat.Services;
 
 namespace WorkTimeStat.Storage
 {
@@ -26,10 +27,40 @@ namespace WorkTimeStat.Storage
             return watcher;
         }
 
-        internal void InitWatcher()
+        internal void Init()
         {
             watcher = new Watcher("WorktimeStat", Settings.WatcherResolution,
                 Settings.WatcherSavePreference, Settings.WatcherDataPrecision);
+
+            CheckForHolidayYearsEnd();
+        }
+
+        private void CheckForHolidayYearsEnd()
+        {
+            DateTime today = DateTime.Today.Date;
+            if (today.Year != Settings.HolidayYearStart.Year && today >= Settings.HolidayYearStart.AddYears(1))
+            {
+                DoYearlyReset();
+                Settings.HolidayYearStart = today;
+            }
+        }
+
+        private void DoYearlyReset()
+        {
+            SaveService.SaveYearlyBackupForReset();
+            KeeperDto dto = WorkDayService.FindDataBeforeDate(DateTime.Today.Date);
+
+            WorkDays.Clear();
+            DaysWorkedInMonth.Clear();
+            LeaveDays.Clear();
+            SickDays.Clear();
+
+            if (dto != null)
+            {
+                WorkDays = dto.WorkDays;
+                LeaveDays = dto.LeaveDays;
+                SickDays = dto.SickDays;
+            }
         }
 
         #region Singleton
@@ -54,7 +85,7 @@ namespace WorkTimeStat.Storage
         private static readonly Lazy<WorkKeeper> lazy = new Lazy<WorkKeeper>(() =>
         {
             WorkKeeper workKeeper = Serializer.JsonObjectDeserialize<WorkKeeper>(
-                FilesLocation.GetSaveDirPath(), FilesLocation.GetSaveFileName());
+                SaveService.GetSaveDirPath(), SaveService.GetSaveFileName());
 
             return workKeeper ?? new WorkKeeper();
         });
