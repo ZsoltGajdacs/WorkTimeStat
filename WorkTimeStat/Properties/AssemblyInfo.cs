@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZsGWorks")]
 [assembly: AssemblyProduct("WorkTimeStat")]
-[assembly: AssemblyCopyright("Copyright © ZsGWorks 2020")]
+[assembly: AssemblyCopyright("Copyright © ZsGWorks 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
