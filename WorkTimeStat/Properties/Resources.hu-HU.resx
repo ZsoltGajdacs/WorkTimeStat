@@ -226,7 +226,7 @@
     <value>Mai használati idő</value>
   </data>
   <data name="main_error_no_settings_content" xml:space="preserve">
-    <value>Kérlek állítsd be a napi munkaóráidat és éves szabadságkeretedet!</value>
+    <value>Kérlek állítsd be a napi munkaóráidat, éves szabadságkeretedet és az év kezdetét (amikor feltelik a szabid)!</value>
   </data>
   <data name="main_error_no_settings_header" xml:space="preserve">
     <value>Hiányos beállítások</value>

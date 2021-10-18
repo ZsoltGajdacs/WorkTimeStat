@@ -385,7 +385,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please set your number of leaves and daily work hours in settings!.
+        ///   Looks up a localized string similar to Please set your number of leaves, daily work hours and holiday year start in settings!.
         /// </summary>
         public static string main_error_no_settings_content {
             get {

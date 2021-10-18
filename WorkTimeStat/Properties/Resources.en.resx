@@ -226,7 +226,7 @@
     <value>Today's computer usage</value>
   </data>
   <data name="main_error_no_settings_content" xml:space="preserve">
-    <value>Please set your number of leaves and daily work hours in settings!</value>
+    <value>Please set your number of leaves, daily work hours and holiday year start in settings!</value>
   </data>
   <data name="main_error_no_settings_header" xml:space="preserve">
     <value>No setup</value>

@@ -47,7 +47,7 @@ namespace WorkTimeStat
         private void CheckSettingsSetup()
         {
             WorkSettings settings = WorkKeeper.Instance.Settings;
-            if (settings.DailyWorkHours == default || settings.YearlyLeaveNumber == default)
+            if (settings.DailyWorkHours == default || settings.YearlyLeaveNumber == default || settings.HolidayYearStart == default)
             {
                 LocalizationHelper locHelp = LocalizationHelper.Instance;
                 MessageBox.Show(locHelp.GetStringForKey("main_error_no_settings_content"),
