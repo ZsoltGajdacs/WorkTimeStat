@@ -139,14 +139,24 @@ namespace WorkTimeStat.Services
                 return 0;
             }
 
-            double minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
-
-            minutesWorked -= day.OtherBreakDuration;
-            minutesWorked -= day.OverWorkDuration;
-
-            if (!day.IsLunchTimeWorkTime)
+            double minutesWorked = 0;
+            if (day.WorkDayType == WorkDayType.OVERWORK_DAY)
             {
+                minutesWorked = day.OverWorkDuration;
+                minutesWorked -= day.OtherBreakDuration;
                 minutesWorked -= day.LunchBreakDuration;
+            }
+            else
+            {
+                minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
+
+                minutesWorked -= day.OtherBreakDuration;
+                minutesWorked -= day.OverWorkDuration;
+
+                if (!day.IsLunchTimeWorkTime)
+                {
+                    minutesWorked -= day.LunchBreakDuration;
+                }
             }
 
             return minutesWorked / 60;

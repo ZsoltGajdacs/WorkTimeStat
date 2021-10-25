@@ -88,20 +88,22 @@ namespace WorkTimeStat.Controls
             private void LoadStatisticsData()
             {
                 List<WorkDayType> dayTypes = StatisticsService.GetOfficalWorkdayTypes();
+                List<WorkDayType> monthlyDiffDayTypes = new List<WorkDayType>(dayTypes);
+                monthlyDiffDayTypes.Add(WorkDayType.OVERWORK_DAY);
 
                 // Monthly
                 int thisMonth = DateTime.Now.Month;
                 MWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes));
                 MFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(thisMonth));
                 MCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(thisMonth, dayTypes));
-                MLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, dayTypes));
+                MLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, monthlyDiffDayTypes));
 
                 // Last month
                 int lastMonth = thisMonth - 1;
                 PmWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes));
                 PmFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(lastMonth));
                 PmCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(lastMonth, dayTypes));
-                PmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, dayTypes));
+                PmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, monthlyDiffDayTypes));
 
                 // Daily
                 WorkDay today = WorkDayService.GetCurrentDay();

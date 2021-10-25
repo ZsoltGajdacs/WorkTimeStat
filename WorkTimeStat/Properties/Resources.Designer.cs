@@ -295,6 +295,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A not usual workday, where only overwork is done (for example a weekend).
+        /// </summary>
+        public static string enum_overworkday_desc {
+            get {
+                return ResourceManager.GetString("enum_overworkday_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwork.
+        /// </summary>
+        public static string enum_overworkday_display {
+            get {
+                return ResourceManager.GetString("enum_overworkday_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Standby work.
         /// </summary>
         public static string enum_standby_desc {
@@ -732,6 +750,15 @@ namespace WorkTimeStat.Properties {
         public static string u_btn_save {
             get {
                 return ResourceManager.GetString("u_btn_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h.
+        /// </summary>
+        public static string u_hour {
+            get {
+                return ResourceManager.GetString("u_hour", resourceCulture);
             }
         }
         

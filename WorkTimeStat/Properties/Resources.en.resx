@@ -195,6 +195,12 @@
   <data name="enum_other_display" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="enum_overworkday_desc" xml:space="preserve">
+    <value>A not usual workday, where only overwork is done (for example a weekend)</value>
+  </data>
+  <data name="enum_overworkday_display" xml:space="preserve">
+    <value>Overwork</value>
+  </data>
   <data name="enum_standby_desc" xml:space="preserve">
     <value>Standby work</value>
   </data>
@@ -341,6 +347,9 @@
   </data>
   <data name="u_btn_save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="u_hour" xml:space="preserve">
+    <value>h</value>
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Lunch break:</value>

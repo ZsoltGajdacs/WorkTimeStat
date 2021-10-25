@@ -195,6 +195,12 @@
   <data name="enum_other_display" xml:space="preserve">
     <value>Máshol</value>
   </data>
+  <data name="enum_overworkday_desc" xml:space="preserve">
+    <value>Egy olyan nap amikor nincs normál munkavégzés, csak munkaidő pótlás</value>
+  </data>
+  <data name="enum_overworkday_display" xml:space="preserve">
+    <value>Túlmunka</value>
+  </data>
   <data name="enum_standby_desc" xml:space="preserve">
     <value>Készenlétben töltött idő</value>
   </data>
@@ -344,6 +350,9 @@
   </data>
   <data name="u_btn_save" xml:space="preserve">
     <value>Mentés</value>
+  </data>
+  <data name="u_hour" xml:space="preserve">
+    <value>ó</value>
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Ebédszünet:</value>
