@@ -120,6 +120,15 @@
   <data name="cal_btn_change" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="cal_btn_delete" xml:space="preserve">
+    <value>Delete day data</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_content" xml:space="preserve">
+    <value>Are you sure you want to delete this day's data? This action is irreversible!</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_header" xml:space="preserve">
+    <value>Confirm deletion of day data!</value>
+  </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Some values are not correctly filled</value>
   </data>

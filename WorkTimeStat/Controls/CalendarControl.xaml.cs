@@ -196,6 +196,29 @@ namespace WorkTimeStat.Controls
             }
         }
 
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (chosenDay != null)
+            {
+                MessageBoxResult result = MessageBox.Show(langHelper.GetStringForKey("cal_delete_confirm_dialog_content"),
+                       langHelper.GetStringForKey("cal_delete_confirm_dialog_header"),
+                       MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    WorkDayService.DeleteDay(ref chosenDay);
+                    chosenDay = null;
+                    RefreshLabels(ref chosenDay);
+                }
+            }
+            else
+            {
+                MessageBox.Show(langHelper.GetStringForKey("cal_error_no_data_for_day_content"),
+                       langHelper.GetStringForKey("cal_error_no_data_for_day_header"),
+                       MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             if (chosenDay != null)
@@ -382,6 +405,5 @@ namespace WorkTimeStat.Controls
         }
 
         #endregion
-
     }
 }

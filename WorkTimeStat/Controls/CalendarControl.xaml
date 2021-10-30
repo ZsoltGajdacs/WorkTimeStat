@@ -186,6 +186,9 @@
                     Click="CancelBtn_Click"/>
             </DockPanel>
 
+            <Button x:Name="DeleteBtn" Content="{x:Static loc:Resources.cal_btn_delete}" Grid.Column="1" Grid.Row="21"
+                    Click="DeleteBtn_Click"/>
+            
             <Button x:Name="EditBtn" Content="{x:Static loc:Resources.cal_btn_change}" Grid.Column="1" Grid.Row="23"
                     Click="EditBtn_Click"/>
 

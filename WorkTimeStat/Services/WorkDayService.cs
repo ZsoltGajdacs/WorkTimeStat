@@ -62,5 +62,11 @@ namespace WorkTimeStat.Services
             DateTime todayDate = DateTime.Now.Date;
             SetDayAtDate(todayDate, ref today);
         }
+
+        internal static void DeleteDay(ref WorkDay day)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+            keeper.WorkDays.Remove(day.DayDate);
+        }
     }
 }

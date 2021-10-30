@@ -70,6 +70,33 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete day data.
+        /// </summary>
+        public static string cal_btn_delete {
+            get {
+                return ResourceManager.GetString("cal_btn_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this day&apos;s data? This action is irreversible!.
+        /// </summary>
+        public static string cal_delete_confirm_dialog_content {
+            get {
+                return ResourceManager.GetString("cal_delete_confirm_dialog_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm deletion of day data!.
+        /// </summary>
+        public static string cal_delete_confirm_dialog_header {
+            get {
+                return ResourceManager.GetString("cal_delete_confirm_dialog_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some values are not correctly filled.
         /// </summary>
         public static string cal_error_incomplete_state_at_save_content {

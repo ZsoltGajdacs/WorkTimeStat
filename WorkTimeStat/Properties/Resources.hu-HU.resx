@@ -120,6 +120,15 @@
   <data name="cal_btn_change" xml:space="preserve">
     <value>Javítás</value>
   </data>
+  <data name="cal_btn_delete" xml:space="preserve">
+    <value>Nap törlése</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_content" xml:space="preserve">
+    <value>Biztos vagy benne hogy törölni szeretnéd ezen nap adatait? A törlés nem visszavonható!</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_header" xml:space="preserve">
+    <value>Törlés megerősítése</value>
+  </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Valami nincs kitöltve megfelelően</value>
   </data>
