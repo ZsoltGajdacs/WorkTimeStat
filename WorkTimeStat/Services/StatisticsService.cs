@@ -142,14 +142,13 @@ namespace WorkTimeStat.Services
             double minutesWorked = 0;
             if (day.WorkDayType == WorkDayType.OVERWORK_DAY)
             {
-                minutesWorked = day.OverWorkDuration;
+                minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
                 minutesWorked -= day.OtherBreakDuration;
                 minutesWorked -= day.LunchBreakDuration;
             }
             else
             {
                 minutesWorked = (day.EndTime - day.StartTime).TotalMinutes;
-
                 minutesWorked -= day.OtherBreakDuration;
                 minutesWorked -= day.OverWorkDuration;
 
@@ -231,7 +230,7 @@ namespace WorkTimeStat.Services
 
         internal static bool IsDayOverworkOnlyDay(WorkDay day)
         {
-            return CalcDailyWorkedHours(day) == 0 && day.OverWorkDuration > 0;
+            return day.WorkDayType == WorkDayType.OVERWORK_DAY;
         }
 
         private static bool IsDaySickDay(WorkDay day)

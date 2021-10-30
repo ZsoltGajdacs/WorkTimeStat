@@ -90,6 +90,9 @@ namespace WorkTimeStat.Controls
             if (result != null)
             {
                 chosenOverWorkType = result.FoundEnum;
+
+
+                ShouldEnableOverWorkControl(result.FoundEnum != WorkDayType.OVERWORK_DAY);
             }
         }
 
@@ -116,6 +119,11 @@ namespace WorkTimeStat.Controls
             viewModel.CalcAndSetTotalWorkTime();
         }
         #endregion
+
+        private void ShouldEnableOverWorkControl(bool enableControl)
+        {
+            overWorkTime.IsEnabled = enableControl;
+        }
 
         private class WorkDayEditControlVM : BindableClass
         {
