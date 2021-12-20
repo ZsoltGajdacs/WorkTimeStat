@@ -1,4 +1,5 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Win32;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -35,6 +36,8 @@ namespace WorkTimeStat
             workKeeper.Init();
 
             saveTimer = new SaveTimer(TimeSpan.FromMinutes(30));
+
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
 
             StatisticsService.FullReCountWorkedDays();
         }
@@ -136,6 +139,24 @@ namespace WorkTimeStat
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+        #endregion
+
+        #region System Events
+        /// <summary>
+        /// Happens when the user lockes the workstation, determines the timers to restart based on 
+        /// lock time
+        /// </summary>
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                workKeeper.PauseActiveTicket();
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock)
+            {
+                workKeeper.RestartActiveTicket();
+            }
         }
         #endregion
 

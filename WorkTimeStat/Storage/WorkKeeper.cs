@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UsageWatcher;
 using UsageWatcher.Enums;
 using WorkTimeStat.Helpers;
@@ -15,6 +16,9 @@ namespace WorkTimeStat.Storage
     {
         [NonSerialized]
         private IWatcher watcher;
+
+        [NonSerialized]
+        private string activeTicketName;
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
@@ -64,6 +68,7 @@ namespace WorkTimeStat.Storage
             }
         }
 
+        #region Ticket handling
         internal List<TicketTime> GetTodaysTickets()
         {
             WorkedTickets.TryGetValue(DateTime.Today, out List<TicketTime> tickets);
@@ -87,6 +92,26 @@ namespace WorkTimeStat.Storage
             storedTickets.Clear();
             storedTickets.AddRange(tickets);
         }
+
+        internal void PauseActiveTicket()
+        {
+            TicketTime activeTicket = GetTodaysTickets()
+                                            .Where(ticket => ticket.CurrentTimePair.EndTime == default)
+                                            .FirstOrDefault();
+
+            activeTicketName = activeTicket.TicketName;
+            activeTicket.PauseTicket();
+        }
+
+        internal void RestartActiveTicket()
+        {
+            TicketTime activeTicket = GetTodaysTickets()
+                                            .Where(ticket => ticket.TicketName == activeTicketName)
+                                            .FirstOrDefault();
+            activeTicket.StartTicket();
+            activeTicketName = string.Empty;
+        }
+        #endregion
 
         #region Singleton
         public static WorkKeeper Instance { get { return lazy.Value; } }
