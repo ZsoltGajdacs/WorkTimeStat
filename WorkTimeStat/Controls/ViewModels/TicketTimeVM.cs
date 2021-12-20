@@ -96,7 +96,7 @@ namespace WorkTimeStat.Controls.ViewModels
                                                 ? storedTicket.UsageTimes[lastUsageTime].EndTime
                                                 : DateTime.Now;
 
-            string measuredTime = StatisticsService.GetUsageForDateTimeFrame(ticketStart, ticketEnd)
+            string measuredTime = StatisticsService.GetUsageForDateTimeFrame(ticketStart, ticketEnd, TimeSpan.FromMinutes(5))
                                                             .ToString(CultureInfo.CurrentCulture);
 
             TimeSpentText = string.Format(CultureInfo.CurrentCulture, "{0} {1} / {2} {3}", measuredTime, MINUTE_TEXT,

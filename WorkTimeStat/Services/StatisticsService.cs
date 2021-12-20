@@ -290,15 +290,16 @@ namespace WorkTimeStat.Services
             return Rounder.RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
         }
 
-        internal static double GetUsageForDateTimeFrame(DateTime startDateTime, DateTime endDateTime)
+        internal static double GetUsageForDateTimeFrame(DateTime startDateTime, DateTime endDateTime, TimeSpan minBlockLength = default)
         {
             double usageTime = 0;
             if (startDateTime.Date == endDateTime.Date)
             {
-                List<UsageBlock> usages = GetUsageFlowForDate(startDateTime.Date);
-                usages = usages.Where(usage => (usage.StartTime >= startDateTime && usage.EndTime <= endDateTime)
+                List<UsageBlock> usages = GetUsageFlowForDate(startDateTime.Date, minBlockLength);
+                usages = usages.Where(usage => ((usage.StartTime >= startDateTime && usage.EndTime <= endDateTime)
                                                || (usage.StartTime <= startDateTime && usage.EndTime <= endDateTime)
                                                || (usage.StartTime <= startDateTime && usage.EndTime >= endDateTime))
+                                               && usage.EndTime > startDateTime)
                                .ToList();
                 if (usages.Count > 0)
                 {
@@ -323,7 +324,7 @@ namespace WorkTimeStat.Services
             return Rounder.RoundToMidWithTwoPrecision(usageTime);
         }
 
-        internal static List<UsageBlock> GetUsageFlowForDate(DateTime date)
+        internal static List<UsageBlock> GetUsageFlowForDate(DateTime date, TimeSpan minBlockLength = default)
         {
             WorkDay day = WorkDayService.GetDayAtDate(date);
             if (day == null)
@@ -334,10 +335,17 @@ namespace WorkTimeStat.Services
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
-            return UsageService.GetUsageListForTimeFrame(startDate, endDate);
+            List<UsageBlock> usages = UsageService.GetUsageListForTimeFrame(startDate, endDate);
+
+            if (minBlockLength != default)
+            {
+                usages = FilterBlocksByLength(ref usages, minBlockLength);
+            }
+
+            return usages;
         }
 
-        internal static List<UsageBlock> GetUsageBreaksForDate(DateTime date)
+        internal static List<UsageBlock> GetUsageBreaksForDate(DateTime date, TimeSpan minBlockLength = default)
         {
             WorkDay day = WorkDayService.GetDayAtDate(date);
             if (day == null)
@@ -348,7 +356,14 @@ namespace WorkTimeStat.Services
             DateTime startDate = day.DayDate.Date + day.StartTime;
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
-            return UsageService.GetBreaksInUsageListForTimeFrame(startDate, endDate);
+            List<UsageBlock> breaks = UsageService.GetBreaksInUsageListForTimeFrame(startDate, endDate);
+
+            if (minBlockLength != default)
+            {
+                breaks = FilterBlocksByLength(ref breaks, minBlockLength);
+            }
+
+            return breaks;
         }
 
         internal static double GetUsageForMonth(int month, List<WorkDayType> types)
@@ -372,6 +387,21 @@ namespace WorkTimeStat.Services
         {
             List<DateTime> workdays = WorkKeeper.Instance.WorkDays.Keys.ToList();
             return UsageService.GetListOfUsages().FindAll(u => workdays.Contains(u));
+        }
+
+        internal static double CalcUsageBlockTotals(ref List<UsageBlock> usages)
+        {
+            TimeSpan total = TimeSpan.Zero;
+
+            usages.ForEach((usage) => total += usage.EndTime - usage.StartTime);
+
+            return Rounder.RoundToMidWithTwoPrecision(total.TotalMinutes);
+        }
+
+        private static List<UsageBlock> FilterBlocksByLength(ref List<UsageBlock> usages, TimeSpan minBlockLength)
+        {
+            return usages.Where(usage => usage.EndTime - usage.StartTime > minBlockLength)
+                         .ToList();
         }
         #endregion
 

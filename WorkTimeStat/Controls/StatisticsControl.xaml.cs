@@ -151,7 +151,7 @@ namespace WorkTimeStat.Controls
 
             private void Init()
             {
-                usageFlowData = "";
+                usageFlowData = string.Empty;
                 usageBreakData = string.Empty;
                 usageFlowTotal = string.Empty;
                 usageBreakTotal = string.Empty;
@@ -159,14 +159,14 @@ namespace WorkTimeStat.Controls
 
             public void LoadDataForDay(DateTime day)
             {
-                List<UsageBlock> usageflows = StatisticsService.GetUsageFlowForDate(day);
-                List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(day);
+                List<UsageBlock> usageflows = StatisticsService.GetUsageFlowForDate(day, TimeSpan.FromMinutes(5));
+                List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(day, TimeSpan.FromMinutes(10));
 
                 LocalizationHelper locHelper = LocalizationHelper.Instance;
-                UsageFlowTotal = Math.Round(CalcUsageBlockTotals(usageflows, TimeSpan.FromMinutes(5)), MidpointRounding.ToEven)
-                    .ToString(CultureInfo.CurrentCulture) + " " + locHelper.GetStringForKey("u_minute");
-                UsageBreakTotal = Math.Round(CalcUsageBlockTotals(usageBreaks, TimeSpan.FromMinutes(10)), MidpointRounding.ToEven)
-                    .ToString(CultureInfo.CurrentCulture) + " " + locHelper.GetStringForKey("u_minute");
+                UsageFlowTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}", 
+                                        StatisticsService.CalcUsageBlockTotals(ref usageflows), locHelper.GetStringForKey("u_minute"));
+                UsageBreakTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}",
+                                        StatisticsService.CalcUsageBlockTotals(ref usageBreaks), locHelper.GetStringForKey("u_minute"));
 
                 UsageFlowData = UsageBlocksToString(usageflows, TimeSpan.FromMinutes(5));
                 UsageBreakData = UsageBlocksToString(usageBreaks, TimeSpan.FromMinutes(10));
@@ -175,21 +175,6 @@ namespace WorkTimeStat.Controls
             private static List<DateTime> GetDatesWithUsageData()
             {
                 return StatisticsService.GetDatesWithUsageData().OrderByDescending(u => u.Date).ToList();
-            }
-
-            private static double CalcUsageBlockTotals(List<UsageBlock> usages, TimeSpan minBlockLength)
-            {
-                TimeSpan total = TimeSpan.Zero;
-
-                usages.ForEach((usage) =>
-                {
-                    if (usage.EndTime - usage.StartTime > minBlockLength)
-                    {
-                        total += usage.EndTime - usage.StartTime;
-                    }
-                });
-
-                return total.TotalMinutes;
             }
 
             private static string UsageBlocksToString(List<UsageBlock> blocks, TimeSpan minBlockLength)
