@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using UsageWatcher.Enums;
 using WorkTimeStat.Controls;
 using WorkTimeStat.Enums;
@@ -87,22 +88,26 @@ namespace WorkTimeStat
             WorkDayEditControl dayEdit = new WorkDayEditControl(WorkDayService.GetCurrentDay());
             dayEdit.CloseBallon += CloseTaskbarBalloon;
 
-            TaskbarIcon.ShowCustomBalloon(dayEdit, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
-        }
-
-        private void TaskbarIcon_TrayMiddleMouseUp(object sender, RoutedEventArgs e)
-        {
-
+            TaskbarIcon.ShowCustomBalloon(dayEdit, PopupAnimation.Fade, null);
         }
         #endregion
 
         #region Menu Click Events
+        private void TicketItem_Click(object sender, RoutedEventArgs e)
+        {
+            TicketTimeControl ticketTimeControl = new TicketTimeControl();
+            ticketTimeControl.CloseBallon += CloseTaskbarBalloon;
+
+            TaskbarIcon.ShowCustomBalloon(ticketTimeControl, PopupAnimation.Fade, null);
+            WindowFocusHelper.ActivatePopup(TaskbarIcon.CustomBalloon);
+        }
+
         private void CalendarItem_Click(object sender, RoutedEventArgs e)
         {
             CalendarControl calendarControl = new CalendarControl();
             calendarControl.CloseBallon += CloseTaskbarBalloon;
 
-            TaskbarIcon.ShowCustomBalloon(calendarControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(calendarControl, PopupAnimation.Fade, null);
         }
 
         private void SettingsItem_Click(object sender, RoutedEventArgs e)
@@ -110,7 +115,7 @@ namespace WorkTimeStat
             SettingsControl settingsControl = new SettingsControl();
             settingsControl.CloseBallon += CloseTaskbarBalloon;
 
-            TaskbarIcon.ShowCustomBalloon(settingsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(settingsControl, PopupAnimation.Fade, null);
         }
 
         private void StatisticsItem_Click(object sender, RoutedEventArgs e)
@@ -118,7 +123,7 @@ namespace WorkTimeStat
             StatisticsControl statisticsControl = new StatisticsControl();
             statisticsControl.CloseBallon += CloseTaskbarBalloon;
 
-            TaskbarIcon.ShowCustomBalloon(statisticsControl, System.Windows.Controls.Primitives.PopupAnimation.Fade, null);
+            TaskbarIcon.ShowCustomBalloon(statisticsControl, PopupAnimation.Fade, null);
         }
 
         private void UsageItem_Click(object sender, RoutedEventArgs e)

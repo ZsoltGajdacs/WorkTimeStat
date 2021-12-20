@@ -20,6 +20,7 @@ namespace WorkTimeStat.Storage
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
+        public Dictionary<DateTime, List<TicketTime>> WorkedTickets { get; private set; }
         public WorkSettings Settings { get; set; }
 
         public IWatcher GetWatcher()
@@ -63,6 +64,30 @@ namespace WorkTimeStat.Storage
             }
         }
 
+        internal List<TicketTime> GetTodaysTickets()
+        {
+            WorkedTickets.TryGetValue(DateTime.Today, out List<TicketTime> tickets);
+            return tickets;
+        }
+
+        internal void UpdateTicketList(List<TicketTime> tickets)
+        {
+            if (WorkedTickets == null)
+            {
+                WorkedTickets = new Dictionary<DateTime, List<TicketTime>>();
+            }
+
+            WorkedTickets.TryGetValue(DateTime.Today, out List<TicketTime> storedTickets);
+            if (storedTickets == null)
+            {
+                storedTickets = new List<TicketTime>();
+                WorkedTickets.Add(DateTime.Today, storedTickets);
+            }
+
+            storedTickets.Clear();
+            storedTickets.AddRange(tickets);
+        }
+
         #region Singleton
         public static WorkKeeper Instance { get { return lazy.Value; } }
 
@@ -72,6 +97,7 @@ namespace WorkTimeStat.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
+            WorkedTickets = new Dictionary<DateTime, List<TicketTime>>();
 
             Settings = new WorkSettings
             {

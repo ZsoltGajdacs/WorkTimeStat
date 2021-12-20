@@ -255,6 +255,9 @@
   <data name="main_statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
+  <data name="main_ticketTime" xml:space="preserve">
+    <value>Log work</value>
+  </data>
   <data name="main_tooltip" xml:space="preserve">
     <value>Left button work time, Right button menu</value>
   </data>
@@ -347,6 +350,15 @@
   </data>
   <data name="stat_worked_hours" xml:space="preserve">
     <value>Worked hours:</value>
+  </data>
+  <data name="tt_input_default_text" xml:space="preserve">
+    <value>Add new ticket number here</value>
+  </data>
+  <data name="tt_ticket_start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="tt_ticket_stop" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="u_btn_cancel" xml:space="preserve">
     <value>Cancel</value>

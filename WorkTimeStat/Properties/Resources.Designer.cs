@@ -475,6 +475,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log work.
+        /// </summary>
+        public static string main_ticketTime {
+            get {
+                return ResourceManager.GetString("main_ticketTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Left button work time, Right button menu.
         /// </summary>
         public static string main_tooltip {
@@ -750,6 +759,33 @@ namespace WorkTimeStat.Properties {
         public static string stat_worked_hours {
             get {
                 return ResourceManager.GetString("stat_worked_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new ticket number here.
+        /// </summary>
+        public static string tt_input_default_text {
+            get {
+                return ResourceManager.GetString("tt_input_default_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string tt_ticket_start {
+            get {
+                return ResourceManager.GetString("tt_ticket_start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string tt_ticket_stop {
+            get {
+                return ResourceManager.GetString("tt_ticket_stop", resourceCulture);
             }
         }
         

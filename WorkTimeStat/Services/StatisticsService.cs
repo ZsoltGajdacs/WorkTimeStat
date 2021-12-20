@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UsageWatcher.Models;
 using WorkTimeStat.Enums;
+using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Storage;
 
@@ -47,7 +48,7 @@ namespace WorkTimeStat.Services
 
             double result = CalcWorkedHoursOnGivenDays(workDaysInMonth);
 
-            return RoundToMidWithTwoPrecision(result);
+            return Rounder.RoundToMidWithTwoPrecision(result);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace WorkTimeStat.Services
 
             if (day.DayDate != DateTime.Today)
             {
-                return RoundToMidWithTwoPrecision(day.UsageTime.TotalHours);
+                return Rounder.RoundToMidWithTwoPrecision(day.UsageTime.TotalHours);
             }
             else
             {
@@ -286,7 +287,40 @@ namespace WorkTimeStat.Services
             DateTime endDate = day.DayDate.Date + day.EndTime;
 
             TimeSpan usageInTimeframe = UsageService.GetUsageForTimeframe(startDate, endDate);
-            return RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+            return Rounder.RoundToMidWithTwoPrecision(usageInTimeframe.TotalHours);
+        }
+
+        internal static double GetUsageForDateTimeFrame(DateTime startDateTime, DateTime endDateTime)
+        {
+            double usageTime = 0;
+            if (startDateTime.Date == endDateTime.Date)
+            {
+                List<UsageBlock> usages = GetUsageFlowForDate(startDateTime.Date);
+                usages = usages.Where(usage => (usage.StartTime >= startDateTime && usage.EndTime <= endDateTime)
+                                               || (usage.StartTime <= startDateTime && usage.EndTime <= endDateTime)
+                                               || (usage.StartTime <= startDateTime && usage.EndTime >= endDateTime))
+                               .ToList();
+                if (usages.Count > 0)
+                {
+                    if (usages[0].StartTime < startDateTime)
+                    {
+                        usages[0].StartTime = startDateTime;
+                    }
+                    
+                    if (usages[usages.Count - 1].EndTime > endDateTime)
+                    {
+                        usages[usages.Count - 1].EndTime = endDateTime;
+                    }
+                    
+                    usages.ForEach(usage => usageTime += (usage.EndTime - usage.StartTime).TotalMinutes);
+                }
+            }
+            else
+            {
+                // TODO: Implement logic for multi day counting
+            }
+
+            return Rounder.RoundToMidWithTwoPrecision(usageTime);
         }
 
         internal static List<UsageBlock> GetUsageFlowForDate(DateTime date)
@@ -331,7 +365,7 @@ namespace WorkTimeStat.Services
                 }
             }
 
-            return RoundToMidWithTwoPrecision(result);
+            return Rounder.RoundToMidWithTwoPrecision(result);
         }
 
         internal static List<DateTime> GetDatesWithUsageData()
@@ -345,14 +379,6 @@ namespace WorkTimeStat.Services
         public static List<WorkDayType> GetOfficalWorkdayTypes()
         {
             return new List<WorkDayType> { WorkDayType.WEEKDAY, WorkDayType.HALF_DAY };
-        }
-
-        /// <summary>
-        /// Gives back the midpoint rounded number with two digits after zero for the given double
-        /// </summary>
-        private static double RoundToMidWithTwoPrecision(double num)
-        {
-            return Math.Round(num, 2, MidpointRounding.ToEven);
         }
 
         private static Dictionary<DayType, double> GetWorkHoursPerDayType()

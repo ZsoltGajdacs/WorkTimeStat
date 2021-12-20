@@ -13,11 +13,13 @@
     <Grid>
         <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="Icons\water_white.ico" 
                         ToolTip="{x:Static loc:Resources.main_tooltip}" 
-                        MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp" 
-                        TrayMiddleMouseUp="TaskbarIcon_TrayMiddleMouseUp">
+                        MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
 
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Name="TicketItem" Header="{x:Static loc:Resources.main_ticketTime}" 
+                              Click="TicketItem_Click" FontSize="14"/>
+                    <Separator />
                     <MenuItem Name="settingsItem" Header="{x:Static loc:Resources.main_settings}" 
                               Click="SettingsItem_Click" FontSize="14"/>
                     <Separator />
