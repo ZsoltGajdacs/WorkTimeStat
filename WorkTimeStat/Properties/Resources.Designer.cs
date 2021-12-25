@@ -727,6 +727,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tasks for the day:.
+        /// </summary>
+        public static string stat_tasks_data {
+            get {
+                return ResourceManager.GetString("stat_tasks_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string stat_tasks_tab_name {
+            get {
+                return ResourceManager.GetString("stat_tasks_tab_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This month:.
         /// </summary>
         public static string stat_this_month {

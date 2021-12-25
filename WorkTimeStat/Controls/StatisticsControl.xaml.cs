@@ -20,6 +20,7 @@ namespace WorkTimeStat.Controls
 
         private readonly UsageTabData usageTabDataVM;
         private readonly OverviewTabData overviewTabDataVM;
+        private readonly TaskTabData tasksTabDataVM;
 
         public StatisticsControl()
         {
@@ -30,8 +31,12 @@ namespace WorkTimeStat.Controls
 
             usageTabDataVM = CreateUsageTabData();
             UsageGrid.DataContext = usageTabDataVM;
+
+            tasksTabDataVM = CreateTasksTabData();
+            TasksGrid.DataContext = tasksTabDataVM;
         }
 
+        #region Init
         private static UsageTabData CreateUsageTabData()
         {
             return new UsageTabData();
@@ -41,7 +46,14 @@ namespace WorkTimeStat.Controls
         {
             return new OverviewTabData();
         }
+        
+        private static TaskTabData CreateTasksTabData()
+        {
+            return new TaskTabData();
+        }
+        #endregion
 
+        #region Event handlers
         private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             CloseBallon?.Invoke();
@@ -49,9 +61,16 @@ namespace WorkTimeStat.Controls
 
         private void UsageDateCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime selectedDate = (DateTime) e.AddedItems[0];
+            DateTime selectedDate = (DateTime)e.AddedItems[0];
             usageTabDataVM.LoadDataForDay(selectedDate);
         }
+
+        private void TasksDateCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime selectedDate = (DateTime)e.AddedItems[0];
+            tasksTabDataVM.LoadDataForDay(selectedDate);
+        }
+        #endregion
 
         #region Overview Tab
         private class OverviewTabData
@@ -163,7 +182,7 @@ namespace WorkTimeStat.Controls
                 List<UsageBlock> usageBreaks = StatisticsService.GetUsageBreaksForDate(day, TimeSpan.FromMinutes(10));
 
                 LocalizationHelper locHelper = LocalizationHelper.Instance;
-                UsageFlowTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}", 
+                UsageFlowTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}",
                                         StatisticsService.CalcUsageBlockTotals(ref usageflows), locHelper.GetStringForKey("u_minute"));
                 UsageBreakTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}",
                                         StatisticsService.CalcUsageBlockTotals(ref usageBreaks), locHelper.GetStringForKey("u_minute"));
@@ -185,20 +204,91 @@ namespace WorkTimeStat.Controls
                 {
                     if ((block.EndTime - block.StartTime) > minBlockLength)
                     {
-                        sb.Append(block.StartTime.ToShortTimeString());
-                        sb.Append(" - ");
-                        sb.Append(block.EndTime.ToShortTimeString());
-                        sb.Append(": ");
-                        sb.Append(Math.Round((block.EndTime - block.StartTime).TotalMinutes, MidpointRounding.ToEven)
-                                                        .ToString(CultureInfo.CurrentCulture));
-                        sb.Append(' ');
-                        sb.AppendLine(locHelper.GetStringForKey("u_minute"));
+                        string start = block.StartTime.ToShortTimeString();
+                        string end = block.EndTime.ToShortTimeString();
+                        string length = Math.Round((block.EndTime - block.StartTime).TotalMinutes, MidpointRounding.ToEven)
+                                                        .ToString(CultureInfo.CurrentCulture);
+                        string minute = locHelper.GetStringForKey("u_minute");
+
+                        sb.AppendFormat(CultureInfo.CurrentCulture, "{0} - {1}: {2} {3}", start, end, length, minute);
+                        sb.AppendLine();
                     }
                 }
 
                 return sb.ToString();
             }
 
+        }
+        #endregion
+
+        #region Tasks Tab
+        private class TaskTabData : BindableClass
+        {
+            private string tasksData;
+            private string tasksTotal;
+
+            public string TasksData { get => tasksData; set => SetAndNotifyPropertyChanged(ref tasksData, value); }
+            public string TasksTotal { get => tasksTotal; set => SetAndNotifyPropertyChanged(ref tasksTotal, value); }
+
+            public List<DateTime> DatesWithTasksData { get; set; }
+
+            public TaskTabData()
+            {
+                Init();
+                LoadDataForDay(DateTime.Today);
+                DatesWithTasksData = GetDatesWithTasks();
+            }
+
+            private void Init()
+            {
+                tasksData = string.Empty;
+                tasksTotal = string.Empty;
+            }
+
+            private static List<DateTime> GetDatesWithTasks()
+            {
+                return TaskService.GetDatesWithTasksRecorded().OrderByDescending(u => u.Date).ToList();
+            }
+
+            public void LoadDataForDay(DateTime day)
+            {
+                List<MeasuredTask> tasks = TaskService.GetDaysTasks(day);
+
+                LocalizationHelper locHelper = LocalizationHelper.Instance;
+                TasksTotal = string.Format(CultureInfo.CurrentCulture, "{0} {1}",
+                                        StatisticsService.CalcTaskUsagesForDay(day), locHelper.GetStringForKey("u_minute"));
+
+                TasksData = TasksToString(ref tasks);
+            }
+
+            private static string TasksToString(ref List<MeasuredTask> tasks)
+            {
+                LocalizationHelper locHelper = LocalizationHelper.Instance;
+                StringBuilder sb = new StringBuilder();
+
+                if (tasks != null)
+                {
+                    tasks.ForEach(task =>
+                    {
+                        string name = task.TaskName;
+                        string start = task.GetStartTime().ToShortTimeString();
+                        string end = task.GetEndTime().ToShortTimeString();
+                        string measuredTime =
+                            StatisticsService.GetUsageForDateTimeFrame(task.GetStartTime(), task.GetEndTime(), TimeSpan.FromMinutes(5))
+                                                                    .ToString(CultureInfo.CurrentCulture);
+                        string overallTime = Rounder.RoundToClosestTime(task.GetOverallSpentTime(), TimeSpan.FromMinutes(5))
+                                                                    .TotalMinutes
+                                                                    .ToString(CultureInfo.CurrentCulture);
+                        string minute = locHelper.GetStringForKey("u_minute");
+
+                        sb.AppendFormat(CultureInfo.CurrentCulture, "{0}: {1} - {2}; {3}{4}/{5}{6}", name, start, end, measuredTime, 
+                                                                                                     minute, overallTime, minute);
+                        sb.AppendLine();
+                    });
+                } 
+
+                return sb.ToString();
+            }
         }
         #endregion
     }

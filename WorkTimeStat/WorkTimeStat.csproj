@@ -169,7 +169,7 @@
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\Serializer.cs" />
     <Compile Include="Models\KeeperDto.cs" />
-    <Compile Include="Models\TicketTime.cs" />
+    <Compile Include="Models\MeasuredTask.cs" />
     <Compile Include="Models\TimePair.cs" />
     <Compile Include="Models\WorkSettings.cs" />
     <Compile Include="Properties\Resources.en.Designer.cs">
@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="Services\StatisticsService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\UsageService.cs" />
     <Compile Include="Services\WorkDayService.cs" />
     <Compile Include="Timers\SaveTimer.cs" />

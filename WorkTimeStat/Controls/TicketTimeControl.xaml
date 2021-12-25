@@ -10,16 +10,16 @@
              Background="#FF434343" Foreground="White" FontSize="14">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="TicketTimeTemplate">
+        <DataTemplate x:Key="TaskTimeTemplate">
             <Border Background="#FFF8F8F8" BorderBrush="#FF545454" BorderThickness="1" CornerRadius="5,5,5,5" Margin="0 0 0 5">
                 <DockPanel LastChildFill="True">
                     <Button x:Name="StatusBtn" Content="{Binding Path=StatusBtnText, Mode=OneWay}"
                             Margin="0 0 15 0" DockPanel.Dock="Right" Width="100"
                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Tag="{Binding Path=TicketName, Mode=OneWay}"
+                            Tag="{Binding Path=TaskName, Mode=OneWay}"
                             Click="StatusBtn_Click"/>
 
-                    <Label HorizontalAlignment="Left" Content="{Binding Path=TicketName, Mode=OneWay}" 
+                    <Label HorizontalAlignment="Left" Content="{Binding Path=TaskName, Mode=OneWay}" 
                            Width="320" Margin="0 0 5 0" />
 
                     <Label HorizontalAlignment="Left" Content="{Binding Path=StartTimeText, Mode=OneWay}" 
@@ -62,7 +62,7 @@
                      Background="#FFF8F8F8" Foreground="DimGray"/>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3">
-                <ItemsControl x:Name="TicketTimeItems" ItemTemplate="{StaticResource TicketTimeTemplate}"/>
+                <ItemsControl x:Name="TaskTimeItems" ItemTemplate="{StaticResource TaskTimeTemplate}"/>
             </ScrollViewer>
 
             <Button x:Name="okButtonS" Content="{x:Static loc:Resources.u_btn_save}" Width="80" Grid.Column="1" Grid.Row="5" 

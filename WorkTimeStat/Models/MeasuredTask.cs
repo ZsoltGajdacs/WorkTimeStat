@@ -6,33 +6,35 @@ namespace WorkTimeStat.Models
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    public class TicketTime
+    public class MeasuredTask
     {
-        public string TicketName { get; private set; }
+        public string TaskName { get; private set; }
 
         [JsonIgnore]
         public TimePair CurrentTimePair { get; private set; }
 
         public List<TimePair> UsageTimes { get; private set; }
 
-        public TicketTime(string ticketName)
+        #region CTOR
+        public MeasuredTask(string ticketName)
         {
-            TicketName = ticketName;
+            TaskName = ticketName;
             UsageTimes = new List<TimePair>();
 
-            StartTicket();
+            StartTask();
         }
 
         [JsonConstructor]
-        private TicketTime(string ticketName, List<TimePair> usageTimes)
+        private MeasuredTask(string taskName, List<TimePair> usageTimes)
         {
-            TicketName = ticketName ?? throw new ArgumentNullException(nameof(ticketName));
+            TaskName = taskName ?? throw new ArgumentNullException(nameof(taskName));
             UsageTimes = usageTimes ?? throw new ArgumentNullException(nameof(usageTimes));
 
             CurrentTimePair = UsageTimes[UsageTimes.Count - 1];
         }
+        #endregion
 
-        public void StartTicket()
+        public void StartTask()
         {
             if (CurrentTimePair == null || CurrentTimePair.EndTime != default)
             {
@@ -43,12 +45,12 @@ namespace WorkTimeStat.Models
             UsageTimes.Sort((thisTime, thatTime) => DateTime.Compare(thisTime.StartTime, thatTime.StartTime));
         }
 
-        public void PauseTicket()
+        public void PauseTask()
         {
-            EndTicket();
+            EndTask();
         }
 
-        public void EndTicket()
+        public void EndTask()
         {
             CurrentTimePair.End();
         }
@@ -66,6 +68,19 @@ namespace WorkTimeStat.Models
             }
 
             return spentTime;
+        }
+
+        public DateTime GetStartTime()
+        {
+            return UsageTimes[0].StartTime;
+        }
+
+        public DateTime GetEndTime()
+        {
+            int lastUsageTime = UsageTimes.Count - 1;
+            return UsageTimes[lastUsageTime].EndTime != default
+                                            ? UsageTimes[lastUsageTime].EndTime
+                                            : DateTime.Now;
         }
     }
 }

@@ -151,11 +151,11 @@ namespace WorkTimeStat
         {
             if (e.Reason == SessionSwitchReason.SessionLock)
             {
-                workKeeper.PauseActiveTicket();
+                TaskService.PauseActiveTask();
             }
             else if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
-                workKeeper.RestartActiveTicket();
+                TaskService.RestartActiveTask();
             }
         }
         #endregion

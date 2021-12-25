@@ -405,6 +405,13 @@ namespace WorkTimeStat.Services
         }
         #endregion
 
+        #region Tasks
+        public static TimeSpan CalcTaskUsagesForDay(DateTime date)
+        {
+            return TimeSpan.Zero;
+        }
+        #endregion
+
         #region Helpers
         public static List<WorkDayType> GetOfficalWorkdayTypes()
         {

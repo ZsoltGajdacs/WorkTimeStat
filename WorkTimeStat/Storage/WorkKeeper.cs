@@ -17,14 +17,14 @@ namespace WorkTimeStat.Storage
         [NonSerialized]
         private IWatcher watcher;
 
-        [NonSerialized]
-        private string activeTicketName;
+        [JsonIgnore]
+        public string ActiveTaskName { get; set; }
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
-        public Dictionary<DateTime, List<TicketTime>> WorkedTickets { get; private set; }
+        public Dictionary<DateTime, List<MeasuredTask>> Tasks { get; private set; }
         public WorkSettings Settings { get; set; }
 
         public IWatcher GetWatcher()
@@ -68,53 +68,8 @@ namespace WorkTimeStat.Storage
             }
         }
 
-        #region Ticket handling
-        internal List<TicketTime> GetTodaysTickets()
-        {
-            WorkedTickets.TryGetValue(DateTime.Today, out List<TicketTime> tickets);
-            return tickets;
-        }
-
-        internal void UpdateTicketList(List<TicketTime> tickets)
-        {
-            if (WorkedTickets == null)
-            {
-                WorkedTickets = new Dictionary<DateTime, List<TicketTime>>();
-            }
-
-            WorkedTickets.TryGetValue(DateTime.Today, out List<TicketTime> storedTickets);
-            if (storedTickets == null)
-            {
-                storedTickets = new List<TicketTime>();
-                WorkedTickets.Add(DateTime.Today, storedTickets);
-            }
-
-            storedTickets.Clear();
-            storedTickets.AddRange(tickets);
-        }
-
-        internal void PauseActiveTicket()
-        {
-            TicketTime activeTicket = GetTodaysTickets()
-                                            .Where(ticket => ticket.CurrentTimePair.EndTime == default)
-                                            .FirstOrDefault();
-
-            activeTicketName = activeTicket.TicketName;
-            activeTicket.PauseTicket();
-        }
-
-        internal void RestartActiveTicket()
-        {
-            TicketTime activeTicket = GetTodaysTickets()
-                                            .Where(ticket => ticket.TicketName == activeTicketName)
-                                            .FirstOrDefault();
-            activeTicket.StartTicket();
-            activeTicketName = string.Empty;
-        }
-        #endregion
-
         #region Singleton
-        public static WorkKeeper Instance { get { return lazy.Value; } }
+        public static WorkKeeper Instance => lazy.Value;
 
         private WorkKeeper()
         {
@@ -122,7 +77,7 @@ namespace WorkTimeStat.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
-            WorkedTickets = new Dictionary<DateTime, List<TicketTime>>();
+            Tasks = new Dictionary<DateTime, List<MeasuredTask>>();
 
             Settings = new WorkSettings
             {

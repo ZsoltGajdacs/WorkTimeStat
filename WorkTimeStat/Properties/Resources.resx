@@ -339,6 +339,12 @@
   <data name="stat_overview_tab_name" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="stat_tasks_data" xml:space="preserve">
+    <value>Tasks for the day:</value>
+  </data>
+  <data name="stat_tasks_tab_name" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
   <data name="stat_this_month" xml:space="preserve">
     <value>This month:</value>
   </data>

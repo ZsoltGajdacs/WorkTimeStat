@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -10,7 +9,7 @@ using WorkTimeStat.Controls.ViewModels;
 using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
-using WorkTimeStat.Storage;
+using WorkTimeStat.Services;
 
 namespace WorkTimeStat.Controls
 {
@@ -18,7 +17,7 @@ namespace WorkTimeStat.Controls
     {
         private static readonly string INPUT_PLACEHOLDER = LocalizationHelper.Instance.GetStringForKey("tt_input_default_text");
 
-        public BindingList<TicketTimeVM> TicketTimeList { get; private set; }
+        public BindingList<TicketTimeVM> TaskTimeList { get; private set; }
 
         internal event CloseTheBallonEventHandler CloseBallon;
 
@@ -26,17 +25,17 @@ namespace WorkTimeStat.Controls
         {
             InitializeComponent();
 
-            TicketTimeList = InitializeTicketList(WorkKeeper.Instance.GetTodaysTickets());
-            TicketTimeItems.ItemsSource = TicketTimeList;
+            TaskTimeList = InitializeTicketList(TaskService.GetTodaysTasks());
+            TaskTimeItems.ItemsSource = TaskTimeList;
         }
 
-        private BindingList<TicketTimeVM> InitializeTicketList(List<TicketTime> storedTickets)
+        private BindingList<TicketTimeVM> InitializeTicketList(List<MeasuredTask> storedTasks)
         {
             BindingList<TicketTimeVM> viewModelList = new BindingList<TicketTimeVM>();
 
-            if (storedTickets != null)
+            if (storedTasks != null)
             {
-                storedTickets.ForEach(ticket => viewModelList.Add(new TicketTimeVM(ticket)));
+                storedTasks.ForEach(ticket => viewModelList.Add(new TicketTimeVM(ticket)));
             }
 
             return viewModelList;
@@ -87,15 +86,15 @@ namespace WorkTimeStat.Controls
         #region Event helpers
         private void SaveTicketData()
         {
-            List<TicketTime> tickets = TicketTimeList.Select(vm => vm.storedTicket).ToList();
-            WorkKeeper.Instance.UpdateTicketList(tickets);
+            List<MeasuredTask> tickets = TaskTimeList.Select(vm => vm.storedTask).ToList();
+            TaskService.UpdateTaskList(tickets);
         }
 
         private void AddNewTicket(string name)
         {
-            if (!TicketTimeList.Any(ticket => ticket.TicketName == name))
+            if (!TaskTimeList.Any(ticket => ticket.TaskName == name))
             {
-                TicketTimeList.Add(new TicketTimeVM(new TicketTime(name)));
+                TaskTimeList.Add(new TicketTimeVM(new MeasuredTask(name)));
             }
         }
 
@@ -136,10 +135,10 @@ namespace WorkTimeStat.Controls
             Button startBtn = sender as Button;
             string ticketName = startBtn.Tag as string;
 
-            TicketTimeVM ticketToWorkOn = TicketTimeList.FirstOrDefault(ticket => ticket.TicketName == ticketName);
+            TicketTimeVM ticketToWorkOn = TaskTimeList.FirstOrDefault(ticket => ticket.TaskName == ticketName);
             ticketToWorkOn.ChangeStatus();
 
-            TicketTimeList.Where(ticket => ticket.TicketName != ticketToWorkOn.TicketName)
+            TaskTimeList.Where(ticket => ticket.TaskName != ticketToWorkOn.TaskName)
                 .ToList()
                 .ForEach(ticketToStop => ticketToStop.StopIfOngoing());
         }
