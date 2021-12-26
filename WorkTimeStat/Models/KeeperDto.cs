@@ -8,5 +8,6 @@ namespace WorkTimeStat.Models
         public Dictionary<DateTime, WorkDay> WorkDays { get; set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
+        public Dictionary<DateTime, List<MeasuredTask>> Tasks { get; set; }
     }
 }

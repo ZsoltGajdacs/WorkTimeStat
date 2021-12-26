@@ -59,12 +59,14 @@ namespace WorkTimeStat.Storage
             DaysWorkedInMonth.Clear();
             LeaveDays.Clear();
             SickDays.Clear();
+            Tasks.Clear();
 
             if (dto != null)
             {
                 WorkDays = dto.WorkDays;
                 LeaveDays = dto.LeaveDays;
                 SickDays = dto.SickDays;
+                Tasks = dto.Tasks;
             }
         }
 
