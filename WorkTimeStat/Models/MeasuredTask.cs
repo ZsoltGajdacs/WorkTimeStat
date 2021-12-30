@@ -30,7 +30,10 @@ namespace WorkTimeStat.Models
             TaskName = taskName ?? throw new ArgumentNullException(nameof(taskName));
             UsageTimes = usageTimes ?? throw new ArgumentNullException(nameof(usageTimes));
 
-            CurrentTimePair = UsageTimes[UsageTimes.Count - 1];
+            if (UsageTimes.Count > 0)
+            {
+                CurrentTimePair = UsageTimes[UsageTimes.Count - 1];
+            }
         }
         #endregion
 
