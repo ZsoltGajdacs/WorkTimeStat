@@ -70,6 +70,33 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete day data.
+        /// </summary>
+        public static string cal_btn_delete {
+            get {
+                return ResourceManager.GetString("cal_btn_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this day&apos;s data? This action is irreversible!.
+        /// </summary>
+        public static string cal_delete_confirm_dialog_content {
+            get {
+                return ResourceManager.GetString("cal_delete_confirm_dialog_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm deletion of day data!.
+        /// </summary>
+        public static string cal_delete_confirm_dialog_header {
+            get {
+                return ResourceManager.GetString("cal_delete_confirm_dialog_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some values are not correctly filled.
         /// </summary>
         public static string cal_error_incomplete_state_at_save_content {
@@ -295,6 +322,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A not usual workday, where only overwork is done (for example a weekend).
+        /// </summary>
+        public static string enum_overworkday_desc {
+            get {
+                return ResourceManager.GetString("enum_overworkday_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwork.
+        /// </summary>
+        public static string enum_overworkday_display {
+            get {
+                return ResourceManager.GetString("enum_overworkday_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Standby work.
         /// </summary>
         public static string enum_standby_desc {
@@ -376,6 +421,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active task:.
+        /// </summary>
+        public static string main_currently_active_task {
+            get {
+                return ResourceManager.GetString("main_currently_active_task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Today&apos;s computer usage.
         /// </summary>
         public static string main_daily_usage {
@@ -412,6 +466,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No active task.
+        /// </summary>
+        public static string main_no_active_task {
+            get {
+                return ResourceManager.GetString("main_no_active_task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string main_settings {
@@ -426,6 +489,15 @@ namespace WorkTimeStat.Properties {
         public static string main_statistics {
             get {
                 return ResourceManager.GetString("main_statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log work.
+        /// </summary>
+        public static string main_ticketTime {
+            get {
+                return ResourceManager.GetString("main_ticketTime", resourceCulture);
             }
         }
         
@@ -673,6 +745,24 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tasks for the day:.
+        /// </summary>
+        public static string stat_tasks_data {
+            get {
+                return ResourceManager.GetString("stat_tasks_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string stat_tasks_tab_name {
+            get {
+                return ResourceManager.GetString("stat_tasks_tab_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This month:.
         /// </summary>
         public static string stat_this_month {
@@ -709,6 +799,33 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new task name here.
+        /// </summary>
+        public static string tt_input_default_text {
+            get {
+                return ResourceManager.GetString("tt_input_default_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string tt_ticket_start {
+            get {
+                return ResourceManager.GetString("tt_ticket_start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string tt_ticket_stop {
+            get {
+                return ResourceManager.GetString("tt_ticket_stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string u_btn_cancel {
@@ -732,6 +849,15 @@ namespace WorkTimeStat.Properties {
         public static string u_btn_save {
             get {
                 return ResourceManager.GetString("u_btn_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h.
+        /// </summary>
+        public static string u_hour {
+            get {
+                return ResourceManager.GetString("u_hour", resourceCulture);
             }
         }
         

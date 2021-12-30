@@ -43,9 +43,10 @@ namespace WorkTimeStat.Services
             WorkKeeper keeper = WorkKeeper.Instance;
             KeeperDto keeperDto = new KeeperDto
             {
-                WorkDays = keeper.WorkDays.Where(d => d.Key < date).ToDictionary(k => k.Key, v => v.Value),
+                WorkDays = keeper.WorkDays.Where(d => d.Key < date.Date).ToDictionary(k => k.Key, v => v.Value),
                 LeaveDays = keeper.LeaveDays.Where(l => l.Date < date.Date).ToList(),
-                SickDays = keeper.SickDays.Where(s => s.Date < date.Date).ToList()
+                SickDays = keeper.SickDays.Where(s => s.Date < date.Date).ToList(),
+                Tasks = keeper.Tasks.Where(t => t.Key < date.Date).ToDictionary(k => k.Key, v => v.Value)
             };
 
             return keeperDto;
@@ -61,6 +62,12 @@ namespace WorkTimeStat.Services
         {
             DateTime todayDate = DateTime.Now.Date;
             SetDayAtDate(todayDate, ref today);
+        }
+
+        internal static void DeleteDay(ref WorkDay day)
+        {
+            WorkKeeper keeper = WorkKeeper.Instance;
+            keeper.WorkDays.Remove(day.DayDate);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace WorkTimeStat.Models
         {
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
-            StartTime = RoundUpTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
+            StartTime = Rounder.RoundToClosestTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
             EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
             WorkPlaceType = workPlaceType;
             WorkDayType = WorkDayType.WEEKDAY;
@@ -131,10 +131,5 @@ namespace WorkTimeStat.Models
             }
         }
         #endregion
-
-        private static DateTime RoundUpTime(DateTime date, TimeSpan roundTime)
-        {
-            return new DateTime((date.Ticks + roundTime.Ticks - 1) / roundTime.Ticks * roundTime.Ticks, date.Kind);
-        }
     }
 }

@@ -120,6 +120,15 @@
   <data name="cal_btn_change" xml:space="preserve">
     <value>Javítás</value>
   </data>
+  <data name="cal_btn_delete" xml:space="preserve">
+    <value>Nap törlése</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_content" xml:space="preserve">
+    <value>Biztos vagy benne hogy törölni szeretnéd ezen nap adatait? A törlés nem visszavonható!</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_header" xml:space="preserve">
+    <value>Törlés megerősítése</value>
+  </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Valami nincs kitöltve megfelelően</value>
   </data>
@@ -195,6 +204,12 @@
   <data name="enum_other_display" xml:space="preserve">
     <value>Máshol</value>
   </data>
+  <data name="enum_overworkday_desc" xml:space="preserve">
+    <value>Egy olyan nap amikor nincs normál munkavégzés, csak munkaidő pótlás</value>
+  </data>
+  <data name="enum_overworkday_display" xml:space="preserve">
+    <value>Túlmunka</value>
+  </data>
   <data name="enum_standby_desc" xml:space="preserve">
     <value>Készenlétben töltött idő</value>
   </data>
@@ -222,6 +237,9 @@
   <data name="main_calendar" xml:space="preserve">
     <value>Naptár</value>
   </data>
+  <data name="main_currently_active_task" xml:space="preserve">
+    <value>Aktív feladat:</value>
+  </data>
   <data name="main_daily_usage" xml:space="preserve">
     <value>Mai használati idő</value>
   </data>
@@ -234,11 +252,17 @@
   <data name="main_exit" xml:space="preserve">
     <value>Kilépés</value>
   </data>
+  <data name="main_no_active_task" xml:space="preserve">
+    <value>Nincs aktív feladat</value>
+  </data>
   <data name="main_settings" xml:space="preserve">
     <value>Beállítások</value>
   </data>
   <data name="main_statistics" xml:space="preserve">
     <value>Statisztikák</value>
+  </data>
+  <data name="main_ticketTime" xml:space="preserve">
+    <value>Feladat idő mérés</value>
   </data>
   <data name="main_tooltip" xml:space="preserve">
     <value>Bal gomb munkaidő, Jobb gomb menü</value>
@@ -324,6 +348,12 @@
   <data name="stat_overview_tab_name" xml:space="preserve">
     <value>Áttekintés</value>
   </data>
+  <data name="stat_tasks_data" xml:space="preserve">
+    <value>Feljegyzett feladatok:</value>
+  </data>
+  <data name="stat_tasks_tab_name" xml:space="preserve">
+    <value>Feladatok</value>
+  </data>
   <data name="stat_this_month" xml:space="preserve">
     <value>Hónapban:</value>
   </data>
@@ -336,6 +366,15 @@
   <data name="stat_worked_hours" xml:space="preserve">
     <value>Ledolgozott órák:</value>
   </data>
+  <data name="tt_input_default_text" xml:space="preserve">
+    <value>Új feladat kezdése</value>
+  </data>
+  <data name="tt_ticket_start" xml:space="preserve">
+    <value>Indít</value>
+  </data>
+  <data name="tt_ticket_stop" xml:space="preserve">
+    <value>Állj</value>
+  </data>
   <data name="u_btn_cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
@@ -344,6 +383,9 @@
   </data>
   <data name="u_btn_save" xml:space="preserve">
     <value>Mentés</value>
+  </data>
+  <data name="u_hour" xml:space="preserve">
+    <value>ó</value>
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Ebédszünet:</value>

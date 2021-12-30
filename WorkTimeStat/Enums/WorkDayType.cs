@@ -27,6 +27,10 @@ namespace WorkTimeStat.Enums
 
         [Description("enum_halfday_desc")]
         [Display(Name = "enum_halfday_display")]
-        HALF_DAY
+        HALF_DAY,
+
+        [Description("enum_overworkday_desc")]
+        [Display(Name = "enum_overworkday_display")]
+        OVERWORK_DAY
     }
 }

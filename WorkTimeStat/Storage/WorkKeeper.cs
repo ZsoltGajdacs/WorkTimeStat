@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UsageWatcher;
 using UsageWatcher.Enums;
+using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
@@ -14,13 +16,34 @@ namespace WorkTimeStat.Storage
     internal class WorkKeeper : IDisposable
     {
         [NonSerialized]
+        private string _activeTaskName;
+
+        [NonSerialized]
         private IWatcher watcher;
+
+        [JsonIgnore]
+        public string ActiveTaskName 
+        { 
+            get => _activeTaskName;
+
+            set 
+            {
+                if (value != _activeTaskName)
+                {
+                    _activeTaskName = value;
+                    ChangeTooltip?.Invoke(new TooltipChangeEventArgs(value));
+                }
+            }
+        }
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
         public List<DateTime> LeaveDays { get; set; }
         public List<DateTime> SickDays { get; set; }
+        public Dictionary<DateTime, List<MeasuredTask>> Tasks { get; private set; }
         public WorkSettings Settings { get; set; }
+
+        internal event ChangeTaskbarTooltipEventHandler ChangeTooltip;
 
         public IWatcher GetWatcher()
         {
@@ -54,17 +77,19 @@ namespace WorkTimeStat.Storage
             DaysWorkedInMonth.Clear();
             LeaveDays.Clear();
             SickDays.Clear();
+            Tasks.Clear();
 
             if (dto != null)
             {
                 WorkDays = dto.WorkDays;
                 LeaveDays = dto.LeaveDays;
                 SickDays = dto.SickDays;
+                Tasks = dto.Tasks;
             }
         }
 
         #region Singleton
-        public static WorkKeeper Instance { get { return lazy.Value; } }
+        public static WorkKeeper Instance => lazy.Value;
 
         private WorkKeeper()
         {
@@ -72,6 +97,7 @@ namespace WorkTimeStat.Storage
             DaysWorkedInMonth = new Dictionary<int, int>();
             LeaveDays = new List<DateTime>();
             SickDays = new List<DateTime>();
+            Tasks = new Dictionary<DateTime, List<MeasuredTask>>();
 
             Settings = new WorkSettings
             {

@@ -7,7 +7,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:StatisticsControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="310" d:DesignWidth="580"
+             d:DesignHeight="310" d:DesignWidth="590"
              Background="#FF434343" Foreground="White" FontSize="14">
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -94,15 +94,15 @@
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="{x:Static loc:Resources.stat_last_day}" Grid.Column="3" Grid.Row="1"/>
-                        <Label Content="{x:Static loc:Resources.stat_today}" Grid.Column="5" Grid.Row="1"/>
-                        <Label Content="{x:Static loc:Resources.stat_this_month}" Grid.Column="7" Grid.Row="1"/>
-                        <Label Content="{x:Static loc:Resources.stat_last_month}" Grid.Column="9" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_last_day}" FontWeight="SemiBold" Grid.Column="3" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_today}" FontWeight="SemiBold" Grid.Column="5" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_this_month}" FontWeight="SemiBold" Grid.Column="7" Grid.Row="1"/>
+                        <Label Content="{x:Static loc:Resources.stat_last_month}" FontWeight="SemiBold" Grid.Column="9" Grid.Row="1"/>
 
-                        <Label Content="{x:Static loc:Resources.stat_worked_hours}" Grid.Column="1" Grid.Row="3"/>
-                        <Label Content="{x:Static loc:Resources.stat_needed_hours}" Grid.Column="1" Grid.Row="5"/>
-                        <Label Content="{x:Static loc:Resources.stat_measured_hours}" Grid.Column="1" Grid.Row="7"/>
-                        <Label Content="{x:Static loc:Resources.stat_diff_in_hours}" Grid.Column="1" Grid.Row="9"/>
+                        <Label Content="{x:Static loc:Resources.stat_worked_hours}" FontWeight="SemiBold" Grid.Column="1" Grid.Row="3"/>
+                        <Label Content="{x:Static loc:Resources.stat_needed_hours}" FontWeight="SemiBold" Grid.Column="1" Grid.Row="5"/>
+                        <Label Content="{x:Static loc:Resources.stat_measured_hours}" FontWeight="SemiBold" Grid.Column="1" Grid.Row="7"/>
+                        <Label Content="{x:Static loc:Resources.stat_diff_in_hours}" FontWeight="SemiBold" Grid.Column="1" Grid.Row="9"/>
 
                         <Separator Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="8"/>
 
@@ -152,12 +152,11 @@
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="120"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="155"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="155"/>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
 
@@ -168,9 +167,11 @@
 
                         <Label Content="{x:Static loc:Resources.stat_data_flow}" 
                                Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"
+                               FontWeight="SemiBold"
                                HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <Label Content="{x:Static loc:Resources.stat_data_breaks}" 
                                Grid.Column="5" Grid.Row="0" Grid.RowSpan="2"
+                               FontWeight="SemiBold"
                                HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <Label Name="UsageFlowTotalLabel" Content="{Binding UsageFlowTotal, Mode=OneWay}" 
@@ -198,7 +199,59 @@
                         </ScrollViewer>
 
                         <Button x:Name="UsageExitBtn" Content="{x:Static loc:Resources.u_btn_close}"
-                                        Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="7"
+                                        Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="7"
+                                        Click="SaveBtn_Click" />
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+
+                <!--#region Tasks tab-->
+                <TabItem Header="{x:Static loc:Resources.stat_tasks_tab_name}">
+                    <Grid x:Name="TasksGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="430"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox x:Name="TasksDateCombo" Grid.Column="1" Grid.Row="1" 
+                                  ItemsSource="{Binding DatesWithTasksData, Mode=OneWay}"
+                                  SelectedIndex="0"
+                                  SelectionChanged="TasksDateCombo_SelectionChanged"/>
+
+                        <Label Content="{x:Static loc:Resources.stat_tasks_data}" 
+                               Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"
+                               FontSize="14" FontWeight="SemiBold"
+                               HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Label Name="TasksTotalLabel" Content="{Binding TasksTotal, Mode=OneWay}" 
+                               Grid.Column="3" Grid.Row="3" 
+                               FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <ScrollViewer x:Name="TasksDataContainer" 
+                                      Grid.Column="3" Grid.Row="5" 
+                                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" 
+                                      CanContentScroll="True" PanningMode="VerticalOnly" >
+                            <Label Name="TasksData" Content="{Binding TasksData, Mode=OneWay}" 
+                                            FontSize="14" HorizontalAlignment="Center"/>
+                        </ScrollViewer>
+
+                        <Button x:Name="TaskExitBtn" Content="{x:Static loc:Resources.u_btn_close}"
+                                        Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7"
                                         Click="SaveBtn_Click" />
                     </Grid>
                 </TabItem>

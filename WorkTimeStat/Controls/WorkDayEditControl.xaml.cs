@@ -1,170 +1,52 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using SolidShineUi;
+using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using UsageWatcher.Enums;
 using UsageWatcher.Enums.Utils;
 using WorkTimeStat.Enums;
 using WorkTimeStat.Events;
+using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
 using WorkTimeStat.Storage;
+using ZsGUtils.UIHelpers;
 
 namespace WorkTimeStat.Controls
 {
-    public partial class WorkDayEditControl : UserControl, INotifyPropertyChanged
+    public partial class WorkDayEditControl : UserControl
     {
-        private WorkDay today;
-        private readonly DateTime dateToday;
-
-        private DateTime _startTime;
-        private int _startTimeHour = 6;
-        private int _startTimeMinute;
-
-        private DateTime _endTime;
-        private int _endTimeHour = 12;
-        private int _endTimeMinute;
-
-        private int _lunchBreakDuration;
-        private int _otherBreakDuration;
-        private int _overWorkDuration;
+        private readonly WorkDayEditControlVM viewModel;
 
         private WorkDayType chosenOverWorkType;
         private WorkPlaceType chosenWorkPlace;
 
-        #region Properties
-        public DateTime StartTime
-        {
-            get => _startTime;
-            set
-            {
-                _startTime = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int StartTimeHour
-        {
-            get => _startTimeHour;
-            set
-            {
-                _startTimeHour = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int StartTimeMinute
-        {
-            get => _startTimeMinute;
-            set
-            {
-                _startTimeMinute = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public DateTime EndTime
-        {
-            get => _endTime;
-            set
-            {
-                _endTime = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int EndTimeHour
-        {
-            get => _endTimeHour;
-            set
-            {
-                _endTimeHour = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int EndTimeMinute
-        {
-            get => _endTimeMinute;
-            set
-            {
-                _endTimeMinute = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int LunchBreakDuration
-        {
-            get => _lunchBreakDuration;
-            set
-            {
-                _lunchBreakDuration = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int OtherBreakDuration
-        {
-            get => _otherBreakDuration;
-            set
-            {
-                _otherBreakDuration = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public int OverWorkDuration
-        {
-            get => _overWorkDuration;
-            set
-            {
-                _overWorkDuration = value;
-                NotifyPropertyChanged();
-            }
-        }
-        #endregion
-
-        public event PropertyChangedEventHandler PropertyChanged;
         internal event CloseTheBallonEventHandler CloseBallon;
 
         internal WorkDayEditControl(WorkDay today)
         {
             InitializeComponent();
 
-            WorkSettings settings = WorkKeeper.Instance.Settings;
-            this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault, settings.DailyWorkHours, settings.WorkPlaceType);
-            dateToday = DateTime.Now.Date;
-            
+            viewModel = new WorkDayEditControlVM(today);
+
             InitValues();
             SetBindings();
         }
 
         private void InitValues()
         {
-            StartTime = dateToday + today.StartTime;
-            _startTimeHour = today.StartTime.Hours;
-            _startTimeMinute = today.StartTime.Minutes;
-
-            EndTime = dateToday + today.EndTime;
-            _endTimeHour = today.EndTime.Hours;
-            _endTimeMinute = today.EndTime.Minutes;
-
-            LunchBreakDuration = today.LunchBreakDuration;
-            OtherBreakDuration = today.OtherBreakDuration;
-            OverWorkDuration = today.OverWorkDuration;
-
-            chosenOverWorkType = today.WorkDayType;
+            chosenOverWorkType = viewModel.today.WorkDayType;
             WorkType.SelectedIndex = (int)chosenOverWorkType;
 
-            chosenWorkPlace = today.WorkPlaceType;
+            chosenWorkPlace = viewModel.today.WorkPlaceType;
             WorkPlace.SelectedIndex = (int)chosenWorkPlace;
         }
 
         private void SetBindings()
         {
-            editGrid.DataContext = this;
+            editGrid.DataContext = viewModel;
 
             WorkType.ItemsSource = EnumUtil.GetValues<WorkDayType>();
             WorkPlace.ItemsSource = EnumUtil.GetValues<WorkPlaceType>();
@@ -175,22 +57,11 @@ namespace WorkTimeStat.Controls
         /// </summary>
         private void SaveValues()
         {
-            today.SetStartTime(StartTimeHour, StartTimeMinute);
-            today.SetEndTime(EndTimeHour, EndTimeMinute);
-            today.LunchBreakDuration = LunchBreakDuration;
-            today.OtherBreakDuration = OtherBreakDuration;
-            today.OverWorkDuration = OverWorkDuration;
-            today.WorkDayType = chosenOverWorkType;
-            today.WorkPlaceType = chosenWorkPlace;
+            viewModel.SaveValues(chosenOverWorkType, chosenWorkPlace);
 
-            WorkDayService.SetCurrentDay(ref today);
+            WorkDayService.SetCurrentDay(ref viewModel.today);
             StatisticsService.FullReCountWorkedDays();
             SaveService.SaveData(SaveUsage.No);
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region Event Handlers
@@ -219,6 +90,9 @@ namespace WorkTimeStat.Controls
             if (result != null)
             {
                 chosenOverWorkType = result.FoundEnum;
+
+
+                ShouldEnableOverWorkControl(result.FoundEnum != WorkDayType.OVERWORK_DAY);
             }
         }
 
@@ -238,6 +112,109 @@ namespace WorkTimeStat.Controls
                 chosenWorkPlace = result.FoundEnum;
             }
         }
+
+        private void TimeCounters_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            viewModel.CalcAndSetTotalOfftime();
+            viewModel.CalcAndSetTotalWorkTime();
+        }
         #endregion
+
+        private void ShouldEnableOverWorkControl(bool enableControl)
+        {
+            overWorkTime.IsEnabled = enableControl;
+        }
+
+        private class WorkDayEditControlVM : BindableClass
+        {
+            private LocalizationHelper locHelper = LocalizationHelper.Instance;
+
+            internal WorkDay today;
+            private readonly DateTime dateToday;
+
+            private DateTime _startTime;
+            private int _startTimeHour = 6;
+            private int _startTimeMinute;
+
+            private DateTime _endTime;
+            private int _endTimeHour = 12;
+            private int _endTimeMinute;
+
+            private int _lunchBreakDuration;
+            private int _otherBreakDuration;
+            private int _overWorkDuration;
+
+            private string _totalWorktime = string.Empty;
+            private int totalOfftimeNum;
+            private string _totalOfftime = string.Empty;
+
+            public DateTime StartTime { get => _startTime; set => SetAndNotifyPropertyChanged(ref _startTime, value); }
+            public int StartTimeHour { get => _startTimeHour; set => SetAndNotifyPropertyChanged(ref _startTimeHour, value); }
+            public int StartTimeMinute { get => _startTimeMinute; set => SetAndNotifyPropertyChanged(ref _startTimeMinute, value); }
+            
+            public DateTime EndTime { get => _endTime; set => SetAndNotifyPropertyChanged(ref _endTime, value); }
+            public int EndTimeHour { get => _endTimeHour; set => SetAndNotifyPropertyChanged(ref _endTimeHour, value); }
+            public int EndTimeMinute { get => _endTimeMinute; set => SetAndNotifyPropertyChanged(ref _endTimeMinute, value); }
+
+            public int LunchBreakDuration { get => _lunchBreakDuration; set => SetAndNotifyPropertyChanged(ref _lunchBreakDuration, value); }
+            public int OtherBreakDuration { get => _otherBreakDuration; set => SetAndNotifyPropertyChanged(ref _otherBreakDuration, value); }
+            public int OverWorkDuration { get => _overWorkDuration; set => SetAndNotifyPropertyChanged(ref _overWorkDuration, value); }
+            
+            public string TotalWorktime { get => _totalWorktime; set => SetAndNotifyPropertyChanged(ref _totalWorktime, value); }
+            public string TotalOfftime { get => _totalOfftime; set => SetAndNotifyPropertyChanged(ref _totalOfftime, value); }
+
+            public WorkDayEditControlVM(WorkDay today)
+            {
+                dateToday = DateTime.Now.Date;
+                WorkSettings settings = WorkKeeper.Instance.Settings;
+                this.today = today ?? new WorkDay(settings.IsLunchTimeWorkTimeDefault, settings.DailyWorkHours, settings.WorkPlaceType);
+                
+                InitValues();
+            }
+
+            private void InitValues()
+            {
+                StartTime = dateToday + today.StartTime;
+                _startTimeHour = today.StartTime.Hours;
+                _startTimeMinute = today.StartTime.Minutes;
+
+                EndTime = dateToday + today.EndTime;
+                _endTimeHour = today.EndTime.Hours;
+                _endTimeMinute = today.EndTime.Minutes;
+
+                LunchBreakDuration = today.LunchBreakDuration;
+                OtherBreakDuration = today.OtherBreakDuration;
+                OverWorkDuration = today.OverWorkDuration;
+
+                CalcAndSetTotalOfftime();
+                CalcAndSetTotalWorkTime();
+            }
+
+            internal void CalcAndSetTotalWorkTime()
+            {
+                TimeSpan startTime = Converter.ConvertHoursAndMinutesToTimeSpan(_startTimeHour, _startTimeMinute);
+                TimeSpan endTime = Converter.ConvertHoursAndMinutesToTimeSpan(_endTimeHour, _endTimeMinute);
+                double total = ((endTime - startTime) - TimeSpan.FromMinutes(totalOfftimeNum)).TotalHours;
+
+                TotalWorktime = string.Format(CultureInfo.CurrentCulture, "{0} {1}", total, locHelper.GetStringForKey("u_hour"));
+            }
+
+            internal void CalcAndSetTotalOfftime()
+            {
+                totalOfftimeNum = LunchBreakDuration + OtherBreakDuration;
+                TotalOfftime = string.Format(CultureInfo.CurrentCulture, "{0} {1}", totalOfftimeNum, locHelper.GetStringForKey("u_minute"));
+            }
+
+            internal void SaveValues(WorkDayType chosenWorkType, WorkPlaceType chosenWorkPlaceType)
+            {
+                today.SetStartTime(StartTimeHour, StartTimeMinute);
+                today.SetEndTime(EndTimeHour, EndTimeMinute);
+                today.LunchBreakDuration = LunchBreakDuration;
+                today.OtherBreakDuration = OtherBreakDuration;
+                today.OverWorkDuration = OverWorkDuration;
+                today.WorkDayType = chosenWorkType;
+                today.WorkPlaceType = chosenWorkPlaceType;
+            }
+        }
     }
 }

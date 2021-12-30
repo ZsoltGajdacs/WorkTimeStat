@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkTimeStat.Controls"
              xmlns:xce="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              xmlns:Converter="clr-namespace:WorkTimeStat.Enums.Converters"
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:WorkDayEditControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="130" d:DesignWidth="800" FontSize="14" 
+             d:DesignHeight="180" d:DesignWidth="800" FontSize="14" 
              Background="#FF434343" Foreground="White">
 
         <UserControl.Resources>
@@ -28,6 +29,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="5"/>
@@ -53,43 +56,46 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <!-- TimePicker not working for some reason, probably with the implementation of customballon-->
             <Label x:Name="workStartLabel" Content="{x:Static loc:Resources.u_work_start_time}" 
                    Grid.Row="1" Grid.Column="1" Foreground="White"/>
-            <!--<xce:TimePicker x:Name="workStart" Value="{Binding StartTime, Mode=TwoWay}" ShowButtonSpinner="False"
-                            StartTime="6:00" EndTime="12:00" TimeInterval="00:15" ClipValueToMinMax="True" 
+            <!--<xce:TimePicker x:Name="workStart" Value="{Binding StartTime, Mode=TwoWay}" ShowButtonSpinner="True"
+                            StartTime="6:00" EndTime="14:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                             Grid.Row="3" Grid.Column="1" Background="#FF434343" Foreground="White"/>-->
             <StackPanel x:Name="WorkStart" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <xce:IntegerUpDown x:Name="WorkStartHour" Value="{Binding StartTimeHour, Mode=TwoWay}" 
                                Minimum="0" Maximum="23" ClipValueToMinMax="True" Increment="1"
-                               Background="#FF434343" Foreground="White"/>
-                
+                               Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
+
                 <xce:IntegerUpDown x:Name="WorkStartMinute" Value="{Binding StartTimeMinute, Mode=TwoWay}" 
                                Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
             </StackPanel>
 
-            <!-- TimePicker not working for some reason, probably with the implementation of customballon-->
             <Label x:Name="workEndLabel" Content="{x:Static loc:Resources.u_work_end_time}" 
                    Grid.Row="1" Grid.Column="3" Foreground="White"/>
-            <!--<xce:TimePicker x:Name="workEnd" Value="{Binding EndTime, Mode=TwoWay}" ShowButtonSpinner="False"
+            <!--<xce:TimePicker x:Name="workEnd" Value="{Binding EndTime, Mode=TwoWay}" ShowButtonSpinner="True"
                             StartTime="12:00" EndTime="22:00" TimeInterval="00:15" ClipValueToMinMax="True" 
                             Grid.Row="3" Grid.Column="3" Background="#FF434343" Foreground="White"/>-->
             <StackPanel x:Name="WorkEnd" Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
                 <xce:IntegerUpDown x:Name="WorkEndHour" Value="{Binding EndTimeHour, Mode=TwoWay}" 
                                Minimum="10" Maximum="23" ClipValueToMinMax="True" Increment="1"
-                               Background="#FF434343" Foreground="White"/>
-                
+                               Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
+
                 <xce:IntegerUpDown x:Name="WorkEndMinute" Value="{Binding EndTimeMinute, Mode=TwoWay}" 
                                Minimum="0" Maximum="45" ClipValueToMinMax="True" Increment="15"
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
             </StackPanel>
 
             <Label x:Name="workLunchLabel" Content="{x:Static loc:Resources.u_lunch_break_length}" 
                    Grid.Row="1" Grid.Column="5" Foreground="White"/>
             <xce:IntegerUpDown x:Name="workLaunchTime" Value="{Binding LunchBreakDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="120" ClipValueToMinMax="True" Increment="15"
-                               Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"/>
+                               Grid.Row="3" Grid.Column="5" Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
 
             <Label x:Name="workbreakLabel" Content="{x:Static loc:Resources.u_other_break_length}" 
                    Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="3"
@@ -97,7 +103,8 @@
             <xce:IntegerUpDown x:Name="workbreakTime" Value="{Binding OtherBreakDuration, Mode=TwoWay}" 
                                Minimum="0" Maximum="1000" ClipValueToMinMax="True" Increment="15"
                                Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3"
-                               Background="#FF434343" Foreground="White"/>
+                               Background="#FF434343" Foreground="White"
+                               ValueChanged="TimeCounters_ValueChanged"/>
 
             <Label x:Name="overWorkLabel" Content="{x:Static loc:Resources.u_overwork_length}"
                    Grid.Row="1" Grid.Column="11" 
@@ -135,12 +142,28 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
+            <Image Source="pack://application:,,,/Images/curly-bracket-thin-white.png" 
+                   Width="120" Stretch="Fill"
+                   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Label x:Name="WorktimeTotalValue" Content="{Binding TotalWorktime, Mode=OneWay}"
+                   Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Foreground="White" FontSize="10"/>
+
+            <Image Source="pack://application:,,,/Images/curly-bracket-thin-white.png" 
+                   Width="120" Stretch="Fill"
+                   Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="5"/>
+            <Label x:Name="OfftimeTotalValue" Content="{Binding TotalOfftime, Mode=OneWay}"
+                   Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="5"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Foreground="White" FontSize="10"/>
+
             <Button x:Name="saveBtn" Content="{x:Static loc:Resources.u_btn_save}" FontSize="12"
-                    Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="9"
+                    Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="9"
                     Click="SaveBtn_Click"/>
 
             <Button x:Name="closeBtn" Content="{x:Static loc:Resources.u_btn_cancel}" FontSize="12"
-                    Grid.Row="5" Grid.Column="11" Grid.ColumnSpan="5"
+                    Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="5"
                     Click="CloseBtn_Click"/>
         </Grid>
     </Border>

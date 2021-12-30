@@ -120,6 +120,15 @@
   <data name="cal_btn_change" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="cal_btn_delete" xml:space="preserve">
+    <value>Delete day data</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_content" xml:space="preserve">
+    <value>Are you sure you want to delete this day's data? This action is irreversible!</value>
+  </data>
+  <data name="cal_delete_confirm_dialog_header" xml:space="preserve">
+    <value>Confirm deletion of day data!</value>
+  </data>
   <data name="cal_error_incomplete_state_at_save_content" xml:space="preserve">
     <value>Some values are not correctly filled</value>
   </data>
@@ -181,7 +190,7 @@
     <value>Various places throughout the day</value>
   </data>
   <data name="enum_mixed_display" xml:space="preserve">
-    <value>Various</value>
+    <value>Mixed</value>
   </data>
   <data name="enum_office_day_desc" xml:space="preserve">
     <value>Office day</value>
@@ -194,6 +203,12 @@
   </data>
   <data name="enum_other_display" xml:space="preserve">
     <value>Other</value>
+  </data>
+  <data name="enum_overworkday_desc" xml:space="preserve">
+    <value>A not usual workday, where only overwork is done (for example a weekend)</value>
+  </data>
+  <data name="enum_overworkday_display" xml:space="preserve">
+    <value>Overwork</value>
   </data>
   <data name="enum_standby_desc" xml:space="preserve">
     <value>Standby work</value>
@@ -222,6 +237,9 @@
   <data name="main_calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>
+  <data name="main_currently_active_task" xml:space="preserve">
+    <value>Active task:</value>
+  </data>
   <data name="main_daily_usage" xml:space="preserve">
     <value>Today's computer usage</value>
   </data>
@@ -234,11 +252,17 @@
   <data name="main_exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="main_no_active_task" xml:space="preserve">
+    <value>No active task</value>
+  </data>
   <data name="main_settings" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="main_statistics" xml:space="preserve">
     <value>Statistics</value>
+  </data>
+  <data name="main_ticketTime" xml:space="preserve">
+    <value>Log work</value>
   </data>
   <data name="main_tooltip" xml:space="preserve">
     <value>Left button work time, Right button menu</value>
@@ -321,6 +345,12 @@
   <data name="stat_overview_tab_name" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="stat_tasks_data" xml:space="preserve">
+    <value>Tasks for the day:</value>
+  </data>
+  <data name="stat_tasks_tab_name" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
   <data name="stat_this_month" xml:space="preserve">
     <value>This month:</value>
   </data>
@@ -333,6 +363,15 @@
   <data name="stat_worked_hours" xml:space="preserve">
     <value>Worked hours:</value>
   </data>
+  <data name="tt_input_default_text" xml:space="preserve">
+    <value>Add new task name here</value>
+  </data>
+  <data name="tt_ticket_start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="tt_ticket_stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
   <data name="u_btn_cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -341,6 +380,9 @@
   </data>
   <data name="u_btn_save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="u_hour" xml:space="preserve">
+    <value>h</value>
   </data>
   <data name="u_lunch_break_length" xml:space="preserve">
     <value>Lunch break:</value>
