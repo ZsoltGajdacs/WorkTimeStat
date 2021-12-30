@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen" WindowState="Minimized" FontSize="14"
         Visibility="Hidden" Closing="Window_Closing">
     <Grid>
-        <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="Icons\water_white.ico" 
+        <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="Icons\logo-clock.ico" 
                         ToolTip="{x:Static loc:Resources.main_tooltip}" 
                         MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp" 
                         TrayMiddleMouseUp="TaskbarIcon_TrayMiddleMouseUp">
