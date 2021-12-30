@@ -12,7 +12,7 @@
         Visibility="Hidden" Closing="Window_Closing">
     <Grid>
         <tb:TaskbarIcon x:Name="TaskbarIcon" IconSource="Icons\water_white.ico" 
-                        ToolTip="{x:Static loc:Resources.main_tooltip}" 
+                        ToolTip="{x:Static loc:Resources.main_tooltip}"
                         MenuActivation="RightClick" TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp">
 
             <tb:TaskbarIcon.ContextMenu>

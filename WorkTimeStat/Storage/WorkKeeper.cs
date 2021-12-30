@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UsageWatcher;
 using UsageWatcher.Enums;
+using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
@@ -15,10 +16,25 @@ namespace WorkTimeStat.Storage
     internal class WorkKeeper : IDisposable
     {
         [NonSerialized]
+        private string _activeTaskName;
+
+        [NonSerialized]
         private IWatcher watcher;
 
         [JsonIgnore]
-        public string ActiveTaskName { get; set; }
+        public string ActiveTaskName 
+        { 
+            get => _activeTaskName;
+
+            set 
+            {
+                if (value != _activeTaskName)
+                {
+                    _activeTaskName = value;
+                    ChangeTooltip?.Invoke(new TooltipChangeEventArgs(value));
+                }
+            }
+        }
 
         public Dictionary<DateTime, WorkDay> WorkDays { get; private set; }
         public Dictionary<int, int> DaysWorkedInMonth { get; private set; }
@@ -26,6 +42,8 @@ namespace WorkTimeStat.Storage
         public List<DateTime> SickDays { get; set; }
         public Dictionary<DateTime, List<MeasuredTask>> Tasks { get; private set; }
         public WorkSettings Settings { get; set; }
+
+        internal event ChangeTaskbarTooltipEventHandler ChangeTooltip;
 
         public IWatcher GetWatcher()
         {

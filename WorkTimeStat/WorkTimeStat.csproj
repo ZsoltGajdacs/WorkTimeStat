@@ -160,6 +160,7 @@
     <Compile Include="Enums\DayType.cs" />
     <Compile Include="Enums\WorkDayType.cs" />
     <Compile Include="Enums\WorkPlaceType.cs" />
+    <Compile Include="Events\ChangeTaskbarTooltipEvent.cs" />
     <Compile Include="Events\CloseTheBallonEvent.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Dpi.cs" />

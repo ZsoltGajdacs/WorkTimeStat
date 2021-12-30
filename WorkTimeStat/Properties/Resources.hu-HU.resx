@@ -237,6 +237,9 @@
   <data name="main_calendar" xml:space="preserve">
     <value>Naptár</value>
   </data>
+  <data name="main_currently_active_task" xml:space="preserve">
+    <value>Aktív feladat:</value>
+  </data>
   <data name="main_daily_usage" xml:space="preserve">
     <value>Mai használati idő</value>
   </data>
@@ -248,6 +251,9 @@
   </data>
   <data name="main_exit" xml:space="preserve">
     <value>Kilépés</value>
+  </data>
+  <data name="main_no_active_task" xml:space="preserve">
+    <value>Nincs aktív feladat</value>
   </data>
   <data name="main_settings" xml:space="preserve">
     <value>Beállítások</value>
@@ -361,7 +367,7 @@
     <value>Ledolgozott órák:</value>
   </data>
   <data name="tt_input_default_text" xml:space="preserve">
-    <value>Új jegy kezdése</value>
+    <value>Új feladat kezdése</value>
   </data>
   <data name="tt_ticket_start" xml:space="preserve">
     <value>Indít</value>

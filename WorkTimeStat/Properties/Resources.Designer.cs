@@ -421,6 +421,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active task:.
+        /// </summary>
+        public static string main_currently_active_task {
+            get {
+                return ResourceManager.GetString("main_currently_active_task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Today&apos;s computer usage.
         /// </summary>
         public static string main_daily_usage {
@@ -453,6 +462,15 @@ namespace WorkTimeStat.Properties {
         public static string main_exit {
             get {
                 return ResourceManager.GetString("main_exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No active task.
+        /// </summary>
+        public static string main_no_active_task {
+            get {
+                return ResourceManager.GetString("main_no_active_task", resourceCulture);
             }
         }
         
@@ -781,7 +799,7 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new ticket number here.
+        ///   Looks up a localized string similar to Add new task name here.
         /// </summary>
         public static string tt_input_default_text {
             get {

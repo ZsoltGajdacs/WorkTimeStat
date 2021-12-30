@@ -88,6 +88,7 @@ namespace WorkTimeStat.Controls
         {
             List<MeasuredTask> tickets = TaskTimeList.Select(vm => vm.storedTask).ToList();
             TaskService.UpdateTaskList(tickets);
+            TaskService.UpdateTaskbarTooltipWithActiveTask();
         }
 
         private void AddNewTicket(string name)

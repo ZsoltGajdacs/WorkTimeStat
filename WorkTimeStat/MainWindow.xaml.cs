@@ -3,10 +3,12 @@ using Microsoft.Win32;
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using UsageWatcher.Enums;
 using WorkTimeStat.Controls;
 using WorkTimeStat.Enums;
+using WorkTimeStat.Events;
 using WorkTimeStat.Helpers;
 using WorkTimeStat.Models;
 using WorkTimeStat.Services;
@@ -28,12 +30,14 @@ namespace WorkTimeStat
             SetLanguage();
             InitializeComponent();
             CheckSettingsSetup();
+            PostInitTasks();
         }
 
         private void InitializeWorkKeeper()
         {
             workKeeper = WorkKeeper.Instance;
             workKeeper.Init();
+            workKeeper.ChangeTooltip += WorkKeeper_ChangeTooltip;
 
             saveTimer = new SaveTimer(TimeSpan.FromMinutes(30));
 
@@ -61,9 +65,14 @@ namespace WorkTimeStat
                 SettingsItem_Click(null, null);
             }
         }
+
+        private static void PostInitTasks()
+        {
+            TaskService.UpdateTaskbarTooltipWithActiveTask();
+        }
         #endregion
 
-        #region Window Events
+        #region Window Event handlers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "There is a crash when it tries to save at shutdown")]
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -85,7 +94,7 @@ namespace WorkTimeStat
         }
         #endregion
 
-        #region Tray Click Events
+        #region Tray Click Event handlers
         private void TaskbarIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
         {
             WorkDayEditControl dayEdit = new WorkDayEditControl(WorkDayService.GetCurrentDay());
@@ -95,7 +104,7 @@ namespace WorkTimeStat
         }
         #endregion
 
-        #region Menu Click Events
+        #region Menu Click Event handlers
         private void TicketItem_Click(object sender, RoutedEventArgs e)
         {
             TicketTimeControl ticketTimeControl = new TicketTimeControl();
@@ -142,7 +151,7 @@ namespace WorkTimeStat
         }
         #endregion
 
-        #region System Events
+        #region System Event handlers
         /// <summary>
         /// Happens when the user lockes the workstation, determines the timers to restart based on 
         /// lock time
@@ -157,6 +166,61 @@ namespace WorkTimeStat
             {
                 TaskService.RestartActiveTask();
             }
+        }
+        #endregion
+
+        #region Internal events
+        private void WorkKeeper_ChangeTooltip(TooltipChangeEventArgs args)
+        {
+            LocalizationHelper locHelp = LocalizationHelper.Instance;
+
+            string msg;
+            if (string.IsNullOrWhiteSpace(args.GetMessage()))
+            {
+                msg = locHelp.GetStringForKey("main_no_active_task");
+            }
+            else
+            {
+                msg = string.Format(CultureInfo.CurrentCulture, "{0} {1}",
+                                    locHelp.GetStringForKey("main_currently_active_task"), args.GetMessage());
+            }
+
+            SetTaskbarTooltip(msg);
+        }
+        #endregion
+
+        #region Taskbar manipulation
+        /// <summary>
+        /// Sets the taskbar tooltip to the given text
+        /// </summary>
+        private void SetTaskbarTooltip(string text)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                TaskbarIcon.ToolTipText = text;
+            }));
+        }
+
+        /// <summary>
+        /// Disables the given taskbar MenuItem
+        /// </summary>
+        private void DisableTaskbarOption(MenuItem option)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                option.IsEnabled = false;
+            }));
+        }
+
+        /// <summary>
+        /// Enable the given taskbar MenuItem
+        /// </summary>
+        private void EnableTaskbarOption(MenuItem option)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                option.IsEnabled = true;
+            }));
         }
         #endregion
 

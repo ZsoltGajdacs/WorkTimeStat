@@ -21,7 +21,7 @@ namespace WorkTimeStat.Services
         public static List<MeasuredTask> GetDaysTasks(DateTime date)
         {
             WorkKeeper.Instance.Tasks.TryGetValue(date.Date, out List<MeasuredTask> tasks);
-            return tasks;
+            return tasks ?? new List<MeasuredTask>();
         }
 
         public static void UpdateTaskList(List<MeasuredTask> tickets)
@@ -37,12 +37,24 @@ namespace WorkTimeStat.Services
             storedTasks.AddRange(tickets);
         }
 
+        public static void UpdateTaskbarTooltipWithActiveTask()
+        {
+            MeasuredTask activeTask = FindActiveTaskInList();
+            if (activeTask != null)
+            {
+                SetActiveTaskName(activeTask.TaskName);
+            }
+            else
+            {
+                SetActiveTaskName(string.Empty);
+            }
+        }
+
         public static void PauseActiveTask()
         {
-            MeasuredTask activeTask = GetTodaysTasks()
-                                        .FirstOrDefault(ticket => ticket.CurrentTimePair.EndTime == default);
+            MeasuredTask activeTask = FindActiveTaskInList();
 
-            SetActiveTask(activeTask.TaskName);
+            SetActiveTaskName(activeTask.TaskName);
             activeTask.PauseTask();
         }
 
@@ -51,10 +63,15 @@ namespace WorkTimeStat.Services
             MeasuredTask activeTask = GetTodaysTasks()
                                         .FirstOrDefault(ticket => ticket.TaskName == WorkKeeper.Instance.ActiveTaskName);
             activeTask.StartTask();
-            SetActiveTask(string.Empty);
+            SetActiveTaskName(string.Empty);
         }
 
-        private static void SetActiveTask(string taskName)
+        private static MeasuredTask FindActiveTaskInList()
+        {
+            return GetTodaysTasks().FirstOrDefault(ticket => ticket.CurrentTimePair.EndTime == default);
+        }
+
+        private static void SetActiveTaskName(string taskName)
         {
             WorkKeeper.Instance.ActiveTaskName = taskName;
         }
