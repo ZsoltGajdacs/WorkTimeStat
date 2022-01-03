@@ -162,6 +162,7 @@
     <Compile Include="Enums\WorkPlaceType.cs" />
     <Compile Include="Events\ChangeTaskbarTooltipEvent.cs" />
     <Compile Include="Events\CloseTheBallonEvent.cs" />
+    <Compile Include="Events\GrabFocusEvent.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Dpi.cs" />
     <Compile Include="Helpers\Rounder.cs" />

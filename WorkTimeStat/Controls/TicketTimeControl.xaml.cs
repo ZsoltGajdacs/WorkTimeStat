@@ -20,6 +20,7 @@ namespace WorkTimeStat.Controls
         public BindingList<TicketTimeVM> TaskTimeList { get; private set; }
 
         internal event CloseTheBallonEventHandler CloseBallon;
+        internal event GrabFocusEventHandle GrabFocus;
 
         public TicketTimeControl()
         {
@@ -74,6 +75,11 @@ namespace WorkTimeStat.Controls
         private void TaskNameInput_MouseLeave(object sender, MouseEventArgs e)
         {
             AddDefaultToInputIfEmpty();
+        }
+
+        private void TicketGrid_MouseEnter(object sender, MouseEventArgs e)
+        {
+            GrabFocus?.Invoke();
         }
 
         private void okButtonS_Click(object sender, System.Windows.RoutedEventArgs e)

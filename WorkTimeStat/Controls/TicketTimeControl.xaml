@@ -37,7 +37,7 @@
             BorderBrush="Wheat"
             HorizontalAlignment="Center"
             VerticalAlignment="Top">
-        <Grid x:Name="TicketGrid">
+        <Grid x:Name="TicketGrid" MouseEnter="TicketGrid_MouseEnter">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="30"/>

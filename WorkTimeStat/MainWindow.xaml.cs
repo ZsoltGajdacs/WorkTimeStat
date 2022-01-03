@@ -109,9 +109,9 @@ namespace WorkTimeStat
         {
             TicketTimeControl ticketTimeControl = new TicketTimeControl();
             ticketTimeControl.CloseBallon += CloseTaskbarBalloon;
+            ticketTimeControl.GrabFocus += TicketTimeControl_GrabFocus;
 
             TaskbarIcon.ShowCustomBalloon(ticketTimeControl, PopupAnimation.Fade, null);
-            WindowFocusHelper.ActivatePopup(TaskbarIcon.CustomBalloon);
         }
 
         private void CalendarItem_Click(object sender, RoutedEventArgs e)
@@ -186,6 +186,11 @@ namespace WorkTimeStat
             }
 
             SetTaskbarTooltip(msg);
+        }
+
+        private void TicketTimeControl_GrabFocus()
+        {
+            WindowFocusHelper.ActivatePopup(TaskbarIcon.CustomBalloon);
         }
         #endregion
 
