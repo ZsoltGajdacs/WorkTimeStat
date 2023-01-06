@@ -190,7 +190,7 @@
     <value>Various places throughout the day</value>
   </data>
   <data name="enum_mixed_display" xml:space="preserve">
-    <value>Various</value>
+    <value>Mixed</value>
   </data>
   <data name="enum_office_day_desc" xml:space="preserve">
     <value>Office day</value>

@@ -190,7 +190,7 @@
     <value>Nap folyamán több különböző helyen történt munkavégzés</value>
   </data>
   <data name="enum_mixed_display" xml:space="preserve">
-    <value>Kevert</value>
+    <value>Változó</value>
   </data>
   <data name="enum_office_day_desc" xml:space="preserve">
     <value>Irodai munkanap</value>
