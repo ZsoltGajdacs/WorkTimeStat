@@ -9,7 +9,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:CalendarControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="485" d:DesignWidth="470"
+             d:DesignHeight="440" d:DesignWidth="470"
              Background="#FF434343" Foreground="White" FontSize="14">
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -51,8 +51,6 @@
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -65,7 +63,7 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="chosenDateLabel" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" 
+            <Label x:Name="chosenDateLabel" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" 
                HorizontalAlignment="Center"/>
 
             <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="15">
@@ -78,16 +76,15 @@
 
             <Label Content="{x:Static loc:Resources.cal_sick_pay}" Grid.Column="3" Grid.Row="3"/>
             <Label Content="{x:Static loc:Resources.cal_leave_day}" Grid.Column="3" Grid.Row="5"/>
-            <Label Content="{x:Static loc:Resources.cal_leave_days_left}" Grid.Column="3" Grid.Row="7"/>
-            <Label Content="{x:Static loc:Resources.u_work_start_time}" Grid.Column="3" Grid.Row="9"/>
-            <Label Content="{x:Static loc:Resources.u_work_end_time}" Grid.Column="3" Grid.Row="11"/>
-            <Label Content="{x:Static loc:Resources.u_lunch_break_length}" Grid.Column="3" Grid.Row="13"/>
-            <Label Content="{x:Static loc:Resources.u_other_break_length}" Grid.Column="3" Grid.Row="15"/>
-            <Label Content="{x:Static loc:Resources.u_overwork_length}" Grid.Column="3" Grid.Row="17"/>
-            <Label Content="{x:Static loc:Resources.u_workday_type}" Grid.Column="3" Grid.Row="19"/>
-            <Label Content="{x:Static loc:Resources.u_workplace}" Grid.Column="3" Grid.Row="21"/>
-            <Label Content="{x:Static loc:Resources.cal_worked_hours}" Grid.Column="3" Grid.Row="23"/>
-            <Label Content="{x:Static loc:Resources.cal_measured_hours}" Grid.Column="3" Grid.Row="25"/>
+            <Label Content="{x:Static loc:Resources.u_work_start_time}" Grid.Column="3" Grid.Row="7"/>
+            <Label Content="{x:Static loc:Resources.u_work_end_time}" Grid.Column="3" Grid.Row="9"/>
+            <Label Content="{x:Static loc:Resources.u_lunch_break_length}" Grid.Column="3" Grid.Row="11"/>
+            <Label Content="{x:Static loc:Resources.u_other_break_length}" Grid.Column="3" Grid.Row="13"/>
+            <Label Content="{x:Static loc:Resources.u_overwork_length}" Grid.Column="3" Grid.Row="15"/>
+            <Label Content="{x:Static loc:Resources.u_workday_type}" Grid.Column="3" Grid.Row="17"/>
+            <Label Content="{x:Static loc:Resources.u_workplace}" Grid.Column="3" Grid.Row="19"/>
+            <Label Content="{x:Static loc:Resources.cal_worked_hours}" Grid.Column="3" Grid.Row="21"/>
+            <Label Content="{x:Static loc:Resources.cal_measured_hours}" Grid.Column="3" Grid.Row="23"/>
 
             <CheckBox x:Name="sickDayChkbox" Grid.Column="5" Grid.Row="3" 
                   VerticalAlignment="Center" HorizontalAlignment="Left"
@@ -97,20 +94,19 @@
                   VerticalAlignment="Center" HorizontalAlignment="Left" 
                   PreviewMouseDown="LeaveDayChkbox_MouseDown" Click="LeaveDayChkbox_Click"/>
 
-            <Label x:Name="leaveDayNum" Grid.Column="5" Grid.Row="7"/>
-            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8"/>
+            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="6"/>
 
             <!-- Read-only labels -->
-            <Label x:Name="startTimeValue" Grid.Column="5" Grid.Row="9"/>
-            <Label x:Name="endTimeValue" Grid.Column="5" Grid.Row="11"/>
-            <Label x:Name="lunchBreakTimeValue" Grid.Column="5" Grid.Row="13"/>
-            <Label x:Name="otherBreakTimeValue" Grid.Column="5" Grid.Row="15"/>
-            <Label x:Name="overWorkTimeValue" Grid.Column="5" Grid.Row="17"/>
-            <Label x:Name="WorkTypeValue" Grid.Column="5" Grid.Row="19"/>
-            <Label x:Name="WorkPlaceValue" Grid.Column="5" Grid.Row="21"/>
+            <Label x:Name="startTimeValue" Grid.Column="5" Grid.Row="7"/>
+            <Label x:Name="endTimeValue" Grid.Column="5" Grid.Row="9"/>
+            <Label x:Name="lunchBreakTimeValue" Grid.Column="5" Grid.Row="11"/>
+            <Label x:Name="otherBreakTimeValue" Grid.Column="5" Grid.Row="13"/>
+            <Label x:Name="overWorkTimeValue" Grid.Column="5" Grid.Row="15"/>
+            <Label x:Name="WorkTypeValue" Grid.Column="5" Grid.Row="17"/>
+            <Label x:Name="WorkPlaceValue" Grid.Column="5" Grid.Row="19"/>
 
             <!-- Edit controls -->
-            <StackPanel x:Name="WorkStartPanel" Grid.Row="9" Grid.Column="5" Orientation="Horizontal" Visibility="Collapsed">
+            <StackPanel x:Name="WorkStartPanel" Grid.Row="7" Grid.Column="5" Orientation="Horizontal" Visibility="Collapsed">
                 <xce:IntegerUpDown x:Name="WorkStartHour"
                                Minimum="6" Maximum="16" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
@@ -119,7 +115,7 @@
                                Background="#FF434343" Foreground="White"/>
             </StackPanel>
 
-            <StackPanel x:Name="WorkEndPanel" Grid.Row="11" Grid.Column="5" Orientation="Horizontal"  Visibility="Collapsed">
+            <StackPanel x:Name="WorkEndPanel" Grid.Row="9" Grid.Column="5" Orientation="Horizontal"  Visibility="Collapsed">
                 <xce:IntegerUpDown x:Name="WorkEndHour" 
                                Minimum="10" Maximum="23" ClipValueToMinMax="True" Increment="1"
                                Background="#FF434343" Foreground="White"/>
@@ -130,24 +126,24 @@
 
             <xce:IntegerUpDown x:Name="EditWorkLaunchTime"
                                Minimum="0" Maximum="60" ClipValueToMinMax="True" Increment="15"
-                               Grid.Row="13" Grid.Column="5" 
+                               Grid.Row="11" Grid.Column="5" 
                                Background="#FF434343" Foreground="White"
                                Visibility="Collapsed"/>
 
             <xce:IntegerUpDown x:Name="EditWorkbreakTime"
                                Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
-                               Grid.Row="15" Grid.Column="5"
+                               Grid.Row="13" Grid.Column="5"
                                Background="#FF434343" Foreground="White"
                                Visibility="Collapsed"/>
 
             <xce:IntegerUpDown x:Name="EditNonworkTime" 
                                Minimum="0" Maximum="480" ClipValueToMinMax="True" Increment="15"
-                               Grid.Row="17" Grid.Column="5" 
+                               Grid.Row="15" Grid.Column="5" 
                                Background="#FF434343" Foreground="White"
                                Visibility="Collapsed"/>
 
             <ComboBox x:Name="EditWorkType"
-                               Grid.Row="19" Grid.Column="5" 
+                               Grid.Row="17" Grid.Column="5" 
                                Background="#FF434343" Foreground="Black"
                                SelectionChanged="WorkType_SelectionChanged"
                                Visibility="Collapsed">
@@ -159,7 +155,7 @@
             </ComboBox>
 
             <ComboBox x:Name="EditWorkPlace"
-                               Grid.Row="21" Grid.Column="5" 
+                               Grid.Row="19" Grid.Column="5" 
                                Background="#FF434343" Foreground="Black"
                                SelectionChanged="WorkPlace_SelectionChanged"
                                Visibility="Collapsed">
@@ -171,13 +167,13 @@
             </ComboBox>
 
             <!-- Read-only labels -->
-            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="22"/>
+            <Separator Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="20"/>
 
-            <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="23" FontWeight="Bold"/>
-            <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="25" FontWeight="Bold"/>
+            <Label x:Name="workedTimeValue" Grid.Column="5" Grid.Row="21" FontWeight="Bold"/>
+            <Label x:Name="watchedTimeValue" Grid.Column="5" Grid.Row="23" FontWeight="Bold"/>
 
             <!-- Edit controls -->
-            <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="23" LastChildFill="False" Visibility="Collapsed">
+            <DockPanel x:Name="EditPanel" Grid.Column="1" Grid.Row="21" LastChildFill="False" Visibility="Collapsed">
                 <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.u_btn_save}"
                     DockPanel.Dock="Left" Padding="20 0 20 0"
                     Click="SaveBtn_Click"/>
@@ -186,13 +182,13 @@
                     Click="CancelBtn_Click"/>
             </DockPanel>
 
-            <Button x:Name="DeleteBtn" Content="{x:Static loc:Resources.cal_btn_delete}" Grid.Column="1" Grid.Row="21"
+            <Button x:Name="DeleteBtn" Content="{x:Static loc:Resources.cal_btn_delete}" Grid.Column="1" Grid.Row="19"
                     Click="DeleteBtn_Click"/>
             
-            <Button x:Name="EditBtn" Content="{x:Static loc:Resources.cal_btn_change}" Grid.Column="1" Grid.Row="23"
+            <Button x:Name="EditBtn" Content="{x:Static loc:Resources.cal_btn_change}" Grid.Column="1" Grid.Row="21"
                     Click="EditBtn_Click"/>
 
-            <Button x:Name="ExitBtn" Content="{x:Static loc:Resources.u_btn_close}" Grid.Column="1" Grid.Row="25"
+            <Button x:Name="ExitBtn" Content="{x:Static loc:Resources.u_btn_close}" Grid.Column="1" Grid.Row="23"
                     Click="ExitBtn_Click"/>
         </Grid>
     </Border>

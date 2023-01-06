@@ -9,7 +9,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              xmlns:Converter="clr-namespace:WorkTimeStat.Enums.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="335" d:DesignWidth="350"
+             d:DesignHeight="320" d:DesignWidth="350"
              Background="#FF434343" Foreground="White" FontSize="14">
     
     <UserControl.Resources>
@@ -28,8 +28,6 @@
         
         <Grid x:Name="mainGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
@@ -113,15 +111,9 @@
                                 Format="ShortDate" AllowSpin="False" AutoCloseCalendar="True"
                                 ShowButtonSpinner="False" TimePickerVisibility="Collapsed"
                                 Grid.Column="3" Grid.Row="11" />
-            
-            <Label Content="{x:Static loc:Resources.set_leave_days_in_year}" 
-                   ToolTip="{x:Static loc:Resources.set_leave_days_in_year_tooltip}"
-                   Grid.Column="1" Grid.Row="13"/>
-            <xce:IntegerUpDown Value="{Binding YearlyLeaveNumber, Mode=TwoWay}" 
-                               Grid.Column="3" Grid.Row="13"/>
 
             <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.set_btn_save_and_close}"
-                    Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="15"
+                    Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="13"
                     Click="SaveBtn_Click" />
         </Grid>
     </Border>

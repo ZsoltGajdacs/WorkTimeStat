@@ -16,12 +16,13 @@ namespace WorkTimeStat.Controls
 {
     public partial class CalendarControl : UserControl
     {
+        private static readonly string DISPLAY_DATE_FORMAT = "dddd dd MMMM yyyy";
+
         private readonly WorkKeeper keeper;
         private readonly DateTime currDate;
         private readonly LocalizationHelper langHelper;
 
         private WorkDay chosenDay;
-        private int numOfLeavesLeft;
         private bool leaveAutochk;
         private bool sickAutochk;
         private DateTime selectedDate;
@@ -42,7 +43,6 @@ namespace WorkTimeStat.Controls
             currDate = DateTime.Now.Date;
 
             SetToday();
-            UpdateLeaveDays();
         }
 
         private void SetBindings()
@@ -50,12 +50,6 @@ namespace WorkTimeStat.Controls
             mainGrid.DataContext = this;
             EditWorkType.ItemsSource = Enum.GetValues(typeof(WorkDayType)).Cast<WorkDayType>();
             EditWorkPlace.ItemsSource = Enum.GetValues(typeof(WorkPlaceType)).Cast<WorkPlaceType>();
-        }
-
-        private void UpdateLeaveDays()
-        {
-            numOfLeavesLeft = keeper.Settings.YearlyLeaveNumber - keeper.LeaveDays.Count;
-            leaveDayNum.Content = numOfLeavesLeft + " / " + keeper.Settings.YearlyLeaveNumber;
         }
 
         private void SetToday()
@@ -71,7 +65,7 @@ namespace WorkTimeStat.Controls
                 SetEmptyLabels();
             }
 
-            chosenDateLabel.Content = DateTime.Today.ToLongDateString();
+            chosenDateLabel.Content = DateTime.Today.ToString(DISPLAY_DATE_FORMAT);
         }
 
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -79,7 +73,7 @@ namespace WorkTimeStat.Controls
             if (mainCalendar.SelectedDate.HasValue)
             {
                 selectedDate = mainCalendar.SelectedDate.Value.Date;
-                chosenDateLabel.Content = selectedDate.ToLongDateString();
+                chosenDateLabel.Content = selectedDate.ToString(DISPLAY_DATE_FORMAT);
 
                 CalendarSetLeaveDay(selectedDate);
                 CalendarSetSickDay(selectedDate);
@@ -163,7 +157,7 @@ namespace WorkTimeStat.Controls
         #region Click events
         private void LeaveDayChkbox_Click(object sender, RoutedEventArgs e)
         {
-            if (numOfLeavesLeft > 0 && !keeper.LeaveDays.Contains(selectedDate))
+            if (!keeper.LeaveDays.Contains(selectedDate))
             {
                 keeper.LeaveDays.Add(selectedDate);
 
@@ -175,8 +169,6 @@ namespace WorkTimeStat.Controls
             {
                 keeper.LeaveDays.Remove(selectedDate);
             }
-
-            UpdateLeaveDays();
         }
 
         private void SickDayChkbox_Click(object sender, RoutedEventArgs e)
@@ -188,7 +180,6 @@ namespace WorkTimeStat.Controls
                 // Ha betegre megyek nem lehetek szabin....
                 leaveDayChkbox.IsChecked = false;
                 keeper.LeaveDays.Remove(selectedDate);
-                UpdateLeaveDays();
             }
             else if (keeper.SickDays.Contains(selectedDate) && !sickAutochk)
             {

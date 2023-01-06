@@ -33,7 +33,7 @@ namespace WorkTimeStat.Controls
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (keeper.Settings.DailyWorkHours == default || keeper.Settings.YearlyLeaveNumber == default)
+            if (keeper.Settings.DailyWorkHours == default)
             {
                 MessageBox.Show(locHelp.GetStringForKey("set_error_incomplete_setup_content"),
                        locHelp.GetStringForKey("set_error_incomplete_setup_header"),

@@ -12,7 +12,6 @@ namespace WorkTimeStat.Models
     {
         private bool isLunchTimeWorkTimeDefault;
         private decimal amountOfLitreInOneUnit;
-        private int yearlyLeaveNumber;
         private double dailyWorkHours;
         private Resolution watcherResolution;
         private DataPrecision watcherDataPrecision;
@@ -23,7 +22,6 @@ namespace WorkTimeStat.Models
 
         public Boolean IsLunchTimeWorkTimeDefault { get => isLunchTimeWorkTimeDefault; set => SetAndNotifyPropertyChanged(ref isLunchTimeWorkTimeDefault, value); }
         public decimal AmountOfLitreInOneUnit { get => amountOfLitreInOneUnit; set => SetAndNotifyPropertyChanged(ref amountOfLitreInOneUnit, value); }
-        public int YearlyLeaveNumber { get => yearlyLeaveNumber; set => SetAndNotifyPropertyChanged(ref yearlyLeaveNumber, value); }
         public double DailyWorkHours { get => dailyWorkHours; set => SetAndNotifyPropertyChanged(ref dailyWorkHours, value); }
         public Resolution WatcherResolution { get => watcherResolution; set => SetAndNotifyPropertyChanged(ref watcherResolution, value); }
         public DataPrecision WatcherDataPrecision { get => watcherDataPrecision; set => SetAndNotifyPropertyChanged(ref watcherDataPrecision, value); }
