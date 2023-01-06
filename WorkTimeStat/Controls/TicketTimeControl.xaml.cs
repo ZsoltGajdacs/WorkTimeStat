@@ -80,6 +80,7 @@ namespace WorkTimeStat.Controls
         private void TicketGrid_MouseEnter(object sender, MouseEventArgs e)
         {
             GrabFocus?.Invoke();
+            TaskNameInput.Focus();
         }
 
         private void okButtonS_Click(object sender, System.Windows.RoutedEventArgs e)

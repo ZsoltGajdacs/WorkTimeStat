@@ -221,6 +221,10 @@ namespace WorkTimeStat.Services
             {
                 dayType = DayType.HALFDAY;
             }
+            else if (IsDayWeekendDay(day))
+            {
+                dayType = DayType.OVERWORKDAY;
+            }
             else
             {
                 dayType = DayType.WORKDAY;
@@ -249,6 +253,11 @@ namespace WorkTimeStat.Services
         private static bool IsDayHalfDay(WorkDay day)
         {
             return day.WorkDayType == WorkDayType.HALF_DAY;
+        }
+
+        private static bool IsDayWeekendDay(WorkDay day)
+        {
+            return day.WorkDayType == WorkDayType.WEEKEND;
         }
         #endregion
 
