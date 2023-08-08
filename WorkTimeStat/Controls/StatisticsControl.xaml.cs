@@ -112,17 +112,19 @@ namespace WorkTimeStat.Controls
 
                 // Monthly
                 int thisMonth = DateTime.Now.Month;
-                MWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(thisMonth, dayTypes));
-                MFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(thisMonth));
-                MCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(thisMonth, dayTypes));
-                MLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisMonth, monthlyDiffDayTypes));
+                int thisYear = DateTime.Now.Year;
+                MWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(thisYear, thisMonth, dayTypes));
+                MFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(thisYear, thisMonth));
+                MCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(thisYear, thisMonth, dayTypes));
+                MLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(thisYear, thisMonth, monthlyDiffDayTypes));
 
                 // Last month
                 int lastMonth = thisMonth - 1;
-                PmWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(lastMonth, dayTypes));
-                PmFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(lastMonth));
-                PmCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(lastMonth, dayTypes));
-                PmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastMonth, monthlyDiffDayTypes));
+                int lastYear = thisYear - 1;
+                PmWorkedHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyWorkedHours(lastYear, lastMonth, dayTypes));
+                PmFullHours = NumberFormatter.FormatNum(StatisticsService.CalcMonthlyTotalHours(lastYear, lastMonth));
+                PmCalcHours = NumberFormatter.FormatNum(StatisticsService.GetUsageForMonth(lastYear, lastMonth, dayTypes));
+                PmLeftHours = AddPlusIfNeeded(StatisticsService.CalcMonthlyHoursDifference(lastYear, lastMonth, monthlyDiffDayTypes));
 
                 // Daily
                 WorkDay today = WorkDayService.GetCurrentDay();

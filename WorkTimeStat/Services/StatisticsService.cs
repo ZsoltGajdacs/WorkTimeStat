@@ -16,7 +16,7 @@ namespace WorkTimeStat.Services
             WorkKeeper keeper = WorkKeeper.Instance;
             for (int monthNum = 1; monthNum < 13; ++monthNum)
             {
-                int count = CountOfficialWorkedDaysInMonth(monthNum);
+                int count = CountOfficialWorkedDaysInMonth(DateTime.Now.Year, monthNum);
                 keeper.DaysWorkedInMonth[monthNum] = count;
             }
         }
@@ -27,24 +27,24 @@ namespace WorkTimeStat.Services
         /// </summary>
         /// <param name="month"></param>
         /// <returns></returns>
-        internal static int CountOfficialWorkedDaysInMonth(int month)
+        internal static int CountOfficialWorkedDaysInMonth(int year, int month)
         {
             if (month == 0)
             {
                 return 0;
             }
 
-            return GetOfficialWorkdaysInMonth(month).Count();
+            return GetOfficialWorkdaysInMonth(year, month).Count();
         }
 
-        internal static double CalcMonthlyWorkedHours(int month, List<WorkDayType> types)
+        internal static double CalcMonthlyWorkedHours(int year, int month, List<WorkDayType> types)
         {
             if (month == 0)
             {
                 return 0;
             }
 
-            IEnumerable<WorkDay> workDaysInMonth = FilterWorkedDayInMonthByType(month, types);
+            IEnumerable<WorkDay> workDaysInMonth = FilterWorkedDayInMonthByType(year, month, types);
 
             double result = CalcWorkedHoursOnGivenDays(workDaysInMonth);
 
@@ -54,7 +54,7 @@ namespace WorkTimeStat.Services
         /// <summary>
         /// Calculates the amount of worked hours per passed month, only official workdays are counted
         /// </summary>
-        internal static double CalcMonthlyTotalHours(int month)
+        internal static double CalcMonthlyTotalHours(int year, int month)
         {
             if (month == 0)
             {
@@ -62,7 +62,7 @@ namespace WorkTimeStat.Services
             }
 
             double workedHours = 0;
-            foreach (WorkDay day in GetOfficialWorkdaysInMonth(month))
+            foreach (WorkDay day in GetOfficialWorkdaysInMonth(year, month))
             {
                 workedHours += CalcDailyTotalHours(day);
             }
@@ -75,34 +75,35 @@ namespace WorkTimeStat.Services
         /// Positive number: More hours than required
         /// Negative number: Less hours than needed
         /// </summary>
-        internal static double CalcMonthlyHoursDifference(int month, List<WorkDayType> types)
+        internal static double CalcMonthlyHoursDifference(int year, int month, List<WorkDayType> types)
         {
             if (month == 0)
             {
                 return 0;
             }
 
-            IEnumerable<WorkDay> normalWorkdays = FilterWorkedDayInMonthByType(month, types);
+            IEnumerable<WorkDay> normalWorkdays = FilterWorkedDayInMonthByType(year, month, types);
 
             double mWorked = CalcWorkedHoursOnGivenDays(normalWorkdays);
 
-            double mTotal = CalcMonthlyTotalHours(month);
+            double mTotal = CalcMonthlyTotalHours(year, month);
 
             return mWorked - mTotal;
         }
 
-        private static IEnumerable<WorkDay> GetOfficialWorkdaysInMonth(int month)
+        private static IEnumerable<WorkDay> GetOfficialWorkdaysInMonth(int year, int month)
         {
             List<WorkDayType> dayTypes = GetOfficalWorkdayTypes();
-            return FilterOfficalWorkdaysInMonth(month, dayTypes);
+            var officialWorkdays = FilterOfficalWorkdaysInMonth(year, month, dayTypes);
+            return officialWorkdays;
         }
 
-        private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int month, List<WorkDayType> dayTypes)
+        private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int year, int month, List<WorkDayType> dayTypes)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
 
             return keeper.WorkDays
-                .Where(w => w.Key.Date.Month == month)
+                .Where(w => w.Key.Date.Year == year && w.Key.Date.Month == month)
                 .Where(d => !keeper.SickDays.Contains(d.Key))
                 .Where(l => !keeper.LeaveDays.Contains(l.Key))
                 .Where(o => !IsDayOverworkOnlyDay(o.Value))
@@ -110,12 +111,12 @@ namespace WorkTimeStat.Services
                 .Select(d => d.Value);
         }
 
-        private static IEnumerable<WorkDay> FilterWorkedDayInMonthByType(int month, List<WorkDayType> dayType)
+        private static IEnumerable<WorkDay> FilterWorkedDayInMonthByType(int year, int month, List<WorkDayType> dayType)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
 
             return keeper.WorkDays
-                .Where(w => w.Key.Date.Month == month)
+                .Where(w => w.Key.Date.Year == year && w.Key.Date.Month == month)
                 .Where(wdt => dayType.Contains(wdt.Value.WorkDayType))
                 .Select(d => d.Value);
         }
@@ -375,9 +376,9 @@ namespace WorkTimeStat.Services
             return breaks;
         }
 
-        internal static double GetUsageForMonth(int month, List<WorkDayType> types)
+        internal static double GetUsageForMonth(int year, int month, List<WorkDayType> types)
         {
-            IEnumerable<WorkDay> workDays = FilterWorkedDayInMonthByType(month, types);
+            IEnumerable<WorkDay> workDays = FilterWorkedDayInMonthByType(year, month, types);
             IEnumerable<TimeSpan> usagesInMonth = workDays.Select(d => d.UsageTime);
 
             double result = 0;
