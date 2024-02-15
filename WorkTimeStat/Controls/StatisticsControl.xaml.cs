@@ -106,10 +106,10 @@ namespace WorkTimeStat.Controls
 
             private void LoadStatisticsData()
             {
-                List<WorkDayType> dayTypes = StatisticsService.GetOfficalWorkdayTypes();
+                List<WorkDayType> dayTypes = new List<WorkDayType>(StatisticsService.OFFICIAL_WORK_DAYS);
                 List<WorkDayType> monthlyDiffDayTypes = new List<WorkDayType>(dayTypes);
                 monthlyDiffDayTypes.Add(WorkDayType.OVERWORK_DAY);
-
+                
                 // Monthly
                 int thisMonth = DateTime.Now.Month;
                 int thisYear = DateTime.Now.Year;

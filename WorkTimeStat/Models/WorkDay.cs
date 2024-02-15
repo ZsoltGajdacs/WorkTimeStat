@@ -15,6 +15,7 @@ namespace WorkTimeStat.Models
         private TimeSpan endTime;
         private TimeSpan usageTime;
         private TimeSpan totalDailyUsage;
+        private TimeSpan requiredWorkLength;
         private int lunchBreakDuration;
         private int otherBreakDuration;
         private int overWorkDuration;
@@ -27,22 +28,25 @@ namespace WorkTimeStat.Models
         public TimeSpan EndTime { get => endTime; set => SetAndNotifyPropertyChanged(ref endTime, value); }
         public TimeSpan UsageTime { get => usageTime; set => SetAndNotifyPropertyChanged(ref usageTime, value); }
         public TimeSpan TotalDailyUsage { get => totalDailyUsage; set => SetAndNotifyPropertyChanged(ref totalDailyUsage, value); }
+        public TimeSpan RequiredWorkLength { get => requiredWorkLength; set => SetAndNotifyPropertyChanged(ref requiredWorkLength, value); }
         public int LunchBreakDuration { get => lunchBreakDuration; set => SetAndNotifyPropertyChanged(ref lunchBreakDuration, value); }
         public int OtherBreakDuration { get => otherBreakDuration; set => SetAndNotifyPropertyChanged(ref otherBreakDuration, value); }
         public int OverWorkDuration { get => overWorkDuration; set => SetAndNotifyPropertyChanged(ref overWorkDuration, value); }
         public WorkDayType WorkDayType { get => workDayType; set => SetAndNotifyPropertyChanged(ref workDayType, value); }
         public WorkPlaceType WorkPlaceType { get => workPlaceType; set => SetAndNotifyPropertyChanged(ref workPlaceType, value); }
         public bool IsLunchTimeWorkTime { get => isLunchTimeWorkTime; set => SetAndNotifyPropertyChanged(ref isLunchTimeWorkTime, value); }
-
+        
         #region CTORS
-        public WorkDay(bool isLunchTimeWorkTime, double dailyWorkHours, WorkPlaceType workPlaceType)
+        public WorkDay(
+            bool isLunchTimeWorkTime, TimeSpan requiredHoursToWork, WorkPlaceType workPlaceType)
         {
             IsLunchTimeWorkTime = isLunchTimeWorkTime;
             DayDate = DateTime.Now.Date;
             StartTime = Rounder.RoundToClosestTime(DateTime.Now, TimeSpan.FromMinutes(15)).TimeOfDay;
-            EndTime = StartTime + TimeSpan.FromHours(dailyWorkHours);
+            EndTime = StartTime + requiredHoursToWork;
             WorkPlaceType = workPlaceType;
             WorkDayType = WorkDayType.WEEKDAY;
+            RequiredWorkLength = requiredHoursToWork;
         }
         #endregion
 
@@ -50,6 +54,7 @@ namespace WorkTimeStat.Models
         internal void SetStartTime(int startHour, int startMinute)
         {
             StartTime = Converter.ConvertHoursAndMinutesToTimeSpan(startHour, startMinute);
+            EndTime = StartTime + RequiredWorkLength;
         }
 
         internal void SetStartTime(int? startHour, int? startMinute)

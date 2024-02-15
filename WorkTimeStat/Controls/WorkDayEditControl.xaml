@@ -10,7 +10,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              d:DataContext="{d:DesignInstance Type=local:WorkDayEditControl}"
              mc:Ignorable="d" 
-             d:DesignHeight="180" d:DesignWidth="800" FontSize="14" 
+             d:DesignHeight="180" d:DesignWidth="900" FontSize="14" 
              Background="#FF434343" Foreground="White">
 
         <UserControl.Resources>
@@ -29,30 +29,32 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="5"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition MinWidth="90"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="90"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="90"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="45"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="45"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="90"/>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition MinWidth="120"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition MinWidth="135"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition MinWidth="120"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -142,6 +144,21 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
+            <Label x:Name="DailyRequiredTimeLabel" Content="{x:Static loc:Resources.u_required_time}" 
+                   Grid.Row="1" Grid.Column="17" 
+                   Foreground="White"/>
+            <!--<xce:TimePicker x:Name="workEnd" Value="{Binding DailyRequiredWork, Mode=TwoWay}" ShowButtonSpinner="True"
+                StartTime="00:00" EndTime="23:00" TimeInterval="00:01" ClipValueToMinMax="True" 
+                Grid.Row="17" Grid.Column="3" Background="#FF434343" Foreground="White"/>-->
+            <StackPanel x:Name="DailyTimePanel" Grid.Column="17" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <xce:IntegerUpDown x:Name="DailyHours" Value="{Binding DailyWorkHours, Mode=TwoWay}" 
+                    Minimum="0" Maximum="23" ClipValueToMinMax="True" Increment="1"
+                    Background="#FF434343" Foreground="White"/>
+                <xce:IntegerUpDown x:Name="DailyMinutes" Value="{Binding DailyWorkMinutes, Mode=TwoWay}" 
+                    Minimum="0" Maximum="59" ClipValueToMinMax="True" Increment="1"
+                    Background="#FF434343" Foreground="White"/>
+            </StackPanel>
+
             <Image Source="pack://application:,,,/Images/curly-bracket-thin-white.png" 
                    Width="120" Stretch="Fill"
                    Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"/>
@@ -163,7 +180,7 @@
                     Click="SaveBtn_Click"/>
 
             <Button x:Name="closeBtn" Content="{x:Static loc:Resources.u_btn_cancel}" FontSize="12"
-                    Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="5"
+                    Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="7"
                     Click="CloseBtn_Click"/>
         </Grid>
     </Border>

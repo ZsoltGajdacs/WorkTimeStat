@@ -396,6 +396,9 @@
   <data name="u_overwork_length" xml:space="preserve">
     <value>Overwork:</value>
   </data>
+  <data name="u_required_time" xml:space="preserve">
+    <value>Daily time:</value>
+  </data>
   <data name="u_workday_type" xml:space="preserve">
     <value>Workday type:</value>
   </data>

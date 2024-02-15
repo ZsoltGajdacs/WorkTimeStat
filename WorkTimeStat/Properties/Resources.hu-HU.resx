@@ -399,6 +399,9 @@
   <data name="u_overwork_length" xml:space="preserve">
     <value>Túlóra:</value>
   </data>
+  <data name="u_required_time" xml:space="preserve">
+    <value>Napi munkaidő:</value>
+  </data>
   <data name="u_workday_type" xml:space="preserve">
     <value>Munkanap típusa:</value>
   </data>

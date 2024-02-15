@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog.Time;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UsageWatcher.Models;
@@ -11,6 +12,17 @@ namespace WorkTimeStat.Services
 {
     internal static class StatisticsService
     {
+        private static Dictionary<DayType, double> DEFAULT_WORK_LENGTH = 
+            new Dictionary<DayType, double>
+                {
+                    { DayType.SICKDAY, 0 },
+                    { DayType.LEAVEDAY, 0 },
+                    { DayType.OVERWORKDAY, 0 }
+                };
+
+        internal static List<WorkDayType> OFFICIAL_WORK_DAYS = 
+            new List<WorkDayType> { WorkDayType.WEEKDAY, WorkDayType.HALF_DAY };
+
         internal static void FullReCountWorkedDays()
         {
             WorkKeeper keeper = WorkKeeper.Instance;
@@ -34,7 +46,7 @@ namespace WorkTimeStat.Services
                 return 0;
             }
 
-            return GetOfficialWorkdaysInMonth(year, month).Count();
+            return FindOfficialWorkdaysInMonth(year, month).Count();
         }
 
         internal static double CalcMonthlyWorkedHours(int year, int month, List<WorkDayType> types)
@@ -62,7 +74,7 @@ namespace WorkTimeStat.Services
             }
 
             double workedHours = 0;
-            foreach (WorkDay day in GetOfficialWorkdaysInMonth(year, month))
+            foreach (WorkDay day in FindOfficialWorkdaysInMonth(year, month))
             {
                 workedHours += CalcDailyTotalHours(day);
             }
@@ -91,14 +103,7 @@ namespace WorkTimeStat.Services
             return mWorked - mTotal;
         }
 
-        private static IEnumerable<WorkDay> GetOfficialWorkdaysInMonth(int year, int month)
-        {
-            List<WorkDayType> dayTypes = GetOfficalWorkdayTypes();
-            var officialWorkdays = FilterOfficalWorkdaysInMonth(year, month, dayTypes);
-            return officialWorkdays;
-        }
-
-        private static IEnumerable<WorkDay> FilterOfficalWorkdaysInMonth(int year, int month, List<WorkDayType> dayTypes)
+        private static IEnumerable<WorkDay> FindOfficialWorkdaysInMonth(int year, int month)
         {
             WorkKeeper keeper = WorkKeeper.Instance;
 
@@ -107,7 +112,7 @@ namespace WorkTimeStat.Services
                 .Where(d => !keeper.SickDays.Contains(d.Key))
                 .Where(l => !keeper.LeaveDays.Contains(l.Key))
                 .Where(o => !IsDayOverworkOnlyDay(o.Value))
-                .Where(wdt => dayTypes.Contains(wdt.Value.WorkDayType))
+                .Where(wdt => OFFICIAL_WORK_DAYS.Contains(wdt.Value.WorkDayType))
                 .Select(d => d.Value);
         }
 
@@ -173,8 +178,15 @@ namespace WorkTimeStat.Services
                 return 0;
             }
 
-            Dictionary<DayType, double> workHoursPerDayType = GetWorkHoursPerDayType();
-            return workHoursPerDayType[DecideDayType(day)];
+            if (day.WorkDayType != WorkDayType.WEEKDAY || day.WorkDayType != WorkDayType.HALF_DAY)
+            {
+                return DEFAULT_WORK_LENGTH[DecideDayType(day)];
+            }
+            else
+            {
+                return day.RequiredWorkLength.TotalHours;
+            }
+            
         }
 
         /// <summary>
@@ -418,26 +430,8 @@ namespace WorkTimeStat.Services
         #region Tasks
         public static TimeSpan CalcTaskUsagesForDay(DateTime date)
         {
+            // TODO: Finish this
             return TimeSpan.Zero;
-        }
-        #endregion
-
-        #region Helpers
-        public static List<WorkDayType> GetOfficalWorkdayTypes()
-        {
-            return new List<WorkDayType> { WorkDayType.WEEKDAY, WorkDayType.HALF_DAY };
-        }
-
-        private static Dictionary<DayType, double> GetWorkHoursPerDayType()
-        {
-            return new Dictionary<DayType, double>
-            {
-                { DayType.WORKDAY, WorkKeeper.Instance.Settings.DailyWorkHours },
-                { DayType.SICKDAY, 0 },
-                { DayType.LEAVEDAY, 0 },
-                { DayType.OVERWORKDAY, 0 },
-                { DayType.HALFDAY, WorkKeeper.Instance.Settings.DailyWorkHours / 2d }
-            };
         }
         #endregion
 

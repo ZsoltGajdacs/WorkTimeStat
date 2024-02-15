@@ -55,7 +55,7 @@ namespace WorkTimeStat
         private void CheckSettingsSetup()
         {
             WorkSettings settings = WorkKeeper.Instance.Settings;
-            if (settings.DailyWorkHours == default || settings.HolidayYearStart == default)
+            if (settings.DefaultDailyWorkHours == default || settings.HolidayYearStart == default)
             {
                 LocalizationHelper locHelp = LocalizationHelper.Instance;
                 MessageBox.Show(locHelp.GetStringForKey("main_error_no_settings_content"),

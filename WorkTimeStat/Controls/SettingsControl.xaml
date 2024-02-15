@@ -9,7 +9,7 @@
              xmlns:loc = "clr-namespace:WorkTimeStat.Properties"
              xmlns:Converter="clr-namespace:WorkTimeStat.Enums.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="350"
+             d:DesignHeight="320" d:DesignWidth="400"
              Background="#FF434343" Foreground="White" FontSize="14">
     
     <UserControl.Resources>
@@ -49,7 +49,9 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition MinWidth="100"/>
+                <ColumnDefinition MinWidth="50"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition MinWidth="50"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
@@ -57,7 +59,7 @@
                    ToolTip="{x:Static loc:Resources.set_is_lunchtime_worktime_tooltip}"
                    Grid.Column="1" Grid.Row="1"/>
             <CheckBox IsChecked="{Binding IsLunchTimeWorkTimeDefault, Mode=TwoWay}" 
-                      Grid.Column="3" Grid.Row="1" 
+                      Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" 
                       HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Label Content="{x:Static loc:Resources.set_language}" 
@@ -65,7 +67,7 @@
                    Grid.Column="1" Grid.Row="3"/>
             <ComboBox x:Name="LangCombo" SelectedItem="{Binding ChosenLanguage, Mode=TwoWay}"
                       SelectionChanged="LangCombo_SelectionChanged"
-                      Grid.Column="3" Grid.Row="3">
+                      Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource enumNameConverter}}"/>
@@ -77,7 +79,7 @@
                    ToolTip="{x:Static loc:Resources.set_usagewatcher_resolution_tooltip}"
                    Grid.Column="1" Grid.Row="5"/>
             <ComboBox x:Name="ResCombo" SelectedItem="{Binding WatcherResolution, Mode=TwoWay}" 
-                      Grid.Column="3" Grid.Row="5">
+                      Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource enumNameConverter}}"/>
@@ -89,7 +91,7 @@
                    ToolTip="{x:Static loc:Resources.set_default_workplace_tooltip}"
                    Grid.Column="1" Grid.Row="7"/>
             <ComboBox x:Name="WorkPlaceCombo" SelectedItem="{Binding WorkPlaceType, Mode=TwoWay}" 
-                      Grid.Column="3" Grid.Row="7">
+                      Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="3">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource enumNameConverter}}"/>
@@ -100,9 +102,12 @@
             <Label Content="{x:Static loc:Resources.set_default_worktime}" 
                    ToolTip="{x:Static loc:Resources.set_default_worktime_tooltip}"
                    Grid.Column="1" Grid.Row="9"/>
-            <xce:DoubleUpDown Value="{Binding DailyWorkHours, Mode=TwoWay}" 
-                              Grid.Column="3" Grid.Row="9"
-                               Increment="0.5" FormatString="0.0"/>
+            <xce:DoubleUpDown x:Name="HoursCounter" Value="{Binding DefaultDailyWorkHours, Mode=TwoWay}" 
+                   Minimum="0" Maximum="23" 
+                   Grid.Column="3" Grid.Row="9"/>
+            <xce:DoubleUpDown x:Name="MinutesCounter" Value="{Binding DefaultDailyWorkMinutes, Mode=TwoWay}" 
+                   Minimum="0" Maximum="59"
+                   Grid.Column="5" Grid.Row="9"/>
 
             <Label Content="{x:Static loc:Resources.set_year_start}" 
                    ToolTip="{x:Static loc:Resources.set_year_start_tooltip}"
@@ -110,10 +115,10 @@
             <xce:DateTimePicker x:Name="HolidayYearStart" Value="{Binding HolidayYearStart, Mode=TwoWay}"
                                 Format="ShortDate" AllowSpin="False" AutoCloseCalendar="True"
                                 ShowButtonSpinner="False" TimePickerVisibility="Collapsed"
-                                Grid.Column="3" Grid.Row="11" />
+                                Grid.Column="3" Grid.Row="11" Grid.ColumnSpan="3"/>
 
             <Button x:Name="SaveBtn" Content="{x:Static loc:Resources.set_btn_save_and_close}"
-                    Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="13"
+                    Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="13"
                     Click="SaveBtn_Click" />
         </Grid>
     </Border>

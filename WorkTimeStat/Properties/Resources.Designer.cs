@@ -898,6 +898,15 @@ namespace WorkTimeStat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daily time:.
+        /// </summary>
+        public static string u_required_time {
+            get {
+                return ResourceManager.GetString("u_required_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End time:.
         /// </summary>
         public static string u_work_end_time {
